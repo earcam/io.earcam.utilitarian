@@ -40,13 +40,6 @@
 
 		<dependency>
 			<groupId>io.earcam.utilitarian</groupId>
-			<artifactId>io.earcam.utilitarian.web</artifactId>
-			<version>${project.version}</version>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>io.earcam.utilitarian</groupId>
 			<artifactId>io.earcam.utilitarian.net</artifactId>
 			<version>${project.version}</version>
 			<scope>test</scope>
