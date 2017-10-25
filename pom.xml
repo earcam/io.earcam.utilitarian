@@ -10,7 +10,7 @@
 
 	<groupId>io.earcam</groupId>
 	<artifactId>io.earcam.utilitarian</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<description>Utility code, comprised of modules too small to warrant separate incubator projects</description>
@@ -31,7 +31,7 @@
 		<connection>scm:git:git://bitbucket.org/${coordinate.username.project}.git</connection>
 		<developerConnection>scm:git:ssh://bitbucket.org:${coordinate.username.project}.git</developerConnection>
 		<url>http://bitbucket.org/${coordinate.username.project}/tree/master</url>
-		<tag>v0.0.1</tag>
+		<tag>HEAD</tag>
 	</scm>
 	<issueManagement>
 		<system>BitBucket</system>
