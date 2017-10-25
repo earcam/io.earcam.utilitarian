@@ -1,0 +1,73 @@
+@font-face {
+    font-family: 'major_snafuregular';
+    src: url('font/major_snafu.eot');
+    src: url('font/major_snafu.eot?#iefix') format('embedded-opentype'),
+         url('font/major_snafu.woff') format('woff'),
+         url('font/major_snafu.ttf') format('truetype'),
+         url('font/major_snafu.svg#major_snafuregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+/*
+Fix for solarized light bg colour
+*/
+
+div.source pre {
+	background-color: #fdf6e3;
+}
+
+/*
+Bug fix for drop-down menu on mobile devices - see https://github.com/andriusvelykis/reflow-maven-skin/issues/41#issuecomment-141996185
+*/
+.dropdown-backdrop {
+    position: static;
+}
+
+
+
+.color-highlight {
+	color: #EDD400;
+}
+
+.yellowthing {
+  color: #EDD400;
+}
+
+.titlething {
+  font-family: 'major_snafuregular';
+}
+
+.fadething {
+   background: -webkit-linear-gradient(top, #EDD400, #555753);
+   background: -o-linear-gradient(bottom, #EDD400, #555753);
+   background: -moz-linear-gradient(bottom, #EDD400, #555753);
+   background: linear-gradient(to bottom, #EDD400, #555753); 
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/*
+body {
+	background-image:url(../images/bg.png);
+}
+*/
+
+.thumbnail-row {
+	margin-top: 10px;
+}
+
+/*h1, */h2 {
+  margin-top: 30px;
+}
+
+h3, h4, h5, h6 {
+  margin-top: 20px;
+}
+
+.carousel-caption a {
+  color: white;
+}
+

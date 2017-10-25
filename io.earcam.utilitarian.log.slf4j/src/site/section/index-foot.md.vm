@@ -1,0 +1,14 @@
+<h3> Brief Examples</h3>
+
+<h4>1. Programmatically Initialize</h4>
+
+#snippet ( "/src/test/java/io/earcam/utilitarian/log/slf4j/LoggingTest.java", "initialize" ) 
+
+
+<h4>2. Capture</h4>
+
+#snippet ( "/src/test/java/io/earcam/utilitarian/log/slf4j/LoggingTest.java", "capture" ) 
+
+<h3>Static Imports</h3>
+
+#snippet ( "/src/test/java/io/earcam/utilitarian/log/slf4j/LoggingTest.java", "imports" ) 

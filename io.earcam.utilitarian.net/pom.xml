@@ -1,0 +1,124 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>io.earcam</groupId>
+		<artifactId>io.earcam.utilitarian</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<groupId>io.earcam.utilitarian</groupId>
+	<artifactId>io.earcam.utilitarian.net</artifactId>
+	<packaging>jar</packaging>
+
+	<description>javax.net utility, primarily to fudge SSL for testing</description>
+	<url>${site.url}${earcam.project.name.short}</url>
+
+	<distributionManagement>
+		<site>
+			<id>netlify</id>
+			<url>${site.url}${earcam.project.name.short}/</url>
+		</site>
+	</distributionManagement>
+
+	<properties>
+		<skip.execution.pitest>false</skip.execution.pitest>
+		<earcam.project.name.short>net</earcam.project.name.short>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>io.earcam</groupId>
+			<artifactId>io.earcam.unexceptional</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.code.findbugs</groupId>
+			<artifactId>jsr305</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>java-hamcrest</artifactId>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>de.thetaphi</groupId>
+				<artifactId>forbiddenapis</artifactId>
+				<version>2.3</version>
+				<executions>
+					<execution>
+						<id>check</id>
+						<goals>
+							<goal>check</goal>
+						</goals>
+						<configuration>
+							<bundledSignatures>
+								<bundledSignature>jdk-unsafe</bundledSignature>
+								<bundledSignature>jdk-deprecated</bundledSignature>
+								<!-- <bundledSignature>jdk-non-portable</bundledSignature> -->
+								<bundledSignature>jdk-system-out</bundledSignature>
+								<bundledSignature>jdk-reflection</bundledSignature>
+							</bundledSignatures>
+						</configuration>
+					</execution>
+
+					<execution>
+						<id>test-check</id>
+						<goals>
+							<goal>testCheck</goal>
+						</goals>
+						<configuration>
+							<bundledSignatures>
+								<bundledSignature>jdk-unsafe</bundledSignature>
+								<bundledSignature>jdk-deprecated</bundledSignature>
+								<!-- <bundledSignature>jdk-non-portable</bundledSignature> -->
+								<bundledSignature>jdk-system-out</bundledSignature>
+								<!-- <bundledSignature>jdk-reflection</bundledSignature> -->
+							</bundledSignatures>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+</project>

@@ -1,0 +1,30 @@
+This module assumes the use of [slf4j-api](https://www.slf4j.org/) and, by virtue of transitive dependency, 
+uses slf4j-simple backend - as such it's aimed at test support.
+
+Provides:
+
+* Programmatic logging control that plays nice with slf4j-simple's system properties
+ 
+* Simple log capture - lamdba/`Runnable` to `String`
+   
+* Transitively pulls in every available SLF4J binding:
+    * [Log4J 1](https://logging.apache.org/log4j/1.2/) 
+    * [Log4J 2](https://logging.apache.org/log4j/2.0/) 
+    * [java.util.logging](https://docs.oracle.com/javase/8/docs/api/java/util/logging/package-summary.html) 
+    * [Commons Logging](https://commons.apache.org/proper/commons-logging/)
+    * [OSGi Log Service](https://osgi.org/javadoc/r4v42/org/osgi/service/log/LogService.html)
+  
+* Configures log bridges for some popular frameworks that don't use SLF4J by default:
+    * [Jetty](https://www.eclipse.org/jetty/documentation/9.4.x/configuring-logging-modules.html)
+    * [EclipseLink](https://wiki.eclipse.org/EclipseLink/Development/296391)
+    * [JBoss Hibernate](http://docs.jboss.org/hibernate/orm/4.3/topical/html/logging/Logging.html)
+    * [Hazelcast](http://docs.hazelcast.org/docs/latest-development/manual/html/Setting_Up_Clusters/Logging_Configuration.html) 
+    * [CXF](http://cxf.apache.org/docs/general-cxf-logging.html)
+
+It's advisable to configure this logging before anything else
+(Note; it will override anything already set for these "known" properties).
+
+Existing log levels (including the default) set as system properties will not be overridden. 
+So you may, for example, choose to use Maven profiles, setting properties to override specific levels.
+
+For details of slf4j-simple's system properties, see: [SimpleLogger JavaDoc](http://www.slf4j.org/api/org/slf4j/impl/SimpleLogger.html)

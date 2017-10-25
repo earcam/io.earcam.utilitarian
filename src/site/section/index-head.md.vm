@@ -1,0 +1,13 @@
+<!--
+<div class="alert alert-block">
+ <h4>Warning!</h4>
+ <p>Please note this project is in it&apos;s infancy; it was only released in order to release <a href="https://plugin.maven.earcam.io">io.earcam.maven.plugin</a></p> 
+ <p>Currently only at version ${project.version}, it is likely to change significantly.</p>
+</div>
+-->
+
+Definition of _utilitarian_: "designed to be useful or practical rather than attractive."
+
+The <i>intent</i> here is simple: "designed to be useful and practical _then_ attractive."
+
+Absolutely nothing to do with _utilitarianism_.

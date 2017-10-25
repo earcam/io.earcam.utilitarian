@@ -1,0 +1,25 @@
+{
+  "id" : "e1c32092-7fef-3fd2-925e-a2eeb5df3ea4",
+  "request" : {
+    "url" : "/api/v1/sites/34795e8e-8db5-4803-b711-190bb62f97c9",
+    "method" : "DELETE"
+  },
+  "response" : {
+    "status" : 204,
+    "bodyFileName" : "body-sites-34795e8e-8db5-4803-b711-190bb62f97c9-Fa3TJ.txt",
+    "headers" : {
+      "Cache-Control" : "no-cache",
+      "Date" : "Fri, 04 Aug 2017 11:55:45 GMT",
+      "X-Frame-Options" : "ALLOWALL",
+      "X-Ratelimit-Limit" : "500",
+      "X-Ratelimit-Remaining" : "498",
+      "X-Ratelimit-Reset" : "2017-08-04 11:56:45 UTC",
+      "X-Request-Id" : "65147d52-ccde-4949-8815-ff06964d08f1",
+      "X-Runtime" : "0.145737",
+      "Age" : "0",
+      "Connection" : "keep-alive",
+      "Server" : "Netlify"
+    }
+  },
+  "uuid" : "e1c32092-7fef-3fd2-925e-a2eeb5df3ea4"
+}

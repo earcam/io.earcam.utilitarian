@@ -1,0 +1,9 @@
+{
+	"id": "DefaultIndexer",
+	"configuration": {
+		"url": "url",
+		"outputFile": "${jsonDir}/search-data.json",
+		"outputCharset": "${outputCharset}",
+		"fields": "text,title,description"
+	}
+}

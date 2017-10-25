@@ -1,0 +1,4 @@
+<!-- for some reason velocity/doxia isn't including the fragment THEN parsing -->
+<h3>Example</h3>
+#snippet ( "/src/test/java/io/earcam/utilitarian/net/ssl/DummySslContextTest.java", "example" ) 
+

@@ -1,0 +1,7 @@
+Basic integration with [Netlify](https://netlify.com)'s API.
+
+Used in this [Maven plugin][earcam-plugin-netlify].
+
+Undocumented, please see the sourcecode of tests or previously mentioned plugin for usage guidance. 
+
+[earcam-plugin-netlify]: https://plugin.maven.earcam.io/netlify/

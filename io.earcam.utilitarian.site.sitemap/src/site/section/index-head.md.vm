@@ -1,0 +1,15 @@
+* Create sitemaps, sitemap indices 
+* Create robots.txt linking to sitemap indices
+* Submit sitemaps/indices to search engines
+
+Fully compliant with the [sitemaps.org](https://www.sitemaps.org) specification.
+
+Uses a widely adopted (Google, Ask, Bing, Yahoo) extension of [robots.txt](http://www.robotstxt.org/)
+to allow linking to sitemap (see [this](https://developers.google.com/search/reference/robots_txt#sitemap)
+for more info).
+
+Used in this [Maven plugin][earcam-plugin-sitemap].
+
+
+
+[earcam-plugin-sitemap]: https://plugin.maven.earcam.io/sitemap/

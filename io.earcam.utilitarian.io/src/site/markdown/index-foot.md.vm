@@ -1,0 +1,27 @@
+#set($h2 = '##')
+#set($h3 = '###')
+#set($h4 = '####')
+#set($h5 = '#####')
+
+${h3} Examples
+
+${h4} ReplaceAllInputStream
+
+#snippet( "/src/test/java/io/earcam/utilitarian/io/ReplaceAllInputStreamTest.java", "ReplaceAllInputStream" ) 
+
+
+${h4} ReplaceAllOutputStream
+
+#snippet ( "/src/test/java/io/earcam/utilitarian/io/ReplaceAllOutputStreamTest.java", "ReplaceAllOutputStream" ) 
+
+
+${h4} SplittableOutputStream
+
+${h5} Imports
+
+#snippet ( "/src/test/java/io/earcam/utilitarian/io/SplittableOutputStreamTest.java", "imports" ) 
+
+${h5} Example
+
+#snippet ( "/src/test/java/io/earcam/utilitarian/io/SplittableOutputStreamTest.java", "example" ) 
+

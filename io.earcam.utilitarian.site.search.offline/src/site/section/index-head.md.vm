@@ -1,0 +1,47 @@
+#set($h2 = '##')
+#set($h3 = '###')
+#set($h4 = '####')
+#set($h5 = '#####')
+
+Very basic offline search index generator for static-sites using [lunrjs][lunrjs]. 
+
+For a live example, look at the search box in the top-right corner of this page (or for mobile devices, tap the '&#9776;' trigram/hamburger menu). 
+
+Depends upon a number of libraries:
+
+* [PDFBox][pdfbox] for PDF text and meta extraction
+* [JSoup][jsoup] for HTML text and meta extraction
+* [Lucene][lucene] for tokenization
+* [JDK Nashorn][nashorn] and [lunrjs][lunrjs] for JSON search index creation
+
+
+Contains a few optional maven specific extensions - primarily to avoid filling indices with poorly tokenized and likely irrelevant sourcecode; 
+i.e. Xref and JavaDoc specific processors.
+
+
+### Example configuration (Maven friendly defaults)
+
+#### Crawler
+
+#snippet ( "/src/main/resources/META-INF/configuration/default-crawler-maven.json" ) 
+
+
+#### Indexer
+
+#snippet ( "/src/main/resources/META-INF/configuration/default-indexer-maven.json" ) 
+
+
+### Misc
+
+* Currently completely undocumented
+* Very early cut - subject to flux; exposed API is extensible but experimental and will certainly change
+* Configuration via JSON and therefore compatible with Maven plugin style configuration XML (an example of this is the main method of [Search](xref/io/earcam/utilitarian/site/search/offline/Search.html)
+* Used in this [Maven plugin][earcam-plugin-search]
+
+
+[lucene]: https://lucene.apache.org/
+[lunrjs]: https://lunrjs.com/
+[pdfbox]: https://pdfbox.apache.org/
+[jsoup]: https://jsoup.org/
+[nashorn]: http://openjdk.java.net/projects/nashorn/
+[earcam-plugin-search]: https://plugin.maven.earcam.io/site/search/offline/

@@ -1,0 +1,5 @@
+io.earcam.utilitarian.site.search.offline.SimpleTokenizer
+io.earcam.utilitarian.site.search.offline.PdfContentProcessor
+io.earcam.utilitarian.site.search.offline.HtmlContentProcessor
+io.earcam.utilitarian.site.search.offline.ApiDocsHtmlReferenceProcessor
+io.earcam.utilitarian.site.search.offline.XrefHtmlReferenceProcessor

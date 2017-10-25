@@ -1,0 +1,6 @@
+In/Output stream extensions, including;
+
+* A `MarkSupportedInputStream` the wraps an underlying `InputStream`, guarenteeing that mark is supported		
+* Search and replace on `InputStream`s and `OutputStream`s
+* `OutputStream` splitting, with notion of header, record and footer and option to split on maximum number of bytes and/or records
+		

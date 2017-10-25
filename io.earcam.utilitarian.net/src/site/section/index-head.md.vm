@@ -1,0 +1,5 @@
+Permissive/unverified client connections and permissive/self-signed server connections.  Dirty, insecure stuff - use for testing only.		
+
+Also includes a FreePortFinder utility.
+
+See this [example](./example.html).

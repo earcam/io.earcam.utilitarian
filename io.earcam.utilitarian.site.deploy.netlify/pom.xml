@@ -1,0 +1,342 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+        <groupId>io.earcam</groupId>
+        <artifactId>io.earcam.utilitarian</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<groupId>io.earcam.utilitarian</groupId>
+	<artifactId>io.earcam.utilitarian.site.deploy.netlify</artifactId>
+	<packaging>jar</packaging>
+
+	<description>Site upload, API integration for Netlify</description>
+	<url>${site.url}${earcam.project.name.short}</url>
+
+	<distributionManagement>
+		<site>
+			<id>netlify</id>
+			<url>${site.url}${earcam.project.name.short}/</url>
+		</site>
+	</distributionManagement>
+
+	<properties>
+	    <version.swagger.core>1.5.12</version.swagger.core>
+	    <version.jackson>2.8.4</version.jackson>
+	    <scm.tag.netlify.api>v0.0.3</scm.tag.netlify.api>
+
+		<skip.execution.pitest>false</skip.execution.pitest>
+		<earcam.project.name.short>site/deploy/netlify</earcam.project.name.short>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>io.earcam.utilitarian</groupId>
+			<artifactId>io.earcam.utilitarian.web.jaxrs</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.earcam.utilitarian</groupId>
+			<artifactId>io.earcam.utilitarian.web</artifactId>
+			<version>${project.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>io.earcam.utilitarian</groupId>
+			<artifactId>io.earcam.utilitarian.net</artifactId>
+			<version>${project.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>io.earcam</groupId>
+			<artifactId>io.earcam.unexceptional</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.code.findbugs</groupId>
+			<artifactId>jsr305</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>java-hamcrest</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.json</groupId>
+			<artifactId>javax.json-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.ws.rs</groupId>
+			<artifactId>javax.ws.rs-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.tomakehurst</groupId>
+			<artifactId>wiremock</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.glassfish.jersey.core</groupId>
+			<artifactId>jersey-client</artifactId>
+		</dependency>
+
+		<!-- 
+		issues with Swagger access to Netlify - so scoping all 
+		to test/provided+optional while investigating
+		-->
+
+		<dependency>
+			<groupId>io.swagger</groupId>
+			<artifactId>swagger-annotations</artifactId>
+			<version>${version.swagger.core}</version>
+			<!-- <scope>test</scope> -->
+			<scope>provided</scope>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-multipart</artifactId>
+			<version>${version.jersey}</version>
+			<!-- <scope>test</scope> -->
+			<scope>provided</scope>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-json-processing</artifactId>
+			<version>${version.jersey}</version>
+			<!-- <scope>test</scope> -->
+			<scope>provided</scope>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-json-jackson</artifactId>
+			<version>${version.jersey}</version>
+			<!-- <scope>test</scope> -->
+			<scope>provided</scope>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>${version.jackson}</version>
+			<!-- <scope>test</scope> -->
+			<scope>provided</scope>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>${version.jackson}</version>
+			<!-- <scope>test</scope> -->
+			<scope>provided</scope>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${version.jackson}</version>
+			<!-- <scope>test</scope> -->
+			<scope>provided</scope>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jsr310</artifactId>
+			<version>${version.jackson}</version>
+			<!-- <scope>test</scope> -->
+			<scope>provided</scope>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jaxrs</artifactId>
+			<version>${version.jackson}</version>
+			<!-- <scope>test</scope> -->
+			<scope>provided</scope>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.jaxrs</groupId>
+			<artifactId>jackson-jaxrs-json-provider</artifactId>
+			<version>${version.jackson}</version>
+			<!-- <scope>test</scope> -->
+			<scope>provided</scope>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-csv</artifactId>
+			<version>${version.jackson}</version>
+			<!-- <scope>test</scope> -->
+			<scope>provided</scope>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>com.brsanthu</groupId>
+			<artifactId>migbase64</artifactId>
+			<version>2.2</version>
+			<!-- <scope>test</scope> -->
+			<scope>provided</scope>
+			<optional>true</optional>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-enforcer-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-clean-plugin</artifactId>
+				<configuration>
+					<excludeDefaultDirectories>true</excludeDefaultDirectories>
+					<filesets>
+						<fileset>
+							<directory>${project.build.directory}</directory>
+							<excludes>
+								<exclude>checkout/**</exclude>
+							</excludes>
+						</fileset>
+					</filesets>
+				</configuration>
+			</plugin>
+		
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-scm-plugin</artifactId>
+				<version>1.9.5</version>
+				<configuration>
+					<connectionUrl>scm:git:https://github.com/netlify/open-api.git</connectionUrl>
+					<!--
+					<scmVersionType>tag</scmVersionType>
+					<scmVersion>${scm.tag.netlify.api}</scmVersion>
+					-->
+					<scmVersionType>branch</scmVersionType>
+					<scmVersion>master</scmVersion>
+					<connectionType>connection</connectionType>
+					<skipCheckoutIfExists>true</skipCheckoutIfExists>
+					<connectionType>connection</connectionType>
+				</configuration>
+				<executions>
+					<execution>
+						<id>clone</id>
+						<goals>
+							<goal>checkout</goal>
+						</goals>
+						<phase>generate-sources</phase>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>io.swagger</groupId>
+				<artifactId>swagger-codegen-maven-plugin</artifactId>
+				<version>2.2.3</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<phase>process-sources</phase>
+						<configuration>
+							<inputSpec>${project.build.directory}/checkout/swagger.yml</inputSpec>
+							<language>java</language>
+							<apiPackage>${project.artifactId}.api</apiPackage>
+							<modelPackage>${project.artifactId}.api.domain</modelPackage>
+							
+							<verbose>false</verbose><!-- make configurable via general global property -->
+							
+							<library>jersey2</library>
+							<configOptions>
+								<dateLibrary>java8</dateLibrary>
+								<!-- seemingly no option to suppressWarnings - meh need to marshal multiple versions anyhoo -->
+							</configOptions>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>3.0.0</version>
+				<executions>
+					<execution>
+						<id>add-source</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>add-test-source</goal><!-- not currently using Swagger so add as test source -->
+						</goals>
+						<configuration>
+							<sources>
+								<source>${project.build.directory}/generated-sources/swagger/src/main/java</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+</project>

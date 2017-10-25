@@ -1,0 +1,5 @@
+Common client code for [`javax.ws.rs`](https://docs.oracle.com/javaee/7/api/javax/ws/rs/package-summary.html)
+
+* `JsonMessageBodyReader` and `JsonMessageBodyWriter` using [`javax.json.bind`](http://json-b.net/)
+* `BasicAuthenticator` and `TokenBearerAuthenticator`
+* `UserAgent` client request filter

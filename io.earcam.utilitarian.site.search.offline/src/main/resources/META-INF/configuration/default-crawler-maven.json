@@ -1,0 +1,32 @@
+{
+	"mappings": [
+		{
+			"dir": "${baseDir}",
+			"uri": "${baseUri}"
+		}
+	],
+	"steps": [
+		{
+			"id": "RegexFilter",
+			"configuration": {
+				"include": ".*",
+				"exclude": "^(.*dependenc.*|.*\\/jacoco\\-.*|.*\\/pit-reports\\/.*|.*\\/404.html)$"
+			}
+		},
+		{
+			"id": "ApiDocsHtmlReferenceProcessor"
+		},
+		{
+			"id": "XrefHtmlReferenceProcessor"
+		},
+		{
+			"id": "HtmlContentProcessor"
+		},
+		{
+			"id": "PdfContentProcessor"
+		},
+		{
+			"id": "SimpleTokenizer"
+		}
+	]
+}
