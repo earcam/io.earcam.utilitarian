@@ -31,5 +31,5 @@ before_script:
 - wget https://bitbucket.org/earcam/io.earcam.maven/raw/master/io.earcam.maven.configuration/src/main/resources/settings.xml -O $HOME/ci-settings.xml 
 - mvn -v
 script:
-- mvn --settings $HOME/ci-settings.xml -U -P analyse,report clean install
+- mvn --settings $HOME/ci-settings.xml -U -P analyse,report,site
 after_success: bash <(curl -s https://codecov.io/bash)
