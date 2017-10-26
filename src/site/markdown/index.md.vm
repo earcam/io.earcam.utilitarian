@@ -91,10 +91,21 @@
 
 <br/>
 
+
+<ul class="nav nav-list">
+	<li class="nav-header">Resource</li>
+	<li><a class="externalLink" href="https://maven-badges.herokuapp.com/maven-central/${project.groupId}/${project.artifactId}" title="Maven Central"><img src="https://maven-badges.herokuapp.com/maven-central/${project.groupId}/${project.artifactId}/badge.svg" alt="Maven Central" /></a></li>
+#if( !$hasModules )##
+	<li><a class="externalLink" href="http://www.javadoc.io/doc/${project.groupId}/${project.artifactId}" title="JavaDoc"><img src="https://www.javadoc.io/badge/${project.groupId}/${project.artifactId}.svg?color=green" alt="JavaDoc" /></a></li>
+#else##
+	<li>&nbsp;</li>
+#end##
+</ul>
+
+<br/>
+
 <ul class="nav nav-list">
 	<li class="nav-header">Status</li>
-	<li><a class="externalLink" href="https://maven-badges.herokuapp.com/maven-central/${project.groupId}/${project.artifactId}" title="Maven Central"><img src="https://maven-badges.herokuapp.com/maven-central/${project.groupId}/${project.artifactId}/badge.svg" alt="Maven Central" /></a></li>
-	<li><a class="externalLink" href="http://www.javadoc.io/doc/${project.groupId}/${project.artifactId}" title="JavaDoc"><img src="https://www.javadoc.io/badge/${project.groupId}/${project.artifactId}.svg?color=green" alt="JavaDoc" /></a></li>
 	<li><a class="externalLink" href="https://travis-ci.org/${coordinate}" title="Travis CI"><img src="https://travis-ci.org/${coordinate}.svg?branch=master" alt="Travis CI" /></a></li>
 	<li><a class="externalLink" href="https://bitbucket.org/${coordinate}" title="BitBucket Pipelines CI"><img src="https://bitbucket-badges.atlassian.io/badge/${coordinate}.svg" alt="BitBucket Pipelines CI" /></a></li>
 
