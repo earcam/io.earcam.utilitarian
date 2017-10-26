@@ -55,12 +55,12 @@ public class Site {
 	public JsonObject toJsonObject()
 	{
 		JsonObjectBuilder builder = Json.createObjectBuilder();
-		addNotNullable(builder, FIELD_NAME, name);
-		addNotNullable(builder, FIELD_ID, id);
-		addNotNullable(builder, FIELD_CUSTOM_DOMAIN, customDomain);
-		addNotNullable(builder, FIELD_FORCE_SSL, forceSsl);
-		addNotNullable(builder, FIELD_SSL, ssl);
-		addNotNullable(builder, FIELD_MANAGED_DNS, managedDns);
+		addNotNullable(builder, FIELD_NAME, name());
+		addNotNullable(builder, FIELD_ID, id());
+		addNotNullable(builder, FIELD_CUSTOM_DOMAIN, customDomain());
+		builder.add(FIELD_FORCE_SSL, forceSsl());
+		builder.add(FIELD_SSL, ssl());
+		builder.add(FIELD_MANAGED_DNS, managedDns());
 		return builder.build();
 	}
 
@@ -73,23 +73,15 @@ public class Site {
 	}
 
 
-	private static void addNotNullable(JsonObjectBuilder builder, String field, boolean value)
-	{
-		if(field != null) {
-			builder.add(field, value);
-		}
-	}
-
-
 	public static Site fromJsonObject(JsonObject json)
 	{
 		Site site = new Site();
-		site.name = json.getString(FIELD_NAME, null);
-		site.id = json.getString(FIELD_ID, null);
-		site.customDomain = json.getString(FIELD_CUSTOM_DOMAIN, null);
-		site.forceSsl = json.getBoolean(FIELD_FORCE_SSL, false);
-		site.ssl = json.getBoolean(FIELD_SSL, false);
-		site.managedDns = json.getBoolean(FIELD_MANAGED_DNS, false);
+		site.setName(json.getString(FIELD_NAME, null));
+		site.setId(json.getString(FIELD_ID, null));
+		site.setCustomDomain(json.getString(FIELD_CUSTOM_DOMAIN, null));
+		site.setForceSsl(json.getBoolean(FIELD_FORCE_SSL, false));
+		site.setSsl(json.getBoolean(FIELD_SSL, false));
+		site.setManagedDns(json.getBoolean(FIELD_MANAGED_DNS, false));
 		return site;
 	}
 
