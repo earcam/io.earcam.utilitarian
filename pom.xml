@@ -25,6 +25,7 @@
 		<module>io.earcam.utilitarian.site.search.offline</module>
 		<module>io.earcam.utilitarian.site.deploy.netlify</module>
 		<module>io.earcam.utilitarian.site.sitemap</module>
+		<module>io.earcam.utilitarian.charstar</module>
 	</modules>
 
 	<scm>
