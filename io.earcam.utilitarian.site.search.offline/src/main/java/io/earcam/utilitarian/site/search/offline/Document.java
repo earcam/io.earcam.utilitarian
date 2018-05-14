@@ -119,7 +119,6 @@ public class Document {
 
 	public static Document document(Path baseDir, URI baseUri, Path file)
 	{
-		// TODO hardcoded to abs path without host
 		String relativeUri = ensureTrailingSlash(baseUri, true);
 		String refUrl = relativizeReferenceUri(baseDir, relativeUri, file);
 

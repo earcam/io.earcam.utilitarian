@@ -79,7 +79,7 @@ final class FileMap {
 	{
 		try {
 			return Digestive.sha1Hex(new FileInputStream(file));
-		} catch(UncheckedIOException | FileNotFoundException e) { //NOSONAR yeah FNFE, got it, understood
+		} catch(UncheckedIOException | FileNotFoundException e) { // NOSONAR yeah FNFE, got it, understood
 			return SHA1_FAILED_KEY;
 		}
 	}

@@ -36,8 +36,8 @@ public class ResourcesTest {
 		Map<String, String> searchReplace = Collections.singletonMap("${jsonDir}", "HUMBUG");
 		String json = Resources.getResource(Resources.DEFAULT_INDEXER_JSON, UTF_8, searchReplace);
 
+		// @formatter:off
 		assertThat(json, is(equalToIgnoringWhiteSpace(
-				// @formatter:off
 				"{                                                   \n" +
 				"	\"id\": \"DefaultIndexer\",                      \n" +
 				"	\"configuration\": {                             \n" +
@@ -47,7 +47,7 @@ public class ResourcesTest {
 				"		\"fields\": \"text,title,description\"       \n" +
 				"	}                                                \n" +
 				"}                                                   \n"
-				// @formatter:on
 		)));
+		// @formatter:on
 	}
 }

@@ -70,7 +70,7 @@ public class SitemapTest {
 				SITE_BASE_DIR.resolve(Paths.get("directory%b", "directory-ba")),
 				Paths.get("target", "simpleSitemap", UUID.randomUUID().toString()));
 
-		parameters.targetDir.toFile().mkdirs(); //TODO move into Sitemap code
+		parameters.targetDir.toFile().mkdirs(); // TODO move into Sitemap code
 
 		List<Path> maps = new ArrayList<>();
 
@@ -119,7 +119,7 @@ public class SitemapTest {
 				Paths.get("target", "siteMapFromDirectory", UUID.randomUUID().toString()));
 		parameters.options().setInclude(Pattern.compile(".*\\.html?$"));
 
-		parameters.targetDir.toFile().mkdirs(); //FIXME move into Sitemap code
+		parameters.targetDir.toFile().mkdirs(); // FIXME move into Sitemap code
 
 		Sitemap sitemap = new Sitemap(parameters, generatedFileRecorder);
 		return sitemap;
@@ -168,7 +168,7 @@ public class SitemapTest {
 	}
 
 
-	//Smallest record size in fixed data set - anything lower triggers buffer overflow
+	// Smallest record size in fixed data set - anything lower triggers buffer overflow
 	@Test
 	public void splitOnMaxSize254() throws IOException, URISyntaxException
 	{

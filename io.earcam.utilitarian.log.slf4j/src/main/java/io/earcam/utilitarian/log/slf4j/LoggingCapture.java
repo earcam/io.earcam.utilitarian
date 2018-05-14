@@ -46,7 +46,7 @@ final class LoggingCapture {
 	private static void capture(LogCapturable runnable, ByteArrayOutputStream capture)
 	{
 		PrintStream original = getPrintStream();
-		try {                                            //NOSONAR
+		try {                                            // NOSONAR
 			setPrintStream(Exceptional.apply(LoggingCapture::newPrintStream, capture));
 			execute(runnable);
 		} finally {
@@ -71,7 +71,7 @@ final class LoggingCapture {
 
 	private static PrintStream getPrintStream()
 	{
-		return useStdOut() ? System.out : System.err;    //NOSONAR no!
+		return useStdOut() ? System.out : System.err;    // NOSONAR no!
 	}
 
 

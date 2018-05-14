@@ -26,6 +26,7 @@ import java.io.OutputStream;
  *
  * @see ReplaceAllInputStream
  */
+@SuppressWarnings("squid:S4349") // Sonar: Not applicable IMO
 public final class ReplaceAllOutputStream extends OutputStream {
 
 	private final byte[] search;

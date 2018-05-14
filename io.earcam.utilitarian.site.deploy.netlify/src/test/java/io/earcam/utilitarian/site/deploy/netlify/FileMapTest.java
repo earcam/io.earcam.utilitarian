@@ -43,8 +43,6 @@ import org.junit.Test;
 
 /**
  * The dataset contains 6 files, with 2 having the same content and therefore same SHA1
- * @author caspar
- *
  */
 public class FileMapTest {
 
@@ -94,7 +92,8 @@ public class FileMapTest {
 	{
 		assertThat(fileMap, hasKey("611945FD2A3962295F044E9C98FE725C21494983"));
 		assertThat(fileMap.get("611945FD2A3962295F044E9C98FE725C21494983"), contains(SITE_BASE_DIR.resolve("directory a/directory-aa/index.html").toFile()));
-		//HAMCREST WTF?	assertThat(files, hasEntry("611945FD2A3962295F044E9C98FE725C21494983", contains( SITE_BASE_DIR.resolve("directory-a/directory-aa/index.html").toFile() )));
+		// HAMCREST WTF? assertThat(files, hasEntry("611945FD2A3962295F044E9C98FE725C21494983", contains(
+		// SITE_BASE_DIR.resolve("directory-a/directory-aa/index.html").toFile() )));
 	}
 
 

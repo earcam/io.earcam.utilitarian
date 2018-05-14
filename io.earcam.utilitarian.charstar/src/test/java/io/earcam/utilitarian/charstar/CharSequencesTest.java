@@ -19,11 +19,10 @@
 package io.earcam.utilitarian.charstar;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasToString;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.nullValue;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
+
+import java.util.Comparator;
 
 import org.junit.Test;
 
@@ -241,6 +240,13 @@ public class CharSequencesTest {
 
 
 	@Test
+	public void indexOfStartingFromNonZero()
+	{
+		assertThat(CharSequences.indexOf(new StringBuilder("trust in dexterity"), 'e', 11), is(13));
+	}
+
+
+	@Test
 	public void lastIndexOfNotFound()
 	{
 		assertThat(CharSequences.lastIndexOf(new StringBuilder("trust in dexterity"), 'Z'), is(-1));
@@ -282,5 +288,34 @@ public class CharSequencesTest {
 		String string = "a little bit more";
 
 		assertThat(CharSequences.hashCode(string), is(equalTo(CharSequences.hashCode(builder))));
+	}
+
+
+	@Test
+	public void compareToEqual()
+	{
+		assertThat(CharSequences.compare("abc", "abc"), is(0));
+	}
+
+
+	@Test
+	public void compareToLessThan()
+	{
+		assertThat(CharSequences.compare("abc", "abd"), is(lessThan(0)));
+	}
+
+
+	@Test
+	public void compareToGreaterThan()
+	{
+		assertThat(CharSequences.compare("abc", "abb"), is(greaterThan(0)));
+	}
+
+
+	@Test
+	public void comparator()
+	{
+		Comparator<CharSequence> comparator = CharSequences.comparator();
+		assertThat(comparator.compare("abc", "abb"), is(greaterThan(0)));
 	}
 }

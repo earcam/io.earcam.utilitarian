@@ -76,7 +76,7 @@ public class SplitFileSuffix implements IntFunction<String>, Iterator<String> {
 			return "";
 		}
 		String format = "%0" + width + "d";
-		return String.format(ROOT, format, index + 1);  //TODO populate and return a char array instead 
+		return String.format(ROOT, format, index + 1);  // TODO populate and return a char array instead
 	}
 
 

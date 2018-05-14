@@ -45,7 +45,7 @@ public class SimpleTokenizer implements Processor {
 		try {
 			return Closing.closeAfterApplying(createAnalyzer(), input, this::tokens);
 		} catch(UncheckedIOException e) {
-			LOG.warn("Failed to tokenize '" + input + "', due to " + e.getMessage());
+			LOG.warn("Failed to tokenize '{}', due to {}", input, e.getMessage());
 			LOG.debug("Failed to tokenize", e.getCause());
 		}
 		return emptyList();

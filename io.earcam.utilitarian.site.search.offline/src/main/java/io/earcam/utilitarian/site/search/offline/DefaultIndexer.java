@@ -99,11 +99,11 @@ public class DefaultIndexer implements Indexer {
 		fields = mandatory(configuration, FIELDS).split(",");
 
 		if(!getOrDefault(configuration, MAP_TITLES, true)) {
-			titleMapper = (u, t) -> { /*noop*/ };
+			titleMapper = (u, t) -> { /* noop */ };
 		}
 
 		if(!getOrDefault(configuration, GENERATE_AUTOCOMPLETE, true)) {
-			autocompleter = d -> { /*noop*/ };
+			autocompleter = d -> { /* noop */ };
 		}
 
 		initialize();

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.1.xsd">
+	<suppress>
+	   <notes><![CDATA[
+	   file name: javax.ws.rs-api-2.1.jar
+	   ]]></notes>
+	   <gav regex="true">^javax\.ws\.rs:javax\.ws\.rs-api:.*$</gav>
+	   <cve>CVE-2015-4345</cve>
+	</suppress>
+</suppressions>

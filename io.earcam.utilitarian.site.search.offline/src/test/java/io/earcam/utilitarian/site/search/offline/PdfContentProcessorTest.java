@@ -26,6 +26,7 @@ import static org.junit.Assert.assertThat;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import io.earcam.unexceptional.Exceptional;
@@ -48,7 +49,7 @@ public class PdfContentProcessorTest {
 	}
 
 
-	//	@Ignore // pdfbox fail for meta - check API changes, appear to be using legacy..? docs are shyt
+	// @Ignore // pdfbox fail for meta - on OSX only??
 	@Test
 	public void processesContentAndMeta() throws Exception
 	{

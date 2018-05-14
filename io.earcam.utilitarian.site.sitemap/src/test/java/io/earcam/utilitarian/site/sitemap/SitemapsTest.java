@@ -108,7 +108,7 @@ public class SitemapsTest {
 				.collect(joining("\n"));
 
 		assertThat(robotsTxt, is(equalToIgnoringWhiteSpace(
-				// @formatter:off
+		// @formatter:off
 				"User-agent: *             \n" +
 				"Allow: /                  \n" +
 				"Disallow:                 \n" +

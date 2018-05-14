@@ -29,8 +29,12 @@ public interface SplittableOutputStreamBuilder {
 	public interface SplitOutputStreamBuilder extends SplittableOutputStreamBuilder {
 
 		/**
-		 * <p>The builder's build method.</p>
-		 * <p><b>Note: side effect</b>; also writes the <b>head</b> {@code byte} array.</p>
+		 * <p>
+		 * The builder's build method.
+		 * </p>
+		 * <p>
+		 * <b>Note: side effect</b>; also writes the <b>head</b> {@code byte} array.
+		 * </p>
 		 *
 		 * @return An {@link OutputStream} for regular use
 		 * @throws IOException if the attempt to write the <b>head</b> fails
@@ -41,9 +45,13 @@ public interface SplittableOutputStreamBuilder {
 
 
 	/**
-	 * <p>Split criteria for maximum file size.</p>
+	 * <p>
+	 * Split criteria for maximum file size.
+	 * </p>
 	 *
-	 * <p>May also be composed with maximum record count criteria.</p>
+	 * <p>
+	 * May also be composed with maximum record count criteria.
+	 * </p>
 	 *
 	 * @param fileSizeBytes the maximum file size permitted.
 	 * @return the builder for further construction
@@ -55,11 +63,15 @@ public interface SplittableOutputStreamBuilder {
 
 
 	/**
-	 * <p>Split criteria for maximum number of records.  Where the definition of a <i>record</i>
+	 * <p>
+	 * Split criteria for maximum number of records. Where the definition of a <i>record</i>
 	 * is any {@code bytes} written between calls to {@link SplittableOutputStream#start()} and
-	 * {@link SplittableOutputStream#finish()}</p>
+	 * {@link SplittableOutputStream#finish()}
+	 * </p>
 	 *
-	 * <p>May also be composed with maximum file size criteria.</p>
+	 * <p>
+	 * May also be composed with maximum file size criteria.
+	 * </p>
 	 *
 	 * @param numberOfRecords the maximum permitted number of records per file.
 	 * @return the builder for further construction

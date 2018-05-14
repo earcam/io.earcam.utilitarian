@@ -44,7 +44,7 @@ public class SitemapSubmission {
 
 	/**
 	 *
-	 * @param hosts  A list of search engine hosts (including protocol, e.g. https://google.com)
+	 * @param hosts A list of search engine hosts (including protocol, e.g. https://google.com)
 	 * @param base Website
 	 * @param targetDir
 	 * @param sitemaps

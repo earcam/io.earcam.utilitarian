@@ -22,7 +22,9 @@ import static io.earcam.unexceptional.Exceptional.swallow;
 import static org.slf4j.impl.SimpleLogger.CACHE_OUTPUT_STREAM_STRING_KEY;
 
 /**
- * <p>Programmatic configuration for SLF4J logging</p>
+ * <p>
+ * Programmatic configuration for SLF4J logging
+ * </p>
  *
  *
  * http://docs.jboss.org/hibernate/orm/4.3/topical/html/logging/Logging.html

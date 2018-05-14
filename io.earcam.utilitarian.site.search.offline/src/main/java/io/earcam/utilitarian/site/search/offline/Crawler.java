@@ -27,11 +27,13 @@ import java.util.stream.Stream;
 
 import io.earcam.unexceptional.EmeticStream;
 
+// @formatter:off
 /**
  * Pipeline needs to be built according to definition, with names driven via SPI, e.g.
  *
  * configuration is just a Map<String, String> passed to each
  *
+ * <pre>
  * <pipeline>
  *    <filter>
  *    	 <id>default-regex</id>
@@ -51,7 +53,7 @@ import io.earcam.unexceptional.EmeticStream;
  *       <id>default-tokenizer</id>
  *    </processor>
  * </pipeline>
- *
+ * </pre>
  *
  * Therefore Filter and Processor both need to extend 'Component'
  *
@@ -66,6 +68,7 @@ import io.earcam.unexceptional.EmeticStream;
  *
  *
  */
+// @formatter:on
 public class Crawler {
 
 	private Stream<Document> documents;

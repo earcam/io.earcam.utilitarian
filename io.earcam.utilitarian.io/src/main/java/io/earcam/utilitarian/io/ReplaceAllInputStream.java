@@ -24,11 +24,15 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * <p>A search and replace filtering {@link InputStream} wrapper.</p>
+ * <p>
+ * A search and replace filtering {@link InputStream} wrapper.
+ * </p>
  *
- * <p>Requires the underlying {@link InputStream} supports mark and reset; so uses
+ * <p>
+ * Requires the underlying {@link InputStream} supports mark and reset; so uses
  * {@link MarkSupportedInputStream#ensureMarkSupported(InputStream)} to guarantee
- * this prerequisite.</p>
+ * this prerequisite.
+ * </p>
  *
  * @see ReplaceAllOutputStream
  */

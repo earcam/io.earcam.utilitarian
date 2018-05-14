@@ -39,6 +39,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -54,7 +55,6 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
 
-import org.apache.commons.collections4.map.HashedMap;
 import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -182,7 +182,7 @@ public class NetlifyTest {
 	private static final byte[] COLON_SPACE = bytes(": ");
 	private static final byte[] COMMA_NEWLINE = bytes(", " + lineSeparator());
 	private Path baseDir;
-	private Map<String, List<File>> sha1ToRelativePaths = new HashedMap<>();
+	private Map<String, List<File>> sha1ToRelativePaths = new HashMap<>();
 
 
 	@Ignore // Can't work out what's wrong here - Swagger client suffers same issue, Java HTTP bug or Netlify?

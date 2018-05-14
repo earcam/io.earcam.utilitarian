@@ -57,17 +57,21 @@ public class SitemapSubmissionTest {
 		HttpServer server = createHttpServer(port, submittedPaths);
 		server.start();
 
-		List<String> hosts = Arrays.asList("http://localhost:" + port, "http://0.0.0.0:" + port);
+		String host1 = "http://localhost:" + port;
+		String host2 = "http://127.0.0.1:" + port;
+
 		URI base = Exceptional.uri("https://domain.acme.com/module/");
 		Path targetDir = Paths.get("ficticious", "path");
 		Stream<Path> sitemaps = Arrays.asList(targetDir.resolve(Paths.get("dir", "sitemap.xml"))).stream();
 
-		String response = SitemapSubmission.submit(hosts, base, targetDir, sitemaps);
+		String response = SitemapSubmission.submit(Arrays.asList(host1, host2), base, targetDir, sitemaps);
+
+		String pathAndStatus = "/ping?sitemap=https%3A%2F%2Fdomain.acme.com%2Fmodule%2Fdir%2Fsitemap.xml - 200: OK,  ";
 
 		assertThat(response, is(equalToIgnoringWhiteSpace(
-				"http://localhost:" + port + "/ping?sitemap=https%3A%2F%2Fdomain.acme.com%2Fmodule%2Fdir%2Fsitemap.xml - 200: OK,  " +
+				host1 + pathAndStatus +
 						lineSeparator() +
-						"http://0.0.0.0:" + port + "/ping?sitemap=https%3A%2F%2Fdomain.acme.com%2Fmodule%2Fdir%2Fsitemap.xml - 200: OK,  ")));
+						host2 + pathAndStatus)));
 
 		server.stop(0);
 	}

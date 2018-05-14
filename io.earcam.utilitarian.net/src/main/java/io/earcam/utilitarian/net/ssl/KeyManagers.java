@@ -37,7 +37,7 @@ import javax.net.ssl.X509ExtendedKeyManager;
  */
 public final class KeyManagers {
 
-	private static final class DummyX509KeyManager extends X509ExtendedKeyManager {
+	static final class DummyX509KeyManager extends X509ExtendedKeyManager {
 
 		private static final String[] NADDA = new String[0];
 
@@ -88,7 +88,7 @@ public final class KeyManagers {
 		}
 	}
 
-	private static final X509ExtendedKeyManager NOOP_KEY_MANAGER = new DummyX509KeyManager();
+	static final X509ExtendedKeyManager NOOP_KEY_MANAGER = new DummyX509KeyManager();
 
 
 	private KeyManagers()

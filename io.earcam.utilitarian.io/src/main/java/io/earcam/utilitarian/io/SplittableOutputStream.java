@@ -26,25 +26,34 @@ import java.nio.BufferUnderflowException;
 import java.util.function.Supplier;
 
 /**
- * <p>Deals with structured (e.g. XML) or unstructured data.</p>
+ * <p>
+ * Deals with structured (e.g. XML) or unstructured data.
+ * </p>
  *
- * <p>User code must invoke {@link #beginRecord()} before writing {@code byte}s, and subsequently delimit safe
- * splitting points by invoking {@link #endRecord()}.  The number of {@code byte}s written between the
+ * <p>
+ * User code must invoke {@link #beginRecord()} before writing {@code byte}s, and subsequently delimit safe
+ * splitting points by invoking {@link #endRecord()}. The number of {@code byte}s written between the
  * call to {@link #beginRecord()} and call to {@link #endRecord()} must not exceed
- * {@link #maxSize(long)} - ({@link #header}{@code .length} + {@link #footer}{@code .length})</p>
+ * {@link #maxSize(long)} - ({@link #header}{@code .length} + {@link #footer}{@code .length})
+ * </p>
  *
- * <p>A <i>record</i> is defined as any {@code byte}s written between calls to {@link #start()} and
- * {@link #finish()}.  Should the maximum file size be specified and the length of a single record (plus
+ * <p>
+ * A <i>record</i> is defined as any {@code byte}s written between calls to {@link #start()} and
+ * {@link #finish()}. Should the maximum file size be specified and the length of a single record (plus
  * header and footer) exceed the maximum then a {@link BufferOverflowException} is throw.
  *
- * <p>Common usage would be splitting files, in this case the {@link Supplier} is expected to <i>keep
- * track</i> of output file names.</p>
+ * <p>
+ * Common usage would be splitting files, in this case the {@link Supplier} is expected to <i>keep
+ * track</i> of output file names.
+ * </p>
  *
- * <p><b>Please note limitation</b>; due to the use of {@link Long} internally, the maximum
+ * <p>
+ * <b>Please note limitation</b>; due to the use of {@link Long} internally, the maximum
  * size per-file is limited to {@value java.lang.Long#MAX_VALUE} bytes (which is
  * 9,223<abbr title="Petabyte; 1 Petabyte == 1,000,000 Gigabytes">PB</abbr>) per split {@link OutputStream} .
  *
  */
+@SuppressWarnings("squid:S4349") // Sonar: Not applicable IMO
 public class SplittableOutputStream extends OutputStream implements SplittableOutputStreamBuilder, SplittableOutputStreamBuilder.SplitOutputStreamBuilder {
 
 	private final Supplier<OutputStream> supplier;
@@ -80,7 +89,7 @@ public class SplittableOutputStream extends OutputStream implements SplittableOu
 	 */
 	public static SplittableOutputStreamBuilder splittable(Supplier<OutputStream> next, byte[] head, byte[] footer) throws IOException
 	{
-		@SuppressWarnings("squid:S2095")  //false positive - it's being returned
+		@SuppressWarnings("squid:S2095")  // false positive - it's being returned
 		SplittableOutputStream splittable = new SplittableOutputStream(next, head, footer);
 		splittable.reset();
 		return splittable;

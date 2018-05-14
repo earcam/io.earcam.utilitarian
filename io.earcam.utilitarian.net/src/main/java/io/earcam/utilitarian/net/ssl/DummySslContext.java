@@ -18,11 +18,11 @@
  */
 package io.earcam.utilitarian.net.ssl;
 
-import static io.earcam.utilitarian.net.security.KeyStores.keyStore;
-import static io.earcam.utilitarian.net.security.KeyStores.rsa;
 import static io.earcam.utilitarian.net.ssl.KeyManagers.keyManagerDummy;
 import static io.earcam.utilitarian.net.ssl.KeyManagers.keyManagerSunX509;
 import static io.earcam.utilitarian.net.ssl.NoopTrustManager.noopTrustManager;
+import static io.earcam.utilitarian.security.KeyStores.keyStore;
+import static io.earcam.utilitarian.security.Keys.rsa;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -37,6 +37,7 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
@@ -44,7 +45,7 @@ import javax.net.ssl.SSLContext;
 
 import io.earcam.unexceptional.Exceptional;
 import io.earcam.unexceptional.UncheckedSecurityException;
-import io.earcam.utilitarian.net.security.Certificates;
+import io.earcam.utilitarian.security.Certificates;
 
 /**
  * Use for testing only - otherwise why bother? Be honest about in/security
@@ -62,7 +63,9 @@ public final class DummySslContext {
 	/**
 	 * Generates a permissive {@link SSLContext} with generated (in-memory) self-signed X509Certificate
 	 *
-	 * <p><b>USE FOR TESTING ONLY</b></p>
+	 * <p>
+	 * <b>USE FOR TESTING ONLY</b>
+	 * </p>
 	 *
 	 * @param host The hostname/IP
 	 * @return a configured SSLContext
@@ -79,7 +82,9 @@ public final class DummySslContext {
 	/**
 	 * Generates a permissive {@link SSLContext} with generated (in-memory) self-signed X509Certificate
 	 *
-	 * <p><b>USE FOR TESTING ONLY</b></p>
+	 * <p>
+	 * <b>USE FOR TESTING ONLY</b>
+	 * </p>
 	 *
 	 * @param host The hostname/IP
 	 * @param password the password to use for both keystore and certificate alias
@@ -89,10 +94,12 @@ public final class DummySslContext {
 	 * @throws IOException
 	 * @throws GeneralSecurityException
 	 */
-	public static SSLContext serverSslContext(String host, char[] password) throws IOException, GeneralSecurityException
+	public static SSLContext serverSslContext(String host, char[] password) throws GeneralSecurityException
 	{
 		KeyPair pair = rsa();
-		KeyStore keyStore = keyStore("alias", password, pair, Certificates.hostCertificate(host, pair));
+		X509Certificate x509 = Certificates.certificate(pair, "DN=" + host + ", L=London, C=GB").toX509();
+		KeyStore keyStore = keyStore("alias", password, pair, x509);
+
 		SSLContext sslContext = SSLContext.getInstance(PROTOCOL_SSL_V3);
 		sslContext.init(keyManagerSunX509(keyStore, password), noopTrustManager(), new SecureRandom());
 		return sslContext;

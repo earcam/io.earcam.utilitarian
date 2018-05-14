@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>io.earcam</groupId>
 		<artifactId>io.earcam.utilitarian</artifactId>
-		<version>0.0.2-SNAPSHOT</version>
+		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
 	<groupId>io.earcam.utilitarian</groupId>
@@ -23,8 +23,8 @@
 	</distributionManagement>
 
 	<properties>
-		<version.eclipselink>2.7.0</version.eclipselink>
-		<version.log4j2>2.9.1</version.log4j2>
+		<version.eclipselink>2.7.1</version.eclipselink>
+		<version.log4j2>2.11.0</version.log4j2>
 	
 		<skip.execution.pitest>false</skip.execution.pitest>
 		<earcam.project.name.short>log/slf4j</earcam.project.name.short>

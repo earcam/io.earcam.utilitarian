@@ -5,7 +5,7 @@
 	<parent>
         <groupId>io.earcam</groupId>
         <artifactId>io.earcam.utilitarian</artifactId>
-        <version>0.0.2-SNAPSHOT</version>
+        <version>1.0.0-SNAPSHOT</version>
 	</parent>
 
 	<groupId>io.earcam.utilitarian</groupId>
@@ -25,6 +25,9 @@
 	<properties>
 		<skip.execution.pitest>false</skip.execution.pitest>
 		<earcam.project.name.short>site/search</earcam.project.name.short>
+		<dependency-check.skip>true</dependency-check.skip>
+		<!-- issues with unexposed lucene - revapi's checkDependencies=false not working? -->
+		<revapi.skip>true</revapi.skip>
 	</properties>
 
 	<dependencies>
@@ -155,6 +158,17 @@
 
 	<build>
 		<plugins>
+			<!-- False positive in dependency-check-maven -->
+			<plugin>
+				<groupId>org.owasp</groupId>
+				<artifactId>dependency-check-maven</artifactId>
+				<configuration>
+					<suppressionFiles>
+						<suppressionFile>${project.basedir}/suppressions.xml</suppressionFile>
+					</suppressionFiles>
+				</configuration>
+			</plugin>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -183,7 +197,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
-				<version>3.1.0</version>
+				<version>3.1.1</version>
 				<executions>
 					<execution>
 						<phase>package</phase>

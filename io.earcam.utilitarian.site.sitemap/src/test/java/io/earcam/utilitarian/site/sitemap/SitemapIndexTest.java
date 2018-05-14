@@ -60,7 +60,7 @@ public class SitemapIndexTest {
 
 		SitemapParameters parameters = new SitemapParameters(new URI(BASE_URL), fakeBaseDir.resolve("sauce"), fakeBaseDir.resolve("targit"));
 
-		parameters.targetDir.toFile().mkdirs(); //FIXME move into Sitemap code
+		parameters.targetDir.toFile().mkdirs(); // FIXME move into Sitemap code
 
 		List<Path> indices = new ArrayList<>();
 

@@ -21,6 +21,6 @@ package io.earcam.utilitarian.log.slf4j;
 @FunctionalInterface
 public interface LogCapturable {
 
-	void run() throws Throwable;  //NOSONAR
+	void run() throws Throwable;  // NOSONAR
 
 }

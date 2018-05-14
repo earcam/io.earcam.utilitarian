@@ -23,11 +23,15 @@ import java.io.InputStream;
 import java.util.Arrays;
 
 /**
- * <p>Wraps an {@link InputStream} to ensure {@link InputStream#markSupported()} returns {@code true}.</p>
+ * <p>
+ * Wraps an {@link InputStream} to ensure {@link InputStream#markSupported()} returns {@code true}.
+ * </p>
  *
  *
- * <p><b>Note:</b> if calls to {@link #read()} exceed the {@code readLimit} parameter of {@link #mark(int)}
- * then the mark is removed and a call to {@link #reset()} will throw an {@link IOException}.</p>
+ * <p>
+ * <b>Note:</b> if calls to {@link #read()} exceed the {@code readLimit} parameter of {@link #mark(int)}
+ * then the mark is removed and a call to {@link #reset()} will throw an {@link IOException}.
+ * </p>
  *
  */
 public final class MarkSupportedInputStream extends InputStream {

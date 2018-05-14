@@ -23,6 +23,8 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.charset.Charset;
+import java.util.Arrays;
+import java.util.Comparator;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -33,6 +35,25 @@ public final class CharSequences {
 	private CharSequences()
 	{
 
+	}
+
+
+	static CharStar backedCharSequence(char[] sequence)
+	{
+		return CharStar.backedCharSequence(sequence);
+	}
+
+
+	static CharStar charSequence(char[] sequence)
+	{
+		char[] encapsulated = Arrays.copyOf(sequence, sequence.length);
+		return CharStar.charSequence(encapsulated);
+	}
+
+
+	static CharStar charSequence(CharSequence sequence)
+	{
+		return CharStar.charSequence(toArray(sequence));
 	}
 
 
@@ -117,16 +138,29 @@ public final class CharSequences {
 				chars[i] = replace;
 			}
 		}
-		return CharStar.charSequence(chars);
+		return CharStar.backedCharSequence(chars);
 	}
 
 
+	/**
+	 * Returns {@code true} if the argument {@code text} is {@code null} or {@link CharSequence#length()} {@code == 0}
+	 * 
+	 * @param text the CharSequence to test
+	 * @return {@code true} IFF <i>empty</i>
+	 */
 	public static boolean isEmpty(@Nullable CharSequence text)
 	{
 		return text == null || text.length() == 0;
 	}
 
 
+	/**
+	 * Equivalent to {@link String#lastIndexOf(int)
+	 * 
+	 * @param text the CharSequence to test
+	 * @param character the {@code char} to find
+	 * @return the index of first occurrence of argument {@code character}
+	 */
 	public static int lastIndexOf(CharSequence text, char character)
 	{
 		for(int i = text.length() - 1; i >= 0; i--) {
@@ -140,7 +174,13 @@ public final class CharSequences {
 
 	public static int indexOf(CharSequence text, char character)
 	{
-		for(int i = 0; i < text.length(); i++) {
+		return indexOf(text, character, 0);
+	}
+
+
+	public static int indexOf(CharSequence text, char character, int start)
+	{
+		for(int i = start; i < text.length(); i++) {
 			if(text.charAt(i) == character) {
 				return i;
 			}
@@ -158,8 +198,40 @@ public final class CharSequences {
 	public static byte[] toBytes(CharSequence sequence, Charset charset)
 	{
 		ByteBuffer buffer = charset.encode(CharBuffer.wrap(sequence));
-		byte[] bytes = new byte[buffer.remaining()];  // TODO avoid GC?
+		byte[] bytes = new byte[buffer.remaining()];
 		buffer.get(bytes);
 		return bytes;
+	}
+
+
+	public static Comparator<CharSequence> comparator()
+	{
+		return CharSequences::compare;
+	}
+
+
+	public static int compare(CharSequence a, CharSequence b)
+	{
+		int max = Math.min(a.length(), b.length());
+		int i = 0;
+		while(i < max) {
+			char c1 = a.charAt(i);
+			char c2 = b.charAt(i);
+			if(c1 != c2) {
+				return c1 - c2;
+			}
+			i++;
+		}
+		return a.length() - b.length();
+	}
+
+
+	public static char[] toArray(CharSequence sequence)
+	{
+		char[] array = new char[sequence.length()];
+		for(int i = 0; i < array.length; i++) {
+			array[i] = sequence.charAt(i);
+		}
+		return array;
 	}
 }

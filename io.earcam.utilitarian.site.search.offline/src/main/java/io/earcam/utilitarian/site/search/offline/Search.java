@@ -64,7 +64,7 @@ public class Search {
 			indexer.add(crawler.build().documents());
 		}
 		// @SuppressWarnings("squid:S2259")
-		indexer.writeJson();  //NOSONAR false positive
+		indexer.writeJson();  // NOSONAR false positive
 	}
 
 

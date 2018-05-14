@@ -18,13 +18,21 @@
  */
 package io.earcam.utilitarian.charstar;
 
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 import java.util.Arrays;
 
-public class CharStar implements CharSequence {
+final class CharStar implements CharSequence, Comparable<CharSequence>, Externalizable {
 
-	private final char[] sequence;
-	private final int offset;
-	private final int length;
+	private char[] sequence;
+	private int offset;
+	private int length;
+
+
+	public CharStar()
+	{}
 
 
 	private CharStar(char[] sequence)
@@ -41,13 +49,13 @@ public class CharStar implements CharSequence {
 	}
 
 
-	public static CharStar charSequence(char[] sequence)
+	static CharStar backedCharSequence(char[] sequence)
 	{
 		return new CharStar(sequence);
 	}
 
 
-	public static CharStar immutableCharSequence(char[] sequence)
+	static CharStar charSequence(char[] sequence)
 	{
 		char[] encapsulated = Arrays.copyOf(sequence, sequence.length);
 		return new CharStar(encapsulated);
@@ -77,7 +85,7 @@ public class CharStar implements CharSequence {
 	@Override
 	public String toString()
 	{
-		return String.valueOf(sequence);
+		return String.valueOf(sequence, offset, length);
 	}
 
 
@@ -96,12 +104,79 @@ public class CharStar implements CharSequence {
 
 
 	@Override
-	public CharSequence subSequence(int start, int end)
+	public CharStar subSequence(int start, int end)
 	{
-		if(end >= length) {
-			throw new IndexOutOfBoundsException("end >= length: " + end + " >= " + length); // TODO other validation
-		}
-		return new CharStar(sequence, start, end);
+		requireValidIndices(start, end);
+		return new CharStar(sequence, start, end - start);
 	}
 
+
+	private void requireValidIndices(int start, int end)
+	{
+		requireNonNegative("start", start);
+		requireNonNegative("end", end);
+		requireLessThanOrEqualTo("end", end, "length", length);
+		requireLessThanOrEqualTo("start", start, "end", end);
+	}
+
+
+	private void requireNonNegative(String name, int value)
+	{
+		if(value < 0) {
+			throw new IndexOutOfBoundsException(name + " is less than zero: " + value);
+		}
+	}
+
+
+	private void requireLessThanOrEqualTo(String lhs, int lhsValue, String rhs, int rhsValue)
+	{
+		if(lhsValue > rhsValue) {
+			throw new IndexOutOfBoundsException(lhs + " > " + rhs + ": " + lhsValue + " > " + rhsValue);
+		}
+	}
+
+
+	public int compareTo(CharSequence that)
+	{
+		int max = Math.min(this.length, that.length());
+		int i = 0;
+		while(i < max) {
+			char c1 = sequence[offset + i];
+			char c2 = that.charAt(i);
+			if(c1 != c2) {
+				return c1 - c2;
+			}
+			i++;
+		}
+		return this.length - that.length();
+	}
+
+
+	@Override
+	public void writeExternal(ObjectOutput out) throws IOException
+	{
+		out.writeInt(length);
+		for(int i = offset; i < offset + length; i++) {
+			out.writeChar(sequence[i]);
+		}
+	}
+
+
+	@Override
+	public void readExternal(ObjectInput in) throws IOException
+	{
+		length = in.readInt();
+		sequence = new char[length];
+		for(int i = 0; i < length; i++) {
+			sequence[i] = in.readChar();
+		}
+	}
+
+
+	public char[] toArray()
+	{
+		char[] dest = new char[length];
+		System.arraycopy(sequence, offset, dest, 0, length);
+		return dest;
+	}
 }
