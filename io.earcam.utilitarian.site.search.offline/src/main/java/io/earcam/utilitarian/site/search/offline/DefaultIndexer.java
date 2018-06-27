@@ -148,7 +148,8 @@ public class DefaultIndexer implements Indexer {
 		outputFile.getParent().toFile().mkdirs();
 
 		if(isGzip()) {
-			closeAfterAccepting(GZIPOutputStream::new, apply(FileOutputStream::new, outputFile.toFile()), this::writeJson);
+			FileOutputStream fos = apply(FileOutputStream::new, outputFile.toFile());
+			closeAfterAccepting(GZIPOutputStream::new, fos, this::writeJson);
 		} else {
 			closeAfterAccepting(FileOutputStream::new, outputFile.toFile(), this::writeJson);
 		}

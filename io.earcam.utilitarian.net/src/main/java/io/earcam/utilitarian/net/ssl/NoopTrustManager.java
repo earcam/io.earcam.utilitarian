@@ -18,6 +18,7 @@
  */
 package io.earcam.utilitarian.net.ssl;
 
+import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 
 import javax.net.ssl.TrustManager;
@@ -25,24 +26,32 @@ import javax.net.ssl.X509TrustManager;
 
 final class NoopTrustManager implements X509TrustManager {
 
-	private static final TrustManager[] NOOP_TRUST_MANAGERS = new TrustManager[] { new NoopTrustManager() };
+	private static final TrustManager[] NOOP_TRUST_MANAGERS = new TrustManager[] { new NoopTrustManager(false) };
+
+	private boolean alwaysThrow;
 
 
-	private NoopTrustManager()
-	{}
-
-
-	@Override
-	public void checkClientTrusted(X509Certificate[] chain, String authType)
+	NoopTrustManager(boolean alwaysThrow)
 	{
-		/* NOOP */
+		this.alwaysThrow = alwaysThrow;
 	}
 
 
 	@Override
-	public void checkServerTrusted(X509Certificate[] chain, String authType)
+	public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException
 	{
-		/* NOOP */
+		if(alwaysThrow) {
+			throw new CertificateException("always thrown");
+		}
+	}
+
+
+	@Override
+	public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException
+	{
+		if(alwaysThrow) {
+			throw new CertificateException("always thrown");
+		}
 	}
 
 

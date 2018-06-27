@@ -1,0 +1,2 @@
+
+Static helpers for `KeyStore`s and `KeyPair`s, and a half-decent builder for X509 `Certificate`s.

@@ -42,18 +42,40 @@ import java.security.cert.X509Certificate;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
 
 import io.earcam.unexceptional.Exceptional;
 import io.earcam.unexceptional.UncheckedSecurityException;
 import io.earcam.utilitarian.security.Certificates;
 
 /**
- * Use for testing only - otherwise why bother? Be honest about in/security
+ * <h1>Use for testing <b>only</b></h1> - otherwise why bother? Be honest about in/security
  */
 public final class DummySslContext {
 
 	private static final String PROTOCOL_SSL_V3 = "SSLv3";
-	private static final HostnameVerifier DUMMY_HOSTNAME_VERIFIER = (h, s) -> true;
+
+	private static final class DummyHostnameVerifier implements HostnameVerifier {
+
+		private final boolean always;
+
+
+		DummyHostnameVerifier(boolean always)
+		{
+			this.always = always;
+		}
+
+
+		@Override
+		public boolean verify(String hostname, SSLSession session)
+		{
+			return always;
+		}
+
+	}
+
+	public static final HostnameVerifier ALWAYS_PASS_HOSTNAME_VERIFIER = new DummyHostnameVerifier(true);
+	public static final HostnameVerifier ALWAYS_FAIL_HOSTNAME_VERIFIER = new DummyHostnameVerifier(true);
 
 
 	private DummySslContext()
@@ -135,7 +157,7 @@ public final class DummySslContext {
 
 	public static HostnameVerifier dummyHostnameVerifier()
 	{
-		return DUMMY_HOSTNAME_VERIFIER;
+		return ALWAYS_PASS_HOSTNAME_VERIFIER;
 	}
 
 

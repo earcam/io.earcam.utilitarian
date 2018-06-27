@@ -1,0 +1,15 @@
+
+<h3>Example</h3>
+
+Given static imports:
+
+#snippet ( "/src/test/java/io/earcam/utilitarian/security/CertificatesTest.java", "imports" ) 
+
+And a field (that's time-expensive to create):
+
+#snippet ( "/src/test/java/io/earcam/utilitarian/security/CertificatesTest.java", "keypair" )
+ 
+Generating a simple certificate is relatively simple: 
+
+#snippet ( "/src/test/java/io/earcam/utilitarian/security/CertificatesTest.java", "certificate" ) 
+

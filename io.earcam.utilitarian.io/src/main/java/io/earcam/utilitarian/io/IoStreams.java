@@ -45,7 +45,7 @@ public final class IoStreams {
 	 * @return the byte array obtained from draining {@code input}
 	 * @throws UncheckedIOException if an {@link IOException} this thrown
 	 */
-	public static byte[] readAllBytes(InputStream input)
+	public static byte[] readAllBytes(@WillNotClose InputStream input)
 	{
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		transfer(input, baos);

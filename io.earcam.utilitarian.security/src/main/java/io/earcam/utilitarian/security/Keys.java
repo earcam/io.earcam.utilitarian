@@ -26,7 +26,7 @@ import io.earcam.unexceptional.UncheckedSecurityException;
 
 public class Keys {
 
-	private static final int DEFAULT_KEYSIZE = 1024;
+	private static final int DEFAULT_KEYSIZE = 2048;
 
 
 	private Keys()

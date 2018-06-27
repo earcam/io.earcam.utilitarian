@@ -72,7 +72,7 @@ public final class ReplaceAllInputStream extends InputStream {
 			int p = search();
 			if(p == search.length) {
 				position = 1;
-				return replace[0];
+				return replace.length == 0 ? read() : replace[0];
 			} else {
 				wrapped.reset();
 			}
@@ -82,11 +82,12 @@ public final class ReplaceAllInputStream extends InputStream {
 	}
 
 
-	@SuppressWarnings("squid:EmptyStatementUsageCheck") // false positive, loop body is empty due to post-increment
 	private int search() throws IOException
 	{
 		int p = 1;
-		while(p < search.length && wrapped.read() == search[p++]);
+		while(p < search.length && wrapped.read() == search[p]) {
+			++p;
+		}
 		return p;
 	}
 }

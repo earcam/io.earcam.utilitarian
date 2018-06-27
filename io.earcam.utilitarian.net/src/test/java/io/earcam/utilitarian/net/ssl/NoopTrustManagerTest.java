@@ -1,6 +1,6 @@
 /*-
  * #%L
- * io.earcam.utilitarian.site.search.offline
+ * io.earcam.utilitarian.net
  * %%
  * Copyright (C) 2017 earcam
  * %%
@@ -16,21 +16,32 @@
  * </ul>
  * #L%
  */
-package io.earcam.utilitarian.site.search.offline;
+package io.earcam.utilitarian.net.ssl;
 
-import static io.earcam.utilitarian.site.search.offline.Resources.UI_SCRIPT_SEARCH;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-import static org.hamcrest.Matchers.nullValue;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
+
+import java.security.cert.CertificateException;
 
 import org.junit.Test;
 
-public class ResourcesIntegrationTest {
+public class NoopTrustManagerTest {
 
 	@Test
-	public void uiSearchScriptPresent()
+	public void clientsAreNeverTrusted()
 	{
-		assertThat(Resources.getResource(UI_SCRIPT_SEARCH), is(not(nullValue())));
+		try {
+			new NoopTrustManager(true).checkClientTrusted(null, null);
+			fail();
+		} catch(CertificateException e) {}
+	}
+
+
+	@Test
+	public void serverNeverTrusted()
+	{
+		try {
+			new NoopTrustManager(true).checkServerTrusted(null, null);
+			fail();
+		} catch(CertificateException e) {}
 	}
 }

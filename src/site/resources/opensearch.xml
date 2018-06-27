@@ -18,9 +18,9 @@
   #L%
   -->
 <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/" xmlns:moz="http://www.mozilla.org/2006/browser/search/">
-	<ShortName>Utilitarian - Earcam</ShortName>
-	<Description>A m&#x00E9;nagerie of small util modules</Description>
+	<ShortName>Instrumental - Earcam</ShortName>
+	<Description>Instrumentation Tooling</Description>
 	<InputEncoding>UTF-8</InputEncoding>
-	<Image width="16" height="16" type="image/x-icon">https://utilitarian.earcam.io/img/ico/favicon.ico</Image>
-	<Url type="text/html" method="get" template="https://utilitarian.earcam.io/#search={searchTerms}"></Url>
+	<Image width="16" height="16" type="image/x-icon">https://instrumental.earcam.io/img/ico/favicon.ico</Image>
+	<Url type="text/html" method="get" template="https://instrumental.earcam.io/#search={searchTerms}"></Url>
 </OpenSearchDescription>

@@ -19,6 +19,7 @@
 package io.earcam.utilitarian.io;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
@@ -27,7 +28,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 public class ReplaceAllInputStreamTest {
@@ -43,7 +43,7 @@ public class ReplaceAllInputStreamTest {
 		try(ReplaceAllInputStream input = new ReplaceAllInputStream(search, replace, wrapInput(in))) {
 			String out = readAll(input);
 
-			Assert.assertThat(out, is(equalTo("Some example text")));
+			assertThat(out, is(equalTo("Some example text")));
 		}
 	}
 
@@ -65,7 +65,7 @@ public class ReplaceAllInputStreamTest {
 		try(ReplaceAllInputStream input = new ReplaceAllInputStream(search, replace, wrapInput(in))) {
 			String out = readAll(input);
 
-			Assert.assertThat(out, is(equalTo("Too many samples")));
+			assertThat(out, is(equalTo("Too many samples")));
 		}
 	}
 
@@ -81,7 +81,7 @@ public class ReplaceAllInputStreamTest {
 		try(ReplaceAllInputStream input = new ReplaceAllInputStream(search, replace, wrapInput(in))) {
 			String out = readAll(input);
 
-			Assert.assertThat(out, is(equalTo("Audio cassette")));
+			assertThat(out, is(equalTo("Audio cassette")));
 		}
 	}
 
@@ -97,7 +97,7 @@ public class ReplaceAllInputStreamTest {
 		try(ReplaceAllInputStream input = new ReplaceAllInputStream(search, replace, wrapInput(in))) {
 			String out = readAll(input);
 
-			Assert.assertThat(out, is(equalTo("same text")));
+			assertThat(out, is(equalTo("same text")));
 		}
 	}
 
@@ -137,8 +137,40 @@ public class ReplaceAllInputStreamTest {
 		try(ReplaceAllInputStream input = new ReplaceAllInputStream(search, replace, wrapInput(in))) {
 			String out = readAll(input);
 
-			Assert.assertThat(out, is(equalTo("Some example text, exampled by some for example's sake")));
+			assertThat(out, is(equalTo("Some example text, exampled by some for example's sake")));
 		}
 	}
 	// EARCAM_SNIPPET_END: ReplaceAllInputStream
+
+
+	@Test
+	public void mutlipleOccurrencesWithShorterReplacementThanSearch() throws IOException
+	{
+		byte[] in = bytes("Some sample text, sampled by some for sample's sake");
+
+		byte[] search = bytes("sample");
+		byte[] replace = bytes("ample");
+
+		try(ReplaceAllInputStream input = new ReplaceAllInputStream(search, replace, wrapInput(in))) {
+			String out = readAll(input);
+
+			assertThat(out, is(equalTo("Some ample text, ampled by some for ample's sake")));
+		}
+	}
+
+
+	@Test
+	public void deleteMutlipleOccurrences() throws IOException
+	{
+		byte[] in = bytes("Some sample text, sampled by some for sample's sake");
+
+		byte[] search = bytes(" sample");
+		byte[] replace = new byte[0];
+
+		try(ReplaceAllInputStream input = new ReplaceAllInputStream(search, replace, wrapInput(in))) {
+			String out = readAll(input);
+
+			assertThat(out, is(equalTo("Some text,d by some for's sake")));
+		}
+	}
 }

@@ -212,6 +212,8 @@ public class Netlify {
 			EmeticStream.emesis(Files::walk, e.getValue())
 					.sequential()
 					.filter(Files::isRegularFile)
+					// Quick hack, TODO add excludes
+					.filter(p -> !p.getFileName().toString().equals(".io.earcam.utilitarian.site.sitemap.parameters.ser"))
 					.peek(f -> zipEntry(zip, e, f))
 					.peek(f -> LOG.debug("Writing {} to zip... {}", f, e.getValue()))
 					.map(Files::readAllBytes)
@@ -226,8 +228,9 @@ public class Netlify {
 	private void zipEntry(ZipOutputStream zip, Entry<String, Path> baseDir, Path file) throws IOException
 	{
 		URI relativePath = baseDir.getValue().toUri().relativize(file.toUri());
-		String absolutePath = baseDir.getKey() + relativePath;
+		String absolutePath = baseDir.getKey() + relativePath;   // FIXME baseDir.getKey() must end with slash '/'
 		ZipEntry entry = new ZipEntry(absolutePath);
+		LOG.debug("Absolute path in site: {}", absolutePath);
 		entry.setTime(0);
 		entry.setCreationTime(FileTime.from(MIN));
 		entry.setLastAccessTime(FileTime.from(MIN));

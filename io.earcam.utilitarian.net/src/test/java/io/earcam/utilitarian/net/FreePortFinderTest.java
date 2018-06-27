@@ -49,7 +49,7 @@ public class FreePortFinderTest {
 
 
 	@Test
-	public void testName() throws IOException
+	public void findsFreePort() throws IOException
 	{
 		int freePort = FreePortFinder.findFreePort();
 

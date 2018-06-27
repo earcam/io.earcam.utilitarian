@@ -158,17 +158,6 @@
 
 	<build>
 		<plugins>
-			<!-- False positive in dependency-check-maven -->
-			<plugin>
-				<groupId>org.owasp</groupId>
-				<artifactId>dependency-check-maven</artifactId>
-				<configuration>
-					<suppressionFiles>
-						<suppressionFile>${project.basedir}/suppressions.xml</suppressionFile>
-					</suppressionFiles>
-				</configuration>
-			</plugin>
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>

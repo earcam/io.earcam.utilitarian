@@ -145,7 +145,7 @@ public class ExplodedJarInputStreamTest {
 
 	@Ignore // TODO ExplodedJarInputStream doesn't behave like a proper stream... yet
 	@Test
-	public void testName() throws Exception
+	public void asNormalInputStream() throws Exception
 	{
 		Path outputDir = Paths.get("target", "classes");
 		JarInputStream explodedJar = ExplodedJarInputStream.explodedJar(outputDir);

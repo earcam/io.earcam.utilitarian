@@ -59,7 +59,7 @@ public class ReplaceAllOutputStreamTest {
 
 	// EARCAM_SNIPPET_BEGIN: ReplaceAllOutputStream
 	@Test
-	public void replaceConcurrentOccurrences() throws Exception
+	public void replaceConsecutiveOccurrences() throws Exception
 	{
 		byte[] out = bytes("ample samplesamplesample samples");
 
@@ -73,4 +73,20 @@ public class ReplaceAllOutputStreamTest {
 		Assert.assertThat(text(baos.toByteArray()), is(equalTo("ample exampleexampleexample examples")));
 	}
 	// EARCAM_SNIPPET_BEGIN: ReplaceAllOutputStream
+
+
+	@Test
+	public void mutlipleOccurrencesWithShorterReplacementThanSearch() throws Exception
+	{
+		byte[] out = bytes("ample sampled samples sampled");
+
+		byte[] search = bytes(" sample");
+		byte[] replace = new byte[0];
+
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		try(ReplaceAllOutputStream output = new ReplaceAllOutputStream(search, replace, baos)) {
+			output.write(out);
+		}
+		Assert.assertThat(text(baos.toByteArray()), is(equalTo("ampledsd")));
+	}
 }

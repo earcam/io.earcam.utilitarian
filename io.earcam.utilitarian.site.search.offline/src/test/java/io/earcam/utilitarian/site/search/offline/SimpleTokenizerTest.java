@@ -28,7 +28,7 @@ import org.junit.Test;
 public class SimpleTokenizerTest {
 
 	@Test
-	public void testName() throws Exception
+	public void simple() throws Exception
 	{
 		String input = "The  quick,brown fox\r\n\r\njumps -- over\t\t\tthe lazy dog!";
 

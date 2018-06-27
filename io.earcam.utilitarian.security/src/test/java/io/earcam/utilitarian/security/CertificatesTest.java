@@ -18,10 +18,12 @@
  */
 package io.earcam.utilitarian.security;
 
+//EARCAM_SNIPPET_BEGIN: imports
 import static io.earcam.utilitarian.security.Certificates.DN_LOCALHOST;
 import static io.earcam.utilitarian.security.Certificates.certificate;
 import static io.earcam.utilitarian.security.Certificates.CertificateBuilder.localDate;
 import static io.earcam.utilitarian.security.Keys.rsa;
+//EARCAM_SNIPPET_END: imports
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
@@ -36,7 +38,9 @@ import org.junit.Test;
 
 public class CertificatesTest {
 
+	// EARCAM_SNIPPET_BEGIN: keypair
 	private static final KeyPair RSA = rsa();
+	// EARCAM_SNIPPET_END: keypair
 
 
 	@Test
@@ -78,6 +82,7 @@ public class CertificatesTest {
 	@Test
 	public void issuerName()
 	{
+		// EARCAM_SNIPPET_BEGIN: certificate
 		String name = "foo";
 
 		X509Certificate x509 = certificate()
@@ -86,6 +91,7 @@ public class CertificatesTest {
 				.serial(2)
 				.key(RSA)
 				.toX509();
+		// EARCAM_SNIPPET_END: certificate
 
 		assertThat(x509.getIssuerDN().getName(), is(equalTo("CN=" + name)));
 	}

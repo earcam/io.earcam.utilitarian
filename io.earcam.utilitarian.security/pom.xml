@@ -10,6 +10,22 @@
 
 	<groupId>io.earcam.utilitarian</groupId>
 	<artifactId>io.earcam.utilitarian.security</artifactId>
+	<packaging>jar</packaging>
+
+	<description>KeyPair, KeyStore and Certificate utilities</description>
+	<url>${site.url}${earcam.project.name.short}</url>
+
+	<distributionManagement>
+		<site>
+			<id>netlify</id>
+			<url>${site.url}${earcam.project.name.short}/</url>
+		</site>
+	</distributionManagement>
+
+	<properties>
+		<skip.execution.pitest>false</skip.execution.pitest>
+		<earcam.project.name.short>security</earcam.project.name.short>
+	</properties>
 
 	<dependencies>
 		<dependency>
