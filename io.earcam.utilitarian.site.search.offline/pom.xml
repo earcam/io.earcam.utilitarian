@@ -24,7 +24,7 @@
 
 	<properties>
 		<skip.execution.pitest>false</skip.execution.pitest>
-		<earcam.project.name.short>site/search</earcam.project.name.short>
+		<earcam.project.name.short>site/search/offline</earcam.project.name.short>
 		<dependency-check.skip>true</dependency-check.skip>
 		<!-- issues with unexposed lucene - revapi's checkDependencies=false not working? -->
 		<revapi.skip>true</revapi.skip>
@@ -205,8 +205,9 @@
 									<include>org.slf4j:slf4j-api</include>
 								</includes>
 								<excludes>
-									<!-- glassfish imp contains same api -->
+									<!-- glassfish imp contains same api ... though this is now failing FFS
 									<exclude>javax.json:javax.json-api</exclude>
+									-->
 								</excludes>
 							</artifactSet>
 							<filters>

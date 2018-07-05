@@ -58,7 +58,7 @@
 		<version.jersey>2.27</version.jersey>
 		<version.jackson>2.8.4</version.jackson>
 		<version.swagger.core>2.0.0-rc1</version.swagger.core>
-		<version.unexceptional>0.4.0</version.unexceptional>
+		<version.unexceptional>0.5.0</version.unexceptional>
 		<version.bouncy.castle>1.59</version.bouncy.castle>
 		<version.lucene>7.3.0</version.lucene>
 		<version.jsoup>1.11.3</version.jsoup>
@@ -481,6 +481,8 @@
 										<argument>${project.basedir}/io.earcam.utilitarian.site.search.offline/target/site/@/site/search/offline/</argument>
 										<argument>${project.basedir}/io.earcam.utilitarian.site.sitemap/target/site/@/site/sitemap/</argument>
 										<argument>${project.basedir}/io.earcam.utilitarian.web.jaxrs/target/site/@/web/jaxrs/</argument>
+										<argument>${project.basedir}/io.earcam.utilitarian.security/target/site/@/security/</argument>
+										<argument>${project.basedir}/io.earcam.utilitarian.charstar/target/site/@/charstar/</argument>
 									</arguments>
 									<successCodes>
 										<successCode>0</successCode>
