@@ -1,6 +1,5 @@
 #*
 
-
 *##if( $project.collectedProjects.size() > 0 )#*
 	*##set( $hasModules = true )#*
 *##else#*
@@ -19,6 +18,7 @@
 *##set( $sonarCoordinate = "io.earcam%3A" + $context.get( 'earcam.project.root.artifactId' ) )#*
 
 *##set( $indexHeadFile = "$project.basedir/src/site/section/index-head.md.vm" )#*
+*##set( $exampleFile = "${project.basedir}/src/site/markdown/example.md.vm" )#*
 *##set( $indexFootFile = "$project.basedir/src/site/section/index-foot.md.vm" )#*
 
 
@@ -30,7 +30,7 @@
 
 
 *#
-<p class="lead">${project.description}</p>
+<p class="lead">$escape.html(${project.description})</p>
 #*
 
 *##if( $FileUtils.fileExists( $indexHeadFile ) )#*
@@ -39,8 +39,21 @@
 
 <br/>
 
+
+*##if( $FileUtils.fileExists( $exampleFile ) )#*
+	*##parse( $exampleFile )#*
+*#
+<br/>
+<br/>
+#*		
+*##end#*
+
+
+
+
 *##if( $hasModules )#*
 	*#
+<h3>Module List</h3>
 <table>
  <thead>
  <tr>
@@ -51,7 +64,7 @@
 #*
 	*##foreach( $module in $project.collectedProjects )##
  <tr>
- <td><a href="/$module.properties.get('earcam.project.name.short')">${module.artifactId}</a></td><td>${module.description}</td>
+ <td><a href="/$module.properties.get('earcam.project.name.short')">${module.artifactId}</a></td><td>$escape.html(${module.description})</td>
  </tr>
 #*
 	*##end##
