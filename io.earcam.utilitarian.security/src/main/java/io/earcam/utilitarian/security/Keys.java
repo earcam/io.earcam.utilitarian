@@ -46,6 +46,18 @@ public class Keys {
 
 
 	/**
+	 * DSA key pair of size {@value #DEFAULT_KEYSIZE}
+	 * 
+	 * @return a key pair generated with DSA
+	 * @throws UncheckedSecurityException if a {@link java.security.NoSuchAlgorithmException} is thrown
+	 */
+	public static KeyPair dsa()
+	{
+		return keyPair("DSA");
+	}
+
+
+	/**
 	 * Generate an asymmetric key pair of size {@value #DEFAULT_KEYSIZE} for the supplied {@code algorithm}
 	 * 
 	 * @param algorithm e.g. RSA, DSA
