@@ -1,6 +1,6 @@
 /*-
  * #%L
- * io.earcam.utilitarian.net
+ * io.earcam.utilitarian.security
  * %%
  * Copyright (C) 2017 earcam
  * %%

@@ -198,7 +198,7 @@
 						</goals>
 						<configuration>
 							<jvm>${java.home.9}/bin/java</jvm>
-							<argLine>${surefire.argLine} --add-modules java.xml.bind,java.activation</argLine>
+							<argLine>--add-modules java.xml.bind,java.activation</argLine>
 						</configuration>
 					</execution>
 					<execution>
@@ -208,7 +208,7 @@
 						</goals>
 						<configuration>
 							<jvm>${java.home.10}/bin/java</jvm>
-							<argLine>${surefire.argLine} --add-modules java.xml.bind,java.activation</argLine>
+							<argLine>--add-modules java.xml.bind,java.activation</argLine>
 						</configuration>
 					</execution>
 				</executions>
