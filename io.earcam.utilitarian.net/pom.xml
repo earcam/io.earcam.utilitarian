@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>io.earcam</groupId>
 		<artifactId>io.earcam.utilitarian</artifactId>
-		<version>1.0.1-SNAPSHOT</version>
+		<version>1.1.0-SNAPSHOT</version>
 	</parent>
 
 	<groupId>io.earcam.utilitarian</groupId>
@@ -25,7 +25,16 @@
 	<properties>
 		<skip.execution.pitest>false</skip.execution.pitest>
 		<earcam.project.name.short>net</earcam.project.name.short>
-		<dependency-check.skip>true</dependency-check.skip>
+
+		<!-- 
+			jacoco's argLine not merged,
+			even with 'combine.self="append"', 
+			but we can use late binding
+		-->
+		<surefire.argLine></surefire.argLine>
+		<jpms.supplimental.surefire.argLine>
+			--add-reads ${project.artifactId}=jdk.httpserver		
+		</jpms.supplimental.surefire.argLine>
 	</properties>
 
 	<dependencies>
@@ -130,6 +139,11 @@
 			<plugin>
 				<groupId>org.apache.felix</groupId>
 				<artifactId>maven-bundle-plugin</artifactId>
+				<configuration>
+					<instructions>
+						<Adds-Exports>${project.artifactId},${project.artifactId}.ssl</Adds-Exports>
+					</instructions>
+				</configuration>
 			</plugin>
 
 			<plugin>
@@ -140,6 +154,20 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>jdk9-test</id>
+						<configuration>
+							<argLine>@{surefire.argLine} ${jpms.supplimental.surefire.argLine}</argLine>
+						</configuration>
+					</execution>
+					<execution>
+						<id>jdk10-test</id>
+						<configuration>
+							<argLine>@{surefire.argLine} ${jpms.supplimental.surefire.argLine}</argLine>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

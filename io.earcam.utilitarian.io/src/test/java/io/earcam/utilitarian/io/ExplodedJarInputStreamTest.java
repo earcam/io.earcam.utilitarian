@@ -1,6 +1,6 @@
 /*-
  * #%L
- * io.earcam.instrumental.archive
+ * io.earcam.instrumental.io
  * %%
  * Copyright (C) 2018 earcam
  * %%
@@ -43,7 +43,6 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
 import java.util.jar.Manifest;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import io.earcam.unexceptional.Exceptional;
@@ -143,8 +142,7 @@ public class ExplodedJarInputStreamTest {
 	}
 
 
-	@Ignore // TODO ExplodedJarInputStream doesn't behave like a proper stream... yet
-	@Test
+	// @Test // TODO ExplodedJarInputStream doesn't behave like a proper stream... yet
 	public void asNormalInputStream() throws Exception
 	{
 		Path outputDir = Paths.get("target", "classes");

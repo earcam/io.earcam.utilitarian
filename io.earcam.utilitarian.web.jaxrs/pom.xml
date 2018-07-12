@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>io.earcam</groupId>
 		<artifactId>io.earcam.utilitarian</artifactId>
-		<version>1.0.1-SNAPSHOT</version>
+		<version>1.1.0-SNAPSHOT</version>
 	</parent>
 
 	<groupId>io.earcam.utilitarian</groupId>
@@ -26,6 +26,17 @@
 		<skip.execution.pitest>false</skip.execution.pitest>
 		<earcam.project.name.short>web/jaxrs</earcam.project.name.short>
 		<revapi.skip>true</revapi.skip><!-- issues with exposed jax.rs -->
+
+		<!-- 
+			jacoco's argLine not merged, 
+			even with 'combine.self="append"',
+			but we can use late binding 
+		-->
+		<surefire.argLine></surefire.argLine>
+		<jpms.supplimental.surefire.argLine>
+			--add-modules jdk.httpserver,java.activation
+			--add-opens ${project.artifactId}/com.acme=ALL-UNNAMED
+		</jpms.supplimental.surefire.argLine>
 	</properties>
 
 	<dependencies>
@@ -130,11 +141,6 @@
 			</plugin>
 
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-			</plugin>
-
-			<plugin>
 				<groupId>org.apache.felix</groupId>
 				<artifactId>maven-bundle-plugin</artifactId>
 			</plugin>
@@ -147,6 +153,22 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>jdk9-test</id>
+						<configuration>
+							<argLine>@{surefire.argLine}
+								${jpms.supplimental.surefire.argLine}</argLine>
+						</configuration>
+					</execution>
+					<execution>
+						<id>jdk10-test</id>
+						<configuration>
+							<argLine>@{surefire.argLine}
+								${jpms.supplimental.surefire.argLine}</argLine>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

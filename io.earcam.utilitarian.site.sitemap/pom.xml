@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>io.earcam</groupId>
 		<artifactId>io.earcam.utilitarian</artifactId>
-		<version>1.0.1-SNAPSHOT</version>
+		<version>1.1.0-SNAPSHOT</version>
 	</parent>
 
 	<groupId>io.earcam.utilitarian</groupId>
@@ -25,7 +25,19 @@
 	<properties>
 		<skip.execution.pitest>false</skip.execution.pitest>
 		<earcam.project.name.short>site/sitemap</earcam.project.name.short>
-		<dependency-check.skip>true</dependency-check.skip>
+
+		<!-- 
+			jacoco's argLine not merged,
+			even with 'combine.self="append"',
+			but we can use late binding
+		-->
+		<surefire.argLine></surefire.argLine>
+		<jpms.supplimental.surefire.argLine>
+			--add-modules java.activation,java.xml.bind
+			--add-reads ${project.artifactId}=jdk.httpserver
+			--add-opens ${project.artifactId}/org.sitemaps=java.xml.bind
+			--add-opens ${project.artifactId}/org.sitemaps.index=java.xml.bind
+		</jpms.supplimental.surefire.argLine>
 	</properties>
 
 	<dependencies>
@@ -57,7 +69,7 @@
 			<artifactId>bcprov-jdk15on</artifactId>
 		</dependency>
 
- 		<dependency>
+		<dependency>
 			<groupId>org.bouncycastle</groupId>
 			<artifactId>bcpkix-jdk15on</artifactId>
 		</dependency>
@@ -147,12 +159,17 @@
 						</configuration>
 					</execution>
 				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>javax.activation</groupId>
+						<artifactId>javax.activation-api</artifactId>
+						<version>1.2.0</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 
-			<plugin><!-- 
-					jaxb2-maven-plugin adds source/test-source for normal "clean install" 
-					but seemingly not when running report/site? 
-				-->
+			<plugin><!-- jaxb2-maven-plugin adds source/test-source for normal "clean 
+					install" but seemingly not when running report/site? -->
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>
 				<version>3.0.0</version>
@@ -176,14 +193,10 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<!-- is this related/cause of jaxb2-maven-plugin issues when running report/site ? -->
+					<!-- is this related/cause of jaxb2-maven-plugin issues when running 
+						report/site ? -->
 					<useIncrementalCompilation>false</useIncrementalCompilation>
 				</configuration>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
 			</plugin>
 
 			<plugin>
@@ -199,6 +212,22 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>jdk9-test</id>
+						<configuration>
+							<argLine>@{surefire.argLine}
+								${jpms.supplimental.surefire.argLine}</argLine>
+						</configuration>
+					</execution>
+					<execution>
+						<id>jdk10-test</id>
+						<configuration>
+							<argLine>@{surefire.argLine}
+								${jpms.supplimental.surefire.argLine}</argLine>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

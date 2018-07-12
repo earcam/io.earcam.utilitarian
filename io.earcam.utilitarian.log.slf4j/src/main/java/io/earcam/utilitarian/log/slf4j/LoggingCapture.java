@@ -18,8 +18,8 @@
  */
 package io.earcam.utilitarian.log.slf4j;
 
+import static io.earcam.utilitarian.log.slf4j.Constants.LOG_FILE_KEY;
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.slf4j.impl.SimpleLogger.LOG_FILE_KEY;
 
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;

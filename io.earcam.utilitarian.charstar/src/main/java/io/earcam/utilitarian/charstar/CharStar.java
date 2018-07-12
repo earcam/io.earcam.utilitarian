@@ -1,8 +1,8 @@
 /*-
  * #%L
- * io.earcam.utilitarian.file
+ * io.earcam.utilitarian.charstar
  * %%
- * Copyright (C) 2017 earcam
+ * Copyright (C) 2017 - 2018 earcam
  * %%
  * SPDX-License-Identifier: (BSD-3-Clause OR EPL-1.0 OR Apache-2.0 OR MIT)
  *
@@ -25,6 +25,8 @@ import java.io.ObjectOutput;
 import java.util.Arrays;
 
 final class CharStar implements CharSequence, Comparable<CharSequence>, Externalizable {
+
+	private static final long serialVersionUID = 42L;
 
 	private char[] sequence;
 	private int offset;

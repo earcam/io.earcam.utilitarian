@@ -41,7 +41,7 @@ import io.earcam.unexceptional.Exceptional;
 public class SearchTest {
 
 	static {
-		System.setProperty("org.slf4j.simpleLogger.defaultLogLevel", "trace");
+		System.setProperty("org.slf4j.simpleLogger.defaultLogLevel", "info");
 	}
 
 

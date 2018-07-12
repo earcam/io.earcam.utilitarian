@@ -56,7 +56,6 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
 
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -185,8 +184,7 @@ public class NetlifyTest {
 	private Map<String, List<File>> sha1ToRelativePaths = new HashMap<>();
 
 
-	@Ignore // Can't work out what's wrong here - Swagger client suffers same issue, Java HTTP bug or Netlify?
-	@Test
+	// @Test // Can't work out what's wrong here - Swagger client suffers same issue, Java HTTP bug or Netlify?
 	public void deployNewSiteByDigest() throws Exception
 	{
 		Site site = netlify.findSiteForName("earcam-test").orElseThrow(RuntimeException::new);
@@ -232,7 +230,7 @@ public class NetlifyTest {
 	private void deployFile(String deployId, File file)
 	{
 		LOG.trace("Deploying {} for deployment ID: {}", file, deployId);
-		StreamingOutput body = o -> Exceptional.accept(NetlifyTest::inputToOutput, new FileInputStream(file), (OutputStream) o);
+		StreamingOutput body = o -> Exceptional.accept(NetlifyTest::inputToOutput, new FileInputStream(file), o);
 
 		Response response = client.target(baseUrl + "deploys/" + deployId + "/files/" + relativize(file))
 				.request(APPLICATION_JSON_TYPE)
@@ -249,7 +247,7 @@ public class NetlifyTest {
 		int b;
 		long c = 0;
 		try(InputStream input = in) {
-			while((b = in.read()) != -1) {
+			while((b = input.read()) != -1) {
 				out.write(b);
 				c++;
 			}

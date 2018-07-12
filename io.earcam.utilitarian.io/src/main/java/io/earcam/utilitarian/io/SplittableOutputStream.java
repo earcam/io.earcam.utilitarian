@@ -1,6 +1,6 @@
 /*-
  * #%L
- * io.earcam.utilitarian.file
+ * io.earcam.utilitarian.io
  * %%
  * Copyright (C) 2017 earcam
  * %%

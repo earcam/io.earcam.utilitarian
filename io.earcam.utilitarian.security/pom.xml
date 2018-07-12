@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>io.earcam</groupId>
 		<artifactId>io.earcam.utilitarian</artifactId>
-		<version>1.0.1-SNAPSHOT</version>
+		<version>1.1.0-SNAPSHOT</version>
 	</parent>
 
 	<groupId>io.earcam.utilitarian</groupId>
@@ -38,14 +38,14 @@
 			<artifactId>bcprov-ext-jdk15on</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>org.bouncycastle</groupId>
-			<artifactId>bcprov-jdk15on</artifactId>
-		</dependency>
-
  		<dependency>
 			<groupId>org.bouncycastle</groupId>
 			<artifactId>bcpkix-jdk15on</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcprov-jdk15on</artifactId>
 		</dependency>
  		
 		<dependency>

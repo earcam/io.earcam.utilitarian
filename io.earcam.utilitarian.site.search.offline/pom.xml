@@ -5,7 +5,7 @@
 	<parent>
         <groupId>io.earcam</groupId>
         <artifactId>io.earcam.utilitarian</artifactId>
-        <version>1.0.1-SNAPSHOT</version>
+        <version>1.1.0-SNAPSHOT</version>
 	</parent>
 
 	<groupId>io.earcam.utilitarian</groupId>
@@ -25,18 +25,35 @@
 	<properties>
 		<skip.execution.pitest>false</skip.execution.pitest>
 		<earcam.project.name.short>site/search/offline</earcam.project.name.short>
-		<dependency-check.skip>true</dependency-check.skip>
 		<!-- issues with unexposed lucene - revapi's checkDependencies=false not working? -->
 		<revapi.skip>true</revapi.skip>
+
+		<!-- 
+			jacoco's argLine not merged,
+			even with 'combine.self="append"', 
+			but we can use late binding
+		-->
+		<surefire.argLine></surefire.argLine>
+		<jpms.supplimental.surefire.argLine>
+			--add-modules java.scripting
+		</jpms.supplimental.surefire.argLine>
+		
 	</properties>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.webjars.bower</groupId>
-			<!-- TODO trigger next version 2.1.2 in webjars -->
 			<artifactId>lunr.js</artifactId>
 			<version>2.1.0</version>
 		</dependency>
+
+		<!-- TODO switch to 2.1.2
+		<dependency>
+			<groupId>org.webjars.npm</groupId>
+			<artifactId>github-com-olivernn-lunr-js</artifactId>
+			<version>2.1.2</version>
+		</dependency>
+		 -->
 
 		<dependency>
 			<groupId>org.apache.lucene</groupId>
@@ -181,6 +198,22 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>jdk9-test</id>
+						<configuration>
+							<argLine>@{surefire.argLine}
+								${jpms.supplimental.surefire.argLine}</argLine>
+						</configuration>
+					</execution>
+					<execution>
+						<id>jdk10-test</id>
+						<configuration>
+							<argLine>@{surefire.argLine}
+								${jpms.supplimental.surefire.argLine}</argLine>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 
 			<plugin>
@@ -204,11 +237,6 @@
 									<include>*:*</include>
 									<include>org.slf4j:slf4j-api</include>
 								</includes>
-								<excludes>
-									<!-- glassfish imp contains same api ... though this is now failing FFS
-									<exclude>javax.json:javax.json-api</exclude>
-									-->
-								</excludes>
 							</artifactSet>
 							<filters>
 								<filter>

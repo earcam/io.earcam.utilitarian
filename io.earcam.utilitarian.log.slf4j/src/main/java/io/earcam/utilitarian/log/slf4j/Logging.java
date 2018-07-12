@@ -19,7 +19,7 @@
 package io.earcam.utilitarian.log.slf4j;
 
 import static io.earcam.unexceptional.Exceptional.swallow;
-import static org.slf4j.impl.SimpleLogger.CACHE_OUTPUT_STREAM_STRING_KEY;
+import static io.earcam.utilitarian.log.slf4j.Constants.SYSTEM_PREFIX;
 
 /**
  * <p>
@@ -34,6 +34,8 @@ import static org.slf4j.impl.SimpleLogger.CACHE_OUTPUT_STREAM_STRING_KEY;
  * https://wiki.eclipse.org/EclipseLink/Development/296391
  */
 public final class Logging implements LoggingBuilder, LoggerName {
+
+	private static final String CACHE_OUTPUT_STREAM_STRING_KEY = SYSTEM_PREFIX + "cacheOutputStream";
 
 	private static final String LOGGER_PROPERTY_CXF = "org.apache.cxf.Logger";
 	private static final String LOGGER_IMP_CXF = "org.apache.cxf.common.logging.Slf4jLogger";
