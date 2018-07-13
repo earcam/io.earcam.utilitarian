@@ -54,7 +54,7 @@ final class Levels implements LoggingBuilder.LogAtLevel, LoggerName {
 
 	private static boolean isNullOrEmpty(String property)
 	{
-		return property == null || property.isEmpty();
+		return property == null;
 	}
 
 

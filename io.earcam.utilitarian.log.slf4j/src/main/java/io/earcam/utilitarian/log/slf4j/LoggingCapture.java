@@ -50,9 +50,7 @@ final class LoggingCapture {
 			setPrintStream(Exceptional.apply(LoggingCapture::newPrintStream, capture));
 			execute(runnable);
 		} finally {
-			if(original != null) {
-				setPrintStream(original);
-			}
+			setPrintStream(original);
 		}
 	}
 
@@ -77,6 +75,7 @@ final class LoggingCapture {
 
 	static boolean useStdOut()
 	{
+		System.getProperty(LOG_FILE_KEY);
 		return "System.out".equals(System.getProperty(LOG_FILE_KEY, "System.err"));
 	}
 

@@ -29,10 +29,14 @@ import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
 // EARCAM_SNIPPET_END: imports
 
+import javax.annotation.concurrent.NotThreadSafe;
+
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@NotThreadSafe
 public class LoggingTest {
 
 	@Test
@@ -82,5 +86,29 @@ public class LoggingTest {
 		String captured = Logging.capture(() -> acmeLogger.info(wee));
 		assertThat(captured, containsString(wee));
 		// EARCAM_SNIPPET_END: capture
+	}
+
+
+	@Ignore // not threadsafe funcing Java
+	@Test
+	public void basicCaptureOverStdOut()
+	{
+		System.setProperty(Constants.LOG_FILE_KEY, "System.out");
+		try {
+			logging()
+					.configureFrameworks()
+					.defaultLevel(INFO)
+					.log("com.acme").at(DEBUG);
+	
+			// EARCAM_SNIPPET_BEGIN: capture
+			Logger acmeLogger = LoggerFactory.getLogger("com.acme");
+	
+			String wee = "Weeeeeeeeeee!";
+			String captured = Logging.capture(() -> acmeLogger.info(wee));
+			assertThat(captured, containsString(wee));
+			// EARCAM_SNIPPET_END: capture
+		} finally {
+			System.setProperty(Constants.LOG_FILE_KEY, "System.err");
+		}
 	}
 }
