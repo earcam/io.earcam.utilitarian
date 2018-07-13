@@ -18,8 +18,7 @@
  */
 package io.earcam.utilitarian.log.slf4j;
 
-import static io.earcam.utilitarian.log.slf4j.Constants.DEFAULT_LOG_LEVEL_KEY;
-import static io.earcam.utilitarian.log.slf4j.Constants.LOG_KEY_PREFIX;
+import static io.earcam.utilitarian.log.slf4j.Constants.*;
 
 final class Levels implements LoggingBuilder.LogAtLevel, LoggerName {
 

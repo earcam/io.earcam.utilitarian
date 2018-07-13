@@ -51,8 +51,6 @@ import io.earcam.unexceptional.Exceptional;
 @NotThreadSafe
 public final class ExplodedJarInputStream extends JarInputStream {
 
-	private static final int CAFE = 0xCAFE;
-
 	private static class EmptyInputStream extends InputStream {
 
 		public static final InputStream EMPTY_INPUTSTREAM = new EmptyInputStream();
@@ -140,7 +138,7 @@ public final class ExplodedJarInputStream extends JarInputStream {
 		{
 			loadContents();
 			int remaining = available();
-			int length = len > remaining ? remaining : len;
+			int length = Math.min(remaining, len);
 			System.arraycopy(contents, position, b, off, length);
 			position += length;
 			return length;
@@ -272,22 +270,8 @@ public final class ExplodedJarInputStream extends JarInputStream {
 	private void checkCurrent() throws IOException
 	{
 		if(current == null) {
-
-			// we're being read as an inputstream, so must whack out the zip/jar header guff
-			getNextJarEntry();
-			byte[] extra = new byte[4];
-			set16(extra, 0, CAFE);     // extra field id
-			set16(extra, 2, 0);        // extra field size
-
-			current.setExtra(extra);
+			throw new UnsupportedOperationException(ExplodedJarInputStream.class + " cannot currently work as a regular InputStream");
 		}
-	}
-
-
-	private static void set16(byte[] b, int off, int value)
-	{
-		b[off + 0] = (byte) value;
-		b[off + 1] = (byte) (value >> 8);
 	}
 
 

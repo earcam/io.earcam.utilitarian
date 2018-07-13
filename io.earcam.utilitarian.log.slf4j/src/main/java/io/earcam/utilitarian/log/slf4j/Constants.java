@@ -20,10 +20,10 @@ package io.earcam.utilitarian.log.slf4j;
 
 final class Constants {
 
-	static final String SYSTEM_PREFIX = "org.slf4j.simpleLogger.";
-	static final String DEFAULT_LOG_LEVEL_KEY = SYSTEM_PREFIX + "defaultLogLevel";
-	static final String LOG_KEY_PREFIX = SYSTEM_PREFIX + "log.";
-	static final String LOG_FILE_KEY = SYSTEM_PREFIX + "logFile";
+	public static final String SYSTEM_PREFIX = "org.slf4j.simpleLogger.";
+	public static final String DEFAULT_LOG_LEVEL_KEY = SYSTEM_PREFIX + "defaultLogLevel";
+	public static final String LOG_KEY_PREFIX = SYSTEM_PREFIX + "log.";
+	public static final String LOG_FILE_KEY = SYSTEM_PREFIX + "logFile";
 
 
 	private Constants()
