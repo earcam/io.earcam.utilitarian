@@ -33,6 +33,10 @@ public class PdfContentProcessor implements Processor {
 
 	private static final Logger LOG = LoggerFactory.getLogger(PdfContentProcessor.class);
 
+	static {
+		System.setProperty("sun.java2d.cmm", "sun.java2d.cmm.kcms.KcmsServiceProvider");
+	}
+
 
 	@Override
 	public void process(Document document)
