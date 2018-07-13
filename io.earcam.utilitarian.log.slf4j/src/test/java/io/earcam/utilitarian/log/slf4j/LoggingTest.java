@@ -99,10 +99,10 @@ public class LoggingTest {
 					.configureFrameworks()
 					.defaultLevel(INFO)
 					.log("com.acme").at(DEBUG);
-	
+
 			// EARCAM_SNIPPET_BEGIN: capture
 			Logger acmeLogger = LoggerFactory.getLogger("com.acme");
-	
+
 			String wee = "Weeeeeeeeeee!";
 			String captured = Logging.capture(() -> acmeLogger.info(wee));
 			assertThat(captured, containsString(wee));

@@ -23,6 +23,7 @@ import static io.earcam.utilitarian.security.Certificates.DN_LOCALHOST;
 import static io.earcam.utilitarian.security.Certificates.certificate;
 import static io.earcam.utilitarian.security.Certificates.CertificateBuilder.localDate;
 import static io.earcam.utilitarian.security.Keys.rsa;
+import static java.time.ZoneId.systemDefault;
 import static java.util.concurrent.TimeUnit.DAYS;
 //EARCAM_SNIPPET_END: imports
 import static org.hamcrest.Matchers.*;
@@ -34,8 +35,6 @@ import java.security.cert.X509Certificate;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
-import java.util.concurrent.TimeUnit;
 
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
@@ -139,7 +138,7 @@ public class CertificatesTest {
 	@Test
 	public void validFor()
 	{
-		LocalDate from = LocalDate.now().plus(1L, ChronoUnit.DAYS);
+		LocalDate from = LocalDate.now(systemDefault()).plus(1L, ChronoUnit.DAYS);
 		X509Certificate x509 = certificate(RSA, "subject")
 				.validFor(1, DAYS)
 				.toX509();
