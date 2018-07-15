@@ -22,8 +22,7 @@ import static io.earcam.utilitarian.security.KeyStores.decode;
 import static io.earcam.utilitarian.security.KeyStores.keyStore;
 import static io.earcam.utilitarian.security.KeyStores.encode;
 import static io.earcam.utilitarian.security.Keys.rsa;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
 import java.security.KeyPair;

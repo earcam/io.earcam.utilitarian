@@ -20,12 +20,10 @@ package io.earcam.utilitarian.security;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.security.Key;
 import java.security.KeyPair;
 import java.security.KeyStore;
 import java.security.KeyStore.LoadStoreParameter;
 import java.security.PrivateKey;
-import java.security.PublicKey;
 import java.security.cert.Certificate;
 
 import io.earcam.unexceptional.Exceptional;
@@ -38,12 +36,9 @@ public class KeyStores {
 
 	public static KeyPair keyPair(KeyStore store, String alias, char[] password)
 	{
-		Key key = Exceptional.apply(store::getKey, alias, password);
-		if(key instanceof PublicKey) {
-			throw new IllegalArgumentException("private key not found for alias: " + alias);
-		}
+		PrivateKey key = PrivateKey.class.cast(Exceptional.apply(store::getKey, alias, password));
 		Certificate certificate = Exceptional.apply(store::getCertificate, alias);
-		return new KeyPair(certificate.getPublicKey(), (PrivateKey) key);
+		return new KeyPair(certificate.getPublicKey(), key);
 	}
 
 

@@ -59,7 +59,7 @@ public class Certificates {
 		@SuppressWarnings("squid:S1313") // SonarQube false-positive; not an IP address
 		private static final String EXTENSION_KEY_USAGE = "2.5.29.15";
 		@SuppressWarnings("squid:S1313") // SonarQube false-positive; not an IP address
-		private static final String EXTENSION_MAY_ACT_AS_CA = "2.5.29.19";
+		static final String EXTENSION_MAY_ACT_AS_CA = "2.5.29.19";
 		private String issuerName = "acme";
 		private String subjectName;
 		private BigInteger serial = BigInteger.ONE;
@@ -249,16 +249,25 @@ public class Certificates {
 
 	public static X509Certificate localhostCertificate(KeyPair keys)
 	{
-		return certificate(keys)
-				.subject(DN_LOCALHOST)
-				.toX509();
+		return hostCertificate(keys, DN_LOCALHOST);
 	}
 
 
+	/**
+	 * @deprecated
+	 * @see #localhostCertificate(KeyPair)
+	 */
+	@Deprecated
 	public static X509Certificate hostCertificate(KeyPair keys)
 	{
+		throw new UnsupportedOperationException();
+	}
+
+
+	public static X509Certificate hostCertificate(KeyPair keys, String hostname)
+	{
 		return certificate(keys)
-				.subject(DN_LOCALHOST)
+				.subject(hostname)
 				.toX509();
 	}
 }

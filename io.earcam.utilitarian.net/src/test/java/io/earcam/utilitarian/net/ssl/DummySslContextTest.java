@@ -48,6 +48,8 @@ public class DummySslContextTest {
 	@Test
 	public void clientAndServer() throws Exception
 	{
+		DummySslContext.enableSslDebug();  // ⓘ
+
 		int port = findFreePort();  // ⓘ
 
 		String hostname = "localhost";

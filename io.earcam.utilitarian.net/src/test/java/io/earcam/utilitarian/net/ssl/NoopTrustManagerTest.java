@@ -37,6 +37,13 @@ public class NoopTrustManagerTest {
 
 
 	@Test
+	public void clientAreAlwaysTrusted() throws CertificateException
+	{
+		new NoopTrustManager(false).checkClientTrusted(null, null);
+	}
+
+
+	@Test
 	public void serverNeverTrusted()
 	{
 		try {

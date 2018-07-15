@@ -41,6 +41,7 @@ import org.junit.Test;
 
 public class CertificatesTest {
 
+	private static final byte BYTE_ZERO = 0;
 	// EARCAM_SNIPPET_BEGIN: keypair
 	private static final KeyPair RSA = rsa();
 	// EARCAM_SNIPPET_END: keypair
@@ -65,6 +66,17 @@ public class CertificatesTest {
 		// eh? Matchers.equalToIgnoringWhiteSpace() not working or one-sided?
 		// assertThat(x509.getSubjectDN().getName(), is(equalToIgnoringWhiteSpace(DN_LOCALHOST)));
 		assertThat(x509.getSubjectDN().getName(), is(equalTo(DN_LOCALHOST.replaceAll("\\s+", ""))));
+	}
+
+
+	@SuppressWarnings("deprecation")
+	@Test
+	public void deprecatedHostCertificateThrows()
+	{
+		try {
+			Certificates.hostCertificate(RSA);
+			fail();
+		} catch(UnsupportedOperationException uoe) {}
 	}
 
 
@@ -144,5 +156,38 @@ public class CertificatesTest {
 				.toX509();
 
 		assertThat(localDate(x509.getNotAfter()), is(equalTo(from)));
+	}
+
+
+	@Test
+	public void canNotSignOtherCertificates()
+	{
+		X509Certificate x509 = certificate()
+				.issuer("hum")
+				.subject("bug")
+				.serial(2)
+				.key(RSA)
+				.toX509();
+
+		byte[] extensionValue = x509.getExtensionValue(Certificates.CertificateBuilder.EXTENSION_MAY_ACT_AS_CA);
+
+		assertThat(extensionValue[3], is(BYTE_ZERO));
+	}
+
+
+	@Test
+	public void canSignOtherCertificates()
+	{
+		X509Certificate x509 = certificate()
+				.issuer("hum")
+				.subject("bug")
+				.serial(2)
+				.key(RSA)
+				.canSignOtherCertificates()
+				.toX509();
+
+		byte[] extensionValue = x509.getExtensionValue(Certificates.CertificateBuilder.EXTENSION_MAY_ACT_AS_CA);
+
+		assertThat(extensionValue[3], is(not(BYTE_ZERO)));
 	}
 }
