@@ -87,21 +87,21 @@ public final class ExplodedJarInputStream extends JarInputStream {
 		@Override
 		public boolean isDirectory()
 		{
-			return path.toFile().isDirectory();
+			return path().toFile().isDirectory();
 		}
 
 
 		@Override
 		public FileTime getCreationTime()
 		{
-			return Exceptional.apply(Files::readAttributes, path, BasicFileAttributes.class).creationTime();
+			return Exceptional.apply(Files::readAttributes, path(), BasicFileAttributes.class).creationTime();
 		}
 
 
 		@Override
 		public FileTime getLastModifiedTime()
 		{
-			return Exceptional.apply(Files::getLastModifiedTime, path);
+			return Exceptional.apply(Files::getLastModifiedTime, path());
 		}
 
 
@@ -115,7 +115,7 @@ public final class ExplodedJarInputStream extends JarInputStream {
 		@Override
 		public long getSize()
 		{
-			return Exceptional.apply(Files::size, path);
+			return Exceptional.apply(Files::size, path());
 		}
 
 
@@ -129,7 +129,7 @@ public final class ExplodedJarInputStream extends JarInputStream {
 		private void loadContents()
 		{
 			if(contents == null) {
-				contents = Exceptional.apply(Files::readAllBytes, path);
+				contents = Exceptional.apply(Files::readAllBytes, path());
 			}
 		}
 
