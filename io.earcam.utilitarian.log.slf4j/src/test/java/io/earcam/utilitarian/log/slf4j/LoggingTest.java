@@ -29,12 +29,16 @@ import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
 // EARCAM_SNIPPET_END: imports
 
+import java.lang.reflect.Method;
+
 import javax.annotation.concurrent.NotThreadSafe;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.simple.SimpleLogger;
+
+import io.earcam.unexceptional.Exceptional;
 
 @NotThreadSafe
 public class LoggingTest {
@@ -72,12 +76,14 @@ public class LoggingTest {
 
 
 	@Test
-	public void basicCapture()
+	public void basicCaptureOverStdErr()
 	{
+		forceSimpleLoggerResetTo("System.err");
+
 		logging()
 				.configureFrameworks()
 				.defaultLevel(INFO)
-				.log("com.acme").at(DEBUG);
+				.log("com.acme.std.err").at(DEBUG);
 
 		// EARCAM_SNIPPET_BEGIN: capture
 		Logger acmeLogger = LoggerFactory.getLogger("com.acme");
@@ -89,26 +95,33 @@ public class LoggingTest {
 	}
 
 
-	@Ignore // not threadsafe funcing Java
+	private void forceSimpleLoggerResetTo(String output)
+	{
+		System.setProperty(Constants.LOG_FILE_KEY, output);
+		try {
+			Method init = SimpleLogger.class.getDeclaredMethod("init");
+			init.setAccessible(true);
+			init.invoke(null);
+		} catch(SecurityException | IllegalArgumentException | ReflectiveOperationException e) {
+			Exceptional.rethrow(e);
+		}
+	}
+
+
 	@Test
 	public void basicCaptureOverStdOut()
 	{
-		System.setProperty(Constants.LOG_FILE_KEY, "System.out");
-		try {
-			logging()
-					.configureFrameworks()
-					.defaultLevel(INFO)
-					.log("com.acme").at(DEBUG);
+		forceSimpleLoggerResetTo("System.out");
 
-			// EARCAM_SNIPPET_BEGIN: capture
-			Logger acmeLogger = LoggerFactory.getLogger("com.acme");
+		logging()
+				.configureFrameworks()
+				.defaultLevel(INFO)
+				.log("com.acme.std.out").at(DEBUG);
 
-			String wee = "Weeeeeeeeeee!";
-			String captured = Logging.capture(() -> acmeLogger.info(wee));
-			assertThat(captured, containsString(wee));
-			// EARCAM_SNIPPET_END: capture
-		} finally {
-			System.setProperty(Constants.LOG_FILE_KEY, "System.err");
-		}
+		Logger acmeLogger = LoggerFactory.getLogger("com.acme");
+
+		String wee = "Weeeeeeeeeee!";
+		String captured = Logging.capture(() -> acmeLogger.info(wee));
+		assertThat(captured, containsString(wee));
 	}
 }

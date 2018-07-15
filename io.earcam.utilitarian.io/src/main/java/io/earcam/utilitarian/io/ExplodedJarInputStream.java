@@ -267,7 +267,7 @@ public final class ExplodedJarInputStream extends JarInputStream {
 	}
 
 
-	private void checkCurrent() throws IOException
+	private void checkCurrent()
 	{
 		if(current == null) {
 			throw new UnsupportedOperationException(ExplodedJarInputStream.class + " cannot currently work as a regular InputStream");

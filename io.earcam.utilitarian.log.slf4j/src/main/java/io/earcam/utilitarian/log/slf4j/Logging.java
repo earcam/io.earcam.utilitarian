@@ -106,7 +106,7 @@ public final class Logging implements LoggingBuilder, LoggerName {
 
 	/**
 	 * If you're reliant on log output for test assertions then something is probably wrong.
-	 * That said cases (such as refactoring age-old legacy code) exist
+	 * That said, cases (such as refactoring age-old legacy code) do exist
 	 *
 	 * @param runnable
 	 * @return the captured log output
