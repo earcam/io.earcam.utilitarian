@@ -42,6 +42,12 @@ public class KeyStores {
 	}
 
 
+	public static KeyStore keyStore(KeyPairCredential credential, Certificate... certificates)
+	{
+		return keyStore(credential.name(), credential.password(), credential.pair(), certificates);
+	}
+
+
 	/**
 	 * 
 	 * @param alias key alias

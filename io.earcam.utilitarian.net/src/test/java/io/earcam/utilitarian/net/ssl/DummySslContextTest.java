@@ -39,7 +39,6 @@ import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpsConfigurator;
 import com.sun.net.httpserver.HttpsServer;
 
-@SuppressWarnings("restriction")
 public class DummySslContextTest {
 
 	final String serverResponse = "hello Untrustworthy, Unverified and Unknown World Wide Web";

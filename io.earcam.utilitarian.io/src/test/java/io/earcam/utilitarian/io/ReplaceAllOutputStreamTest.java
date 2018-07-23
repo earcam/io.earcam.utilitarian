@@ -21,8 +21,12 @@ package io.earcam.utilitarian.io;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.*;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -88,5 +92,27 @@ public class ReplaceAllOutputStreamTest {
 			output.write(out);
 		}
 		Assert.assertThat(text(baos.toByteArray()), is(equalTo("ampledsd")));
+	}
+
+
+	@Test
+	public void whenClosedThenClosesUnderlying() throws IOException
+	{
+		AtomicBoolean closed = new AtomicBoolean(false);
+		OutputStream dummy = new OutputStream() {
+
+			@Override
+			public void write(int b) throws IOException
+			{}
+
+
+			@Override
+			public void close() throws IOException
+			{
+				closed.set(true);
+			}
+		};
+		try(ReplaceAllOutputStream output = new ReplaceAllOutputStream(new byte[1], new byte[1], dummy)) {}
+		assertThat(closed.get(), is(true));
 	}
 }

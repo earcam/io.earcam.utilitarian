@@ -43,7 +43,6 @@ import com.sun.net.httpserver.HttpServer;
 
 import io.earcam.utilitarian.net.FreePortFinder;
 
-@SuppressWarnings("restriction")
 public class SitemapsTest {
 
 	private static final Path SITE_BASE_DIR = Paths.get("src", "test", "resources", "dummy-site");

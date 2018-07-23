@@ -41,9 +41,11 @@ public class KeyStoresTest {
 	private final String alias = "this.is.an.alias";
 
 	private final KeyPair pair = rsa();
+
+	private final KeyPairCredential credential = new KeyPairCredential(pair, alias, aliasPassword);
 	private final X509Certificate certificate = Certificates.localhostCertificate(pair);
 
-	private KeyStore keyStore = keyStore(alias, aliasPassword, pair, certificate);
+	private KeyStore keyStore = keyStore(credential, certificate);
 
 
 	@Test

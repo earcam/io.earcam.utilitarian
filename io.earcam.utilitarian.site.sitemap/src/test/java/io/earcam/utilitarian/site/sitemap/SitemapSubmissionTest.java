@@ -44,7 +44,6 @@ import com.sun.net.httpserver.HttpServer;
 import io.earcam.unexceptional.Exceptional;
 import io.earcam.utilitarian.net.FreePortFinder;
 
-@SuppressWarnings("restriction")
 public class SitemapSubmissionTest {
 
 	@Test

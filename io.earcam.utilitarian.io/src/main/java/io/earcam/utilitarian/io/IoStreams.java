@@ -66,9 +66,11 @@ public final class IoStreams {
 		Objects.requireNonNull(out, "out");
 		// TODO buffer this
 		int b;
+		long c = 0;
 		while((b = get(in::read)) != -1) {
 			accept(out::write, b);
+			++c;
 		}
-		return -1;
+		return c;
 	}
 }
