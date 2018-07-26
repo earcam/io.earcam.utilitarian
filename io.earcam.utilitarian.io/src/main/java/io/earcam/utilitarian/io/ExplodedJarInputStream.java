@@ -24,15 +24,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
 import java.util.jar.Manifest;
@@ -42,14 +39,15 @@ import javax.annotation.concurrent.NotThreadSafe;
 import io.earcam.unexceptional.Exceptional;
 
 /**
- * BEWARE; CURRENT ISSUES - CANNOT BE WRAPPED BY ANOTHER JarInputStream, CANNOT BE READ AS A NORMAL INPUT STREAM
- * TODO needs to work as proper input stream (i.e if next zip entry not called but {@link #read()} directly)
+ * BEWARE OF LIMITATIONS; CANNOT BE WRAPPED BY ANOTHER JarInputStream, CANNOT BE READ AS A NORMAL INPUT STREAM
  * 
  * TODO performance: {@link ExplodedJarEntry#loadContents()} should just be wrapping FileInputStream...
  */
 @SuppressWarnings("squid:MaximumInheritanceDepth") // SonarQube; Not much can be done about this... dirty hack anyhoo
 @NotThreadSafe
 public final class ExplodedJarInputStream extends JarInputStream {
+
+	private static final Path MANIFEST_PATH = Paths.get("META-INF", "MANIFEST.MF");
 
 	private static class EmptyInputStream extends InputStream {
 
@@ -220,29 +218,15 @@ public final class ExplodedJarInputStream extends JarInputStream {
 		if(!directory.toFile().isDirectory()) {
 			throw new IOException("'" + directory + "' is not a directory");
 		}
-		return new ExplodedJarInputStream(directory, list(directory).iterator());
-	}
-
-
-	private static Set<Path> list(Path path) throws IOException
-	{
-		Set<Path> files = new HashSet<>();
-		try(DirectoryStream<Path> stream = Files.newDirectoryStream(path)) {
-			for(Path entry : stream) {
-				files.add(entry.toRealPath());
-				if(entry.toFile().isDirectory()) {
-					files.addAll(list(entry));
-				}
-			}
-		}
-		return files;
+		RecursivePathIterator rpi = new RecursivePathIterator(directory);
+		return new ExplodedJarInputStream(directory, new Filterator<Path>(rpi, MANIFEST_PATH));
 	}
 
 
 	@Override
 	public JarEntry getNextJarEntry() throws IOException
 	{
-		current = iterator.hasNext() ? new ExplodedJarEntry(iterator.next()) : null;
+		current = iterator.hasNext() ? new ExplodedJarEntry(iterator.next().toRealPath()) : null;
 		return current;
 	}
 
@@ -251,7 +235,7 @@ public final class ExplodedJarInputStream extends JarInputStream {
 	public Manifest getManifest()
 	{
 		Manifest manifest = new Manifest();
-		Path file = directory.resolve(Paths.get("META-INF", "MANIFEST.MF"));
+		Path file = directory.resolve(MANIFEST_PATH);
 		if(file.toFile().exists()) {
 			closeAfterAccepting(FileInputStream::new, file.toFile(), manifest::read);
 		}
