@@ -206,7 +206,7 @@ public class Netlify {
 	private void doWriteZip(ZipOutputStream zip, Map<String, Path> baseDirs)
 	{
 		@SuppressWarnings("squid:S1905") // false positive; cast IS required
-		CheckedConsumer<byte[]> writeThenClose = ((CheckedConsumer<byte[]>) zip::write).andThen(b -> zip.closeEntry());
+		CheckedConsumer<byte[], IOException> writeThenClose = ((CheckedConsumer<byte[], IOException>) zip::write).andThen(b -> zip.closeEntry());
 
 		for(Entry<String, Path> e : baseDirs.entrySet()) {
 			EmeticStream.emesis(Files::walk, e.getValue())
