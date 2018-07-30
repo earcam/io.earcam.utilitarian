@@ -18,9 +18,6 @@
  */
 package io.earcam.utilitarian.io;
 
-import static io.earcam.unexceptional.Exceptional.accept;
-import static io.earcam.unexceptional.Exceptional.get;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -33,6 +30,9 @@ import javax.annotation.WillNotClose;
 
 @ParametersAreNonnullByDefault
 public final class IoStreams {
+
+	private static final int BUFFER_SIZE = 8192;
+
 
 	private IoStreams()
 	{}
@@ -58,19 +58,25 @@ public final class IoStreams {
 	 * 
 	 * @param input read from
 	 * @param output write to, but does not close
+	 * @return the total number of bytes transferred
 	 * @throws UncheckedIOException if an {@link IOException} this thrown
 	 */
 	public static long transfer(@WillNotClose InputStream in, @WillNotClose OutputStream out)
 	{
 		Objects.requireNonNull(in, "in");
 		Objects.requireNonNull(out, "out");
-		// TODO buffer this
-		int b;
-		long c = 0;
-		while((b = get(in::read)) != -1) {
-			accept(out::write, b);
-			++c;
+
+		byte[] buffer = new byte[BUFFER_SIZE];
+		long count = 0;
+		int read;
+		try {
+			while((read = in.read(buffer, 0, BUFFER_SIZE)) != -1) {
+				out.write(buffer, 0, read);
+				count += read;
+			}
+			return count;
+		} catch(IOException e) {
+			throw new UncheckedIOException(e);
 		}
-		return c;
 	}
 }

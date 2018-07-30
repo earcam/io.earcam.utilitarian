@@ -120,7 +120,7 @@ public final class ExplodedJarInputStream extends JarInputStream {
 		public int read()
 		{
 			loadContents();
-			return (position == contents.length) ? -1 : (contents[position++] ^ 0xFF_FF_FF_00);
+			return (available() == 0) ? -1 : (contents[position++] ^ 0xFF_FF_FF_00);
 		}
 
 
@@ -136,6 +136,9 @@ public final class ExplodedJarInputStream extends JarInputStream {
 		{
 			loadContents();
 			int remaining = available();
+			if(remaining == 0) {
+				return -1;
+			}
 			int length = Math.min(remaining, len);
 			System.arraycopy(contents, position, b, off, length);
 			position += length;
