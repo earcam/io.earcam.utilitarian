@@ -482,6 +482,7 @@
 		
 										<argument>${project.reporting.outputDirectory}@/</argument>
 										<argument>${project.basedir}/io.earcam.utilitarian.io/target/site/@/io/</argument>
+										<argument>${project.basedir}/io.earcam.utilitarian.io.file/target/site/@/io/file</argument>
 										<argument>${project.basedir}/io.earcam.utilitarian.log.slf4j/target/site/@/log/slf4j/</argument>
 										<argument>${project.basedir}/io.earcam.utilitarian.net/target/site/@/net/</argument>
 										<argument>${project.basedir}/io.earcam.utilitarian.site.deploy.netlify/target/site/@/site/deploy/netlify/</argument>
