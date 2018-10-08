@@ -96,8 +96,7 @@ public final class DummySslContext {
 	 */
 	public static SSLContext serverSslContext(String host)
 	{
-		char[] password = "pastWeird".toCharArray();
-		return Exceptional.apply(DummySslContext::serverSslContext, host, password);
+		return Exceptional.apply(DummySslContext::serverSslContext, host, new char[] {'p', 'a', 's', 't', 'W', 'e', 'i', 'r', 'd'});
 	}
 
 

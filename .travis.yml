@@ -31,7 +31,7 @@ before_script:
 - wget https://bitbucket.org/earcam/io.earcam.maven/raw/master/io.earcam.maven.configuration/src/main/resources/settings.xml  -O $HOME/ci-settings.xml
 - mvn -v
 script:
-- mvn --settings $HOME/ci-settings.xml -U -P analyse,report,sonar  -Drevapi.skip=true
-- mvn --settings $HOME/ci-settings.xml -U -P jdk-oracle,analyse,report,site-graphic,site  -Drevapi.skip=true
-- #mvn --settings $HOME/ci-settings.xml org.eluder.coveralls:coveralls-maven-plugin:report
+- mvn -q --settings $HOME/ci-settings.xml -U -P analyse,report,sonar  -Drevapi.skip=true
+- mvn -q --settings $HOME/ci-settings.xml -U -P jdk-oracle,analyse,report,site-graphic,site  -Drevapi.skip=true
+- #mvn -q --settings $HOME/ci-settings.xml org.eluder.coveralls:coveralls-maven-plugin:report
 after_success: bash <(curl -s https://codecov.io/bash)
