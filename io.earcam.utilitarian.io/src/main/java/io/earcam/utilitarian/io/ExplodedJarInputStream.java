@@ -117,18 +117,25 @@ public final class ExplodedJarInputStream extends JarInputStream {
 		}
 
 
-		public int read()
-		{
-			loadContents();
-			return (available() == 0) ? -1 : (contents[position++] ^ 0xFF_FF_FF_00);
-		}
-
-
 		private void loadContents()
 		{
 			if(contents == null) {
 				contents = Exceptional.apply(Files::readAllBytes, path());
 			}
+		}
+
+
+		/**
+		 * @deprecated Never intended for public use.
+		 * Aggressively deprecated, class will become final once dropped.
+		 * 
+		 * @return nothing
+		 * @throws UnsupportedOperationException everytime
+		 */
+		@Deprecated
+		public int read()
+		{
+			throw new UnsupportedOperationException("Never intended for public use. Agressively deprecated.");
 		}
 
 
@@ -237,20 +244,13 @@ public final class ExplodedJarInputStream extends JarInputStream {
 	@Override
 	public Manifest getManifest()
 	{
-		Manifest manifest = new Manifest();
+		Manifest manifest = null;
 		Path file = directory.resolve(MANIFEST_PATH);
 		if(file.toFile().exists()) {
+			manifest = new Manifest();
 			closeAfterAccepting(FileInputStream::new, file.toFile(), manifest::read);
 		}
 		return manifest;
-	}
-
-
-	@Override
-	public int read() throws IOException
-	{
-		checkCurrent();
-		return current.read();
 	}
 
 

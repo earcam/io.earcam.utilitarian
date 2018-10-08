@@ -160,6 +160,15 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<executions>
 					<execution>
+						<id>default-test</id>
+						<goals>
+							<goal>test</goal>
+						</goals>
+						<configuration>
+							<skip>true</skip>
+						</configuration>
+					</execution>
+					<execution>
 						<id>jdk9-test</id>
 						<configuration>
 							<argLine>@{surefire.argLine} ${jpms.supplimental.surefire.argLine}</argLine>

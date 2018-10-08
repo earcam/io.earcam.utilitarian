@@ -23,8 +23,8 @@
 	</distributionManagement>
 
 	<properties>
-		<version.eclipselink>2.7.1</version.eclipselink>
-		<version.log4j2>2.11.0</version.log4j2>
+		<version.eclipselink>2.7.3</version.eclipselink>
+		<version.log4j2>2.11.1</version.log4j2>
 	
 		<skip.execution.pitest>false</skip.execution.pitest>
 		<earcam.project.name.short>log/slf4j</earcam.project.name.short>

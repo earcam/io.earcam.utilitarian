@@ -18,11 +18,19 @@
  */
 package io.earcam.utilitarian.io;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.sameInstance;
+import static org.junit.Assert.fail;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.UncheckedIOException;
 
 import org.junit.Test;
 
@@ -39,5 +47,53 @@ public class IoStreamsTest {
 
 		assertThat(transferred, is(5L));
 		assertThat(out.toByteArray(), is(equalTo(bytes)));
+	}
+
+
+	@Test
+	public void readErrorRethrownAsUnchecked()
+	{
+		final IOException chuck = new IOException("Oh noes");
+
+		InputStream in = new InputStream() {
+			@Override
+			public int read() throws IOException
+			{
+				throw chuck;
+			}
+		};
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+
+		try {
+			IoStreams.transfer(in, out);
+			fail();
+		} catch(UncheckedIOException e) {
+			assertThat(e.getCause(), is(sameInstance(chuck)));
+		}
+
+	}
+
+
+	@Test
+	public void writeErrorRethrownAsUnchecked()
+	{
+		final IOException chuck = new IOException("Oh noes");
+
+		ByteArrayInputStream in = new ByteArrayInputStream("hello".getBytes(UTF_8));
+		OutputStream out = new OutputStream() {
+			@Override
+			public void write(int b) throws IOException
+			{
+				throw chuck;
+			}
+		};
+
+		try {
+			IoStreams.transfer(in, out);
+			fail();
+		} catch(UncheckedIOException e) {
+			assertThat(e.getCause(), is(sameInstance(chuck)));
+		}
+
 	}
 }

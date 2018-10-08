@@ -39,13 +39,13 @@ import io.earcam.utilitarian.io.SplittableOutputStream;
 
 public abstract class AbstractSitemap {
 
+	private static final String XML_HEADER = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" + lineSeparator();
+
 	private static final byte[] TAG_LASTMOD = bytes("lastmod");
 
 	private static final byte[] TAG_LOC = bytes("loc");
 
 	private static final byte[] NL = bytes(lineSeparator());
-
-	private static final String XML_HEADER = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" + lineSeparator();
 
 	private static final byte TAB = '\t';
 

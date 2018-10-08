@@ -38,8 +38,8 @@ import java.util.function.Supplier;
  * </p>
  *
  * <p>
- * A <i>record</i> is defined as any {@code byte}s written between calls to {@link #start()} and
- * {@link #finish()}. Should the maximum file size be specified and the length of a single record (plus
+ * A <i>record</i> is defined as any {@code byte}s written between calls to {@link #beginRecord()} and
+ * {@link #endRecord()}. Should the maximum file size be specified and the length of a single record (plus
  * header and footer) exceed the maximum then a {@link BufferOverflowException} is throw.
  *
  * <p>
@@ -50,7 +50,7 @@ import java.util.function.Supplier;
  * <p>
  * <b>Please note limitation</b>; due to the use of {@link Long} internally, the maximum
  * size per-file is limited to {@value java.lang.Long#MAX_VALUE} bytes (which is
- * 9,223<abbr title="Petabyte; 1 Petabyte == 1,000,000 Gigabytes">PB</abbr>) per split {@link OutputStream} .
+ * 9,223PB or 9,223,000,000GB) per split {@link OutputStream} .
  *
  */
 @SuppressWarnings("squid:S4349") // Sonar: Not applicable IMO
@@ -139,10 +139,10 @@ public class SplittableOutputStream extends OutputStream implements SplittableOu
 	}
 
 
-	private static void checkSanity(byte[] head, byte[] footer, long maxFileSize)
+	private static void checkSanity(byte[] head, byte[] foot, long maxFileSize)
 	{
-		if(head.length + footer.length > maxFileSize) {
-			throw new IllegalArgumentException("header.length + footer.length > maxFileSize: " + head.length + " + " + footer.length + " > " + maxFileSize);
+		if(head.length + foot.length > maxFileSize) {
+			throw new IllegalArgumentException("header.length + footer.length > maxFileSize: " + head.length + " + " + foot.length + " > " + maxFileSize);
 		}
 	}
 
@@ -244,7 +244,8 @@ public class SplittableOutputStream extends OutputStream implements SplittableOu
 
 	private boolean recorded()
 	{
-		return (recordsCount == 1 && buffer.size() > header.length) || (recordsCount != 1 && buffer.size() > 0);
+		return (recordsCount == 1 && buffer.size() > header.length)
+				|| (recordsCount != 1 && buffer.size() > 0);
 	}
 
 
@@ -272,5 +273,9 @@ public class SplittableOutputStream extends OutputStream implements SplittableOu
 			throw new BufferUnderflowException();
 		}
 		endSplit();
+		if(buffer.size() > header.length) {
+			writeBuffer();
+			endSplit();
+		}
 	}
 }

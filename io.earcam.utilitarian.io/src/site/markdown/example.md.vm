@@ -5,6 +5,12 @@
 
 ${h3} Examples
 
+${h4} ExplodedJarInputStream (treat a directory as a zipped JAR)
+
+#snippet( "/src/test/java/io/earcam/utilitarian/io/ExplodedJarInputStreamTest.java", "exploded-jar-0" )
+#snippet( "/src/test/java/io/earcam/utilitarian/io/ExplodedJarInputStreamTest.java", "exploded-jar-1" )
+
+
 ${h4} ReplaceAllInputStream
 
 #snippet( "/src/test/java/io/earcam/utilitarian/io/ReplaceAllInputStreamTest.java", "ReplaceAllInputStream" ) 

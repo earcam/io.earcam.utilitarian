@@ -82,7 +82,7 @@ public class KeyStores {
 		KeyStore keyStore = Exceptional.apply(KeyStore::getInstance, type);
 		Exceptional.accept(keyStore::load, (LoadStoreParameter) null);
 		Exceptional.run(() ->
-		// FIXME check - if there are no certificates then we should not provide the private key but the public?
+		// TODO check - if there are no certificates then we should not provide the private key but the public?
 		keyStore.setKeyEntry(alias, pair.getPrivate(), aliasPassword, certificates));
 		return keyStore;
 	}

@@ -149,8 +149,9 @@ public class SitemapTest {
 				.flatMap(List::stream)
 				.count();
 
-		assertThat("all elements accounted for", urls, is(equalTo(6L)));
 		assertThat(maps, hasSize(expectedNumberOfSplits));
+		assertThat("all elements accounted for", urls, is(equalTo(6L)));
+
 	}
 
 

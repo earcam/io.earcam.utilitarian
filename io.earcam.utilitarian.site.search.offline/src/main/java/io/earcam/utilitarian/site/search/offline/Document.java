@@ -20,15 +20,22 @@ package io.earcam.utilitarian.site.search.offline;
 
 import static java.util.stream.Collectors.joining;
 
-import java.io.IOException;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.UncheckedIOException;
 import java.net.URI;
+import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
+import io.earcam.unexceptional.Closing;
 import io.earcam.unexceptional.Exceptional;
 
 //make this XmlRootElement - get Maven to pump config, copy 'n' paste for "main runner"
@@ -123,12 +130,46 @@ public class Document {
 		String refUrl = relativizeReferenceUri(baseDir, relativeUri, file);
 
 		Document document = new Document(file, refUrl);
+		deduceContentType(file, document);
+		return document;
+	}
+
+
+	private static void deduceContentType(Path file, Document document)
+	{
+		String contentType = null;
+		Iterator<Function<Path, String>> detectors = Arrays.<Function<Path, String>> asList(
+				Document::probeContentType,
+				Document::guessContentTypeFromStream,
+				Document::guessContentTypeFromName).iterator();
+
 		try {
-			document.field(CONTENT_TYPE, Files.probeContentType(file));
-		} catch(IOException e) {
+			while(contentType == null && detectors.hasNext()) {
+				contentType = detectors.next().apply(file);
+			}
+		} catch(UncheckedIOException e) {
 			Exceptional.swallow(e);
 		}
-		return document;
+		document.field(CONTENT_TYPE, contentType);
+	}
+
+
+	private static String probeContentType(Path file)
+	{
+		return Exceptional.apply(Files::probeContentType, file);
+	}
+
+
+	private static String guessContentTypeFromStream(Path file)
+	{
+		BufferedInputStream input = new BufferedInputStream(Exceptional.apply(FileInputStream::new, file.toFile()));
+		return Closing.closeAfterApplying(input, URLConnection::guessContentTypeFromStream);
+	}
+
+
+	private static String guessContentTypeFromName(Path file)
+	{
+		return URLConnection.guessContentTypeFromName(file.getFileName().toString());
 	}
 
 

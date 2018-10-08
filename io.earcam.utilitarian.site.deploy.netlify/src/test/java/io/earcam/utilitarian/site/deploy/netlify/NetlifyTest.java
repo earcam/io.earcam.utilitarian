@@ -72,7 +72,7 @@ public class NetlifyTest {
 
 	static {
 		System.setProperty("org.slf4j.simpleLogger.defaultLogLevel", "trace");
-		System.setProperty("org.slf4j.simpleLogger.log.org.eclipse.jetty", "warn");
+		System.setProperty("org.slf4j.simpleLogger.log.org.eclipse.jetty", "info");
 	}
 	private static final Logger LOG = LoggerFactory.getLogger(NetlifyTest.class);
 

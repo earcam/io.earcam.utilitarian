@@ -98,17 +98,14 @@ public class CertificatesTest {
 	public void issuerName()
 	{
 		// EARCAM_SNIPPET_BEGIN: certificate
-		String name = "foo";
-
 		X509Certificate x509 = certificate()
-				.issuer(name)
-				.subject("bar")
-				.serial(2)
+				.issuer("foo corp")
+				.subject("bar cert")
 				.key(RSA)
 				.toX509();
 		// EARCAM_SNIPPET_END: certificate
 
-		assertThat(x509.getIssuerDN().getName(), is(equalTo("CN=" + name)));
+		assertThat(x509.getIssuerDN().getName(), is(equalTo("CN=" + "foo corp")));
 	}
 
 

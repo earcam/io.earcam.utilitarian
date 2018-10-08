@@ -41,6 +41,7 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 import io.earcam.unexceptional.Exceptional;
+import io.earcam.utilitarian.io.ExplodedJarInputStream.ExplodedJarEntry;
 
 public class ExplodedJarInputStreamTest {
 
@@ -112,9 +113,10 @@ public class ExplodedJarInputStreamTest {
 		assertThat(entry.getSize(), is((long) bytecode.length));
 		assertThat(entry.getSize(), is(archivedPath.toFile().length()));
 
-		assertThat(entry.getTime(),
-				is(equalTo(Exceptional.apply(Files::readAttributes, archivedPath, BasicFileAttributes.class).creationTime().toMillis())));
-		assertThat(entry.getCreationTime(), is(equalTo(Files.getLastModifiedTime(archivedPath, NOFOLLOW_LINKS))));
+		assertThat(entry.getCreationTime(),
+				is(equalTo(Exceptional.apply(Files::readAttributes, archivedPath, BasicFileAttributes.class).creationTime())));
+		assertThat(entry.getLastModifiedTime(), is(equalTo(Files.getLastModifiedTime(archivedPath, NOFOLLOW_LINKS))));
+		assertThat(entry.getTime(), is(equalTo(entry.getLastModifiedTime().toMillis())));
 
 		new ClassLoader(null) {
 			{
@@ -166,10 +168,13 @@ public class ExplodedJarInputStreamTest {
 		boolean manifestChecked = false;
 		boolean archivedClassChecked = false;
 
+		// EARCAM_SNIPPET_BEGIN: exploded-jar-0
 		try(JarInputStream input = ExplodedJarInputStream.jarInputStreamFrom(jarDir)) {
 
 			Manifest manifest = input.getManifest();
-			assertThat(manifest.getMainAttributes().keySet(), is(empty()));
+			// ...
+			// EARCAM_SNIPPET_END: exploded-jar-0
+			assertThat(manifest, is(nullValue()));
 
 			JarEntry entry;
 			while((entry = input.getNextJarEntry()) != null) {
@@ -191,7 +196,9 @@ public class ExplodedJarInputStreamTest {
 			}
 			assertThat(manifestChecked, is(false));
 			assertThat(archivedClassChecked, is(true));
+			// EARCAM_SNIPPET_BEGIN: exploded-jar-1
 		}
+		// EARCAM_SNIPPET_END: exploded-jar-1
 	}
 
 
@@ -260,5 +267,18 @@ public class ExplodedJarInputStreamTest {
 		} while(nextJarEntry.isDirectory());
 
 		assertThat(explodedJar.available(), is(greaterThanOrEqualTo(0)));
+	}
+
+
+	@Deprecated
+	@Test
+	public void explodedJarEntrySingleReadMethodIsEffectivelyUseless() throws IOException
+	{
+		ExplodedJarInputStream in = (ExplodedJarInputStream) ExplodedJarInputStream.jarInputStreamFrom(Paths.get(".").toAbsolutePath());
+		ExplodedJarEntry explodedJarEntry = in.new ExplodedJarEntry(Paths.get(".", "target").toAbsolutePath());
+		try {
+			explodedJarEntry.read();
+			fail();
+		} catch(UnsupportedOperationException e) {}
 	}
 }

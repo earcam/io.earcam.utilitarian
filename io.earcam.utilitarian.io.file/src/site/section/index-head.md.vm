@@ -1,0 +1,4 @@
+Recursive file operations; copy, move, delete.
+
+* Works across partitions
+* Optionally follow symbolic links

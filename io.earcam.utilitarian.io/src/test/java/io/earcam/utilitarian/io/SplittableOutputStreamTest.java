@@ -21,13 +21,14 @@ package io.earcam.utilitarian.io;
 //EARCAM_SNIPPET_BEGIN: imports
 import static io.earcam.utilitarian.io.SplittableOutputStream.splittable;
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.joining;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
+//EARCAM_SNIPPET_END: imports
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
-//EARCAM_SNIPPET_END: imports
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -37,6 +38,7 @@ import java.nio.BufferUnderflowException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 import org.hamcrest.Description;
@@ -143,7 +145,7 @@ public class SplittableOutputStreamTest {
 
 
 	@Test
-	public void sizeOfheadPlusFootCannotExceedMaxSize() throws IOException
+	public void sizeOfHeadPlusFootCannotExceedMaxSize() throws IOException
 	{
 		try {
 			splittable(ByteArrayOutputStream::new, new byte[42], new byte[42]).maxSize(81).outputStream();
@@ -435,4 +437,65 @@ public class SplittableOutputStreamTest {
 		assertThat(supplier, hasSuppliedUsedOutputStreams(3));
 	}
 	// EARCAM_SNIPPET_END: examples
+
+
+	@Test
+	public void regressionEnsureLastRecordWritten() throws Exception
+	{
+		byte[] head = bytes("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n" +
+				"<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n");
+		byte[] foot = bytes("</urlset>\n");
+
+		// @formatter:off
+		byte[][] records = {
+				bytes(
+						"\t<url>\n" + 
+						"\t\t<loc>http://example.com/directory%25b/directory-ba/index.html</loc>\n" + 
+						"\t\t<lastmod>2018-07-30</lastmod>\n" + 
+						"\t</url>\n"),
+				bytes(
+						"\t<url>\n" + 
+						"\t\t<loc>http://example.com/directory%25b/directory-bc/index.html</loc>\n" + 
+						"\t\t<lastmod>2018-07-30</lastmod>\n" + 
+						"\t</url>\n"),
+				bytes(
+						"\t<url>\n" + 
+						"\t\t<loc>http://example.com/directory%25b/directory-bb/index.html</loc>\n" + 
+						"\t\t<lastmod>2018-07-30</lastmod>\n" + 
+						"\t</url>\n"),
+				bytes(
+						"\t<url>\n" + 
+						"\t\t<loc>http://example.com/directory%20a/directory-ab/duplicate-index.html</loc>\n" + 
+						"\t\t<lastmod>2018-07-30</lastmod>\n" + 
+						"\t</url>\n"),
+				bytes(
+						"\t<url>\n" + 
+						"\t\t<loc>http://example.com/directory%20a/directory-ab/duplicate-index.html</loc>\n" + 
+						"\t\t<lastmod>2018-07-30</lastmod>\n" + 
+						"\t</url>\n"),
+				bytes(
+						"\t<url>\n" + 
+						"\t\t<loc>http://example.com/directory%20a/directory-aa/index.html</loc>\n" + 
+						"\t\t<lastmod>2018-07-30</lastmod>\n" + 
+						"\t</url>\n"),
+		};
+		// @formatter:on
+
+		CountingOutputStreamSupplier supplier = new CountingOutputStreamSupplier();
+
+		try(SplittableOutputStream output = splittable(supplier, head, foot).maxSize(400).outputStream()) {
+			for(int i = 0; i < records.length; i++) {
+				output.beginRecord();
+				output.write(records[i]);
+				output.endRecord();
+			}
+		}
+
+		assertThat("all entries accounted for", stream(supplier.toString().split("\n"))
+				.filter(Predicate.isEqual("\t<url>"))
+				.count(), is(6L));
+
+		assertThat("created 4 'files'", supplier.supplied.size(), is(4));
+	}
+
 }

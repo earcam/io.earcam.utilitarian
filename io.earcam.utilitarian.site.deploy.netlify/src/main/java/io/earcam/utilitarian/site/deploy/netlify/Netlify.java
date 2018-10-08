@@ -211,11 +211,12 @@ public class Netlify {
 		for(Entry<String, Path> e : baseDirs.entrySet()) {
 			EmeticStream.emesis(Files::walk, e.getValue())
 					.sequential()
+					.sorted(Path::compareTo)
 					.filter(Files::isRegularFile)
-					// Quick hack, TODO add excludes
-					.filter(p -> !p.getFileName().toString().equals(".io.earcam.utilitarian.site.sitemap.parameters.ser"))
+					// Quick hack, TODO add excludes, but sitemap should also clean up it's cache files
+					.filter(p -> !p.getFileName().toString().startsWith(".io.earcam.utilitarian.site.sitemap."))
+					.peek(f -> LOG.debug("Writing to zip: {}", f))
 					.peek(f -> zipEntry(zip, e, f))
-					.peek(f -> LOG.debug("Writing {} to zip... {}", f, e.getValue()))
 					.map(Files::readAllBytes)
 					.forEach(writeThenClose);
 		}
@@ -228,9 +229,9 @@ public class Netlify {
 	private void zipEntry(ZipOutputStream zip, Entry<String, Path> baseDir, Path file) throws IOException
 	{
 		URI relativePath = baseDir.getValue().toUri().relativize(file.toUri());
-		String absolutePath = baseDir.getKey() + relativePath;   // FIXME baseDir.getKey() must end with slash '/'
+		String absolutePath = baseDir.getKey() + relativePath;
 		ZipEntry entry = new ZipEntry(absolutePath);
-		LOG.debug("Absolute path in site: {}", absolutePath);
+		LOG.debug("Absolute path in site: /{}", absolutePath);
 		entry.setTime(0);
 		entry.setCreationTime(FileTime.from(MIN));
 		entry.setLastAccessTime(FileTime.from(MIN));
