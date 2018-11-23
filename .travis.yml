@@ -17,7 +17,7 @@ addons:
 before_install:
 - sudo add-apt-repository ppa:linuxuprising/java -y
 - sudo apt-get update -q
-- sudo apt-get install oracle-java9-installer oracle-java10-installer -y
+- sudo apt-get install oracle-java9-installer oracle-java11-installer -y
 - export JAVA_8_HOME=/usr/lib/jvm/java-8-oracle
 - export JAVA_HOME=${JAVA_8_HOME}
 - mkdir -p $HOME/.m2
