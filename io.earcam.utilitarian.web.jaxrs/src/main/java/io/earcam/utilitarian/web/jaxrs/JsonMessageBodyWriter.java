@@ -19,6 +19,7 @@
 package io.earcam.utilitarian.web.jaxrs;
 
 import static io.earcam.utilitarian.web.jaxrs.JsonMessageBodyReader.JSONB;
+import static io.earcam.utilitarian.web.jaxrs.JsonMessageBodyReader.isJson;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 import java.io.OutputStream;
@@ -40,7 +41,7 @@ public class JsonMessageBodyWriter implements MessageBodyWriter<Object> {
 	@Override
 	public boolean isWriteable(Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType)
 	{
-		return true;
+		return isJson(mediaType);
 	}
 
 

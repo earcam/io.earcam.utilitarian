@@ -23,14 +23,14 @@ import static io.earcam.utilitarian.security.KeyStores.keyStore;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.security.KeyPair;
 import java.security.KeyStore;
 import java.security.cert.X509Certificate;
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import io.earcam.unexceptional.UncheckedSecurityException;
 

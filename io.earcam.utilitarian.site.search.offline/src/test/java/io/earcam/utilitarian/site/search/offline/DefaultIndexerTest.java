@@ -20,6 +20,7 @@ package io.earcam.utilitarian.site.search.offline;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.stream.Collectors.joining;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.greaterThan;
@@ -27,8 +28,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.io.FileMatchers.aFileWithSize;
 import static org.hamcrest.io.FileMatchers.aReadableFile;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
@@ -45,7 +45,7 @@ import java.util.UUID;
 import java.util.stream.Stream;
 import java.util.zip.GZIPInputStream;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import io.earcam.unexceptional.Exceptional;
 

@@ -20,9 +20,9 @@ package io.earcam.utilitarian.site.sitemap;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.stream.Collectors.toList;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.Assert.assertThat;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -37,7 +37,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Stream;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.sitemaps.index.Sitemapindex;
 import org.sitemaps.index.TSitemap;
 
@@ -45,9 +45,6 @@ import io.earcam.unexceptional.Exceptional;
 import io.earcam.utilitarian.site.sitemap.SitemapIndex;
 import io.earcam.utilitarian.site.sitemap.SitemapParameters;
 
-/**
- * TODO Something's wrong - surely we don't need to actually create the files?? Something wrong in Path.resolve??
- */
 public class SitemapIndexTest {
 
 	private static final String BASE_URL = "http://rock.kasbah.com/shareef/likes";
@@ -60,8 +57,6 @@ public class SitemapIndexTest {
 
 		SitemapParameters parameters = new SitemapParameters(new URI(BASE_URL), fakeBaseDir.resolve("sauce"), fakeBaseDir.resolve("targit"));
 
-		parameters.targetDir.toFile().mkdirs(); // FIXME move into Sitemap code
-
 		List<Path> indices = new ArrayList<>();
 
 		SitemapIndex index = new SitemapIndex(parameters, indices::add);
@@ -70,7 +65,6 @@ public class SitemapIndexTest {
 		Path sitemap = parameters.targetDir.resolve(relativeSitemap);
 
 		touch(sitemap);
-		parameters.targetDir.toFile().mkdirs();
 
 		Stream<String> sitemaps = Stream.of(sitemap).map(Object::toString);
 

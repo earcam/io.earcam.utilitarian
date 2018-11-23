@@ -21,14 +21,14 @@ package io.earcam.utilitarian.charstar;
 import static io.earcam.unexceptional.Closing.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class CharStarTest {
 

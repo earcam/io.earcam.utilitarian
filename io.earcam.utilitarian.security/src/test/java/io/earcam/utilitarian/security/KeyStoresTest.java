@@ -22,15 +22,15 @@ import static io.earcam.utilitarian.security.KeyStores.decode;
 import static io.earcam.utilitarian.security.KeyStores.keyStore;
 import static io.earcam.utilitarian.security.KeyStores.encode;
 import static io.earcam.utilitarian.security.Keys.rsa;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
 
 import java.security.KeyPair;
 import java.security.KeyStore;
 import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import io.earcam.utilitarian.security.Certificates;
 

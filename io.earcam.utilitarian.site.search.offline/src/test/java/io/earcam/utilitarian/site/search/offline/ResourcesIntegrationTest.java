@@ -19,12 +19,12 @@
 package io.earcam.utilitarian.site.search.offline;
 
 import static io.earcam.utilitarian.site.search.offline.Resources.UI_SCRIPT_SEARCH;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
-import static org.junit.Assert.assertThat;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class ResourcesIntegrationTest {
 

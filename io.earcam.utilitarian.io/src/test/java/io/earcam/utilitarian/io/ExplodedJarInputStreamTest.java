@@ -21,7 +21,7 @@ package io.earcam.utilitarian.io;
 import static java.nio.file.LinkOption.NOFOLLOW_LINKS;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -38,7 +38,8 @@ import java.util.jar.JarInputStream;
 import java.util.jar.Manifest;
 
 import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 
 import io.earcam.unexceptional.Exceptional;
 import io.earcam.utilitarian.io.ExplodedJarInputStream.ExplodedJarEntry;
@@ -228,57 +229,60 @@ public class ExplodedJarInputStreamTest {
 		}
 	}
 
+	@Nested // TODO ExplodedJarInputStream doesn't behave like a proper stream... yet
+	public class CurrentUndesirableBehaviour {
 
-	@Test // TODO ExplodedJarInputStream doesn't behave like a proper stream... yet
-	public void failsAsNormalInputStream() throws IOException
-	{
-		Path outputDir = Paths.get("target", "test-classes");
-		JarInputStream explodedJar = ExplodedJarInputStream.explodedJar(outputDir);
+		@Test
+		public void failsAsNormalInputStream() throws IOException
+		{
+			Path outputDir = Paths.get("target", "test-classes");
+			JarInputStream explodedJar = ExplodedJarInputStream.explodedJar(outputDir);
 
-		try {
-			IoStreams.readAllBytes(explodedJar);
-			fail();
-		} catch(UnsupportedOperationException uoe) {}
-	}
-
-
-	@Test // TODO ExplodedJarInputStream doesn't behave like a proper stream... yet
-	public void failsAsNormalInputStreamWithNothingAvailable() throws IOException
-	{
-		Path outputDir = Paths.get("target", "test-classes");
-		JarInputStream explodedJar = ExplodedJarInputStream.explodedJar(outputDir);
-
-		try {
-			explodedJar.available();
-			fail();
-		} catch(UnsupportedOperationException uoe) {}
-	}
+			try {
+				IoStreams.readAllBytes(explodedJar);
+				fail();
+			} catch(UnsupportedOperationException uoe) {}
+		}
 
 
-	@Test // TODO ExplodedJarInputStream doesn't behave like a proper stream... yet
-	public void availableCanBeInvokedOnTheEntries() throws IOException
-	{
-		Path outputDir = Paths.get("target", "test-classes");
-		JarInputStream explodedJar = ExplodedJarInputStream.explodedJar(outputDir);
+		@Test
+		public void failsAsNormalInputStreamWithNothingAvailable() throws IOException
+		{
+			Path outputDir = Paths.get("target", "test-classes");
+			JarInputStream explodedJar = ExplodedJarInputStream.explodedJar(outputDir);
 
-		JarEntry nextJarEntry;
-		do {
-			nextJarEntry = explodedJar.getNextJarEntry();
-		} while(nextJarEntry.isDirectory());
-
-		assertThat(explodedJar.available(), is(greaterThanOrEqualTo(0)));
-	}
+			try {
+				explodedJar.available();
+				fail();
+			} catch(UnsupportedOperationException uoe) {}
+		}
 
 
-	@Deprecated
-	@Test
-	public void explodedJarEntrySingleReadMethodIsEffectivelyUseless() throws IOException
-	{
-		ExplodedJarInputStream in = (ExplodedJarInputStream) ExplodedJarInputStream.jarInputStreamFrom(Paths.get(".").toAbsolutePath());
-		ExplodedJarEntry explodedJarEntry = in.new ExplodedJarEntry(Paths.get(".", "target").toAbsolutePath());
-		try {
-			explodedJarEntry.read();
-			fail();
-		} catch(UnsupportedOperationException e) {}
+		@Test
+		public void availableCanBeInvokedOnTheEntries() throws IOException
+		{
+			Path outputDir = Paths.get("target", "test-classes");
+			JarInputStream explodedJar = ExplodedJarInputStream.explodedJar(outputDir);
+
+			JarEntry nextJarEntry;
+			do {
+				nextJarEntry = explodedJar.getNextJarEntry();
+			} while(nextJarEntry.isDirectory());
+
+			assertThat(explodedJar.available(), is(greaterThanOrEqualTo(0)));
+		}
+
+
+		@Deprecated
+		@Test
+		public void explodedJarEntrySingleReadMethodIsEffectivelyUseless() throws IOException
+		{
+			ExplodedJarInputStream in = (ExplodedJarInputStream) ExplodedJarInputStream.jarInputStreamFrom(Paths.get(".").toAbsolutePath());
+			ExplodedJarEntry explodedJarEntry = in.new ExplodedJarEntry(Paths.get(".", "target").toAbsolutePath());
+			try {
+				explodedJarEntry.read();
+				fail();
+			} catch(UnsupportedOperationException e) {}
+		}
 	}
 }

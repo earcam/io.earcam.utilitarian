@@ -27,14 +27,15 @@ import static java.util.Spliterators.spliterator;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Stream.generate;
 import static java.util.stream.StreamSupport.stream;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class SplitFileSuffixTest {
 

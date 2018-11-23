@@ -21,8 +21,12 @@ package io.earcam.utilitarian.io.file;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.time.ZoneId.systemDefault;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
-import static org.hamcrest.io.FileMatchers.*;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.io.FileMatchers.anExistingDirectory;
+import static org.hamcrest.io.FileMatchers.anExistingFile;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
 import java.nio.file.AccessDeniedException;
@@ -33,10 +37,7 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import org.junit.Assert;
-import org.junit.Test;
-
-import io.earcam.utilitarian.io.file.RecursiveFiles;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test directory structure (where x,y,z are files):
@@ -140,7 +141,7 @@ public class RecursiveFilesTest {
 
 		try {
 			RecursiveFiles.delete(sink);
-			Assert.fail();
+			fail();
 		} catch(AccessDeniedException e) {
 			/* noop */
 		} finally {

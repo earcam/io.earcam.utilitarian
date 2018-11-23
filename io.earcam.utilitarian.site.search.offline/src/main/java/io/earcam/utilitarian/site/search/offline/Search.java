@@ -37,8 +37,7 @@ public class Search {
 	{
 		System.setProperty("org.slf4j.simpleLogger.defaultLogLevel", "trace");
 		if(args.length < 2) {
-			throw new IllegalArgumentException(
-					"Expected first arg to be json-output-dir, then at least a further argument of the form 'baseDir@baseUri'");
+			throw new IllegalArgumentException("Expected first arg to be json-output-dir, then at least a further argument of the form 'baseDir@baseUri'");
 		}
 
 		final String jsonDir = args[0];
@@ -46,9 +45,7 @@ public class Search {
 		for(int i = 1; i < args.length; i++) {
 			int index = args[i].indexOf('@');
 			if(index == -1) {
-				throw new IllegalArgumentException(
-						"Only arguments expected are 'baseDir@baseUri', recieved '" +
-								args[i] + "' at index " + i);
+				throw new IllegalArgumentException("Only arguments expected are 'baseDir@baseUri', recieved '" + args[i] + "' at index " + i);
 			}
 			Path baseDir = Paths.get(args[i].substring(0, index));
 			URI baseUri = Exceptional.uri(args[i].substring(index + 1));

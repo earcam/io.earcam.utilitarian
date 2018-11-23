@@ -112,6 +112,7 @@ public class SitemapParameters implements Externalizable {
 		this.base = ensureTrailingSlash(base);
 		sourceDir = sourcePath;
 		targetDir = targetPath;
+		targetDir.toFile().mkdirs();
 	}
 
 

@@ -24,7 +24,7 @@ import static org.hamcrest.Matchers.*;
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.X509ExtendedKeyManager;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import io.earcam.utilitarian.net.ssl.KeyManagers.DummyX509KeyManager;
 

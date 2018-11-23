@@ -22,12 +22,12 @@ import static io.earcam.unexceptional.Exceptional.uncheckFunction;
 import static io.earcam.utilitarian.site.sitemap.Jaxb.unmarshal;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.stream.Collectors.toList;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
 
 import java.io.IOException;
 import java.net.URI;
@@ -41,7 +41,7 @@ import java.util.UUID;
 import java.util.function.Consumer;
 import java.util.regex.Pattern;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.sitemaps.TUrl;
 import org.sitemaps.Urlset;
 
@@ -69,8 +69,6 @@ public class SitemapTest {
 				new URI(BASE_URL),
 				SITE_BASE_DIR.resolve(Paths.get("directory%b", "directory-ba")),
 				Paths.get("target", "simpleSitemap", UUID.randomUUID().toString()));
-
-		parameters.targetDir.toFile().mkdirs(); // TODO move into Sitemap code
 
 		List<Path> maps = new ArrayList<>();
 
@@ -118,8 +116,6 @@ public class SitemapTest {
 				SITE_BASE_DIR,
 				Paths.get("target", "siteMapFromDirectory", UUID.randomUUID().toString()));
 		parameters.options().setInclude(Pattern.compile(".*\\.html?$"));
-
-		parameters.targetDir.toFile().mkdirs(); // FIXME move into Sitemap code
 
 		Sitemap sitemap = new Sitemap(parameters, generatedFileRecorder);
 		return sitemap;

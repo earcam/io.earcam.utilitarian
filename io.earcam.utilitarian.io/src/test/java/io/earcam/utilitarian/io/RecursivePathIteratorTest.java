@@ -19,8 +19,8 @@
 package io.earcam.utilitarian.io;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class RecursivePathIteratorTest {
 

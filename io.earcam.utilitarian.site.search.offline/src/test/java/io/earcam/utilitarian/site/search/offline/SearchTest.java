@@ -21,9 +21,9 @@ package io.earcam.utilitarian.site.search.offline;
 import static io.earcam.unexceptional.Exceptional.apply;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Collections.singletonMap;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
 
 import java.net.URI;
 import java.nio.file.Files;
@@ -34,7 +34,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Stream;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import io.earcam.unexceptional.Exceptional;
 

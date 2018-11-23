@@ -21,15 +21,15 @@ package io.earcam.utilitarian.site.search.offline;
 import static io.earcam.utilitarian.site.search.offline.RegexFilter.EXCLUDE;
 import static io.earcam.utilitarian.site.search.offline.RegexFilter.INCLUDE;
 import static java.util.Collections.singletonMap;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import io.earcam.unexceptional.Exceptional;
 

@@ -22,12 +22,12 @@ import static io.earcam.unexceptional.Exceptional.uri;
 import static java.nio.file.Files.readAllLines;
 import static java.util.Collections.singletonList;
 import static java.util.stream.Collectors.joining;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.equalToIgnoringWhiteSpace;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.io.FileMatchers.aFileWithSize;
-import static org.junit.Assert.assertThat;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -37,12 +37,13 @@ import java.util.ArrayList;
 import java.util.UUID;
 import java.util.stream.Stream;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.sun.net.httpserver.HttpServer;
 
 import io.earcam.utilitarian.net.FreePortFinder;
 
+@SuppressWarnings("restriction")
 public class SitemapsTest {
 
 	private static final Path SITE_BASE_DIR = Paths.get("src", "test", "resources", "dummy-site");
@@ -69,8 +70,6 @@ public class SitemapsTest {
 				new URI(BASE_URL),
 				SITE_BASE_DIR.resolve(Paths.get("directory%b", "directory-ba")),
 				targetPath);
-
-		targetPath.toFile().mkdirs(); // TODO move into Sitemap code
 
 		Path listing = Sitemaps.create(parameters);
 		return listing;

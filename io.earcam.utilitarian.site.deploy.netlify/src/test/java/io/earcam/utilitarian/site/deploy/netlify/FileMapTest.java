@@ -21,6 +21,7 @@ package io.earcam.utilitarian.site.deploy.netlify;
 import static io.earcam.utilitarian.site.deploy.netlify.FileMap.SHA1_FAILED_KEY;
 import static io.earcam.utilitarian.site.deploy.netlify.FileMap.sha1FileMap;
 import static java.util.stream.Collectors.toList;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.aMapWithSize;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.equalTo;
@@ -28,8 +29,7 @@ import static org.hamcrest.Matchers.hasKey;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.Assume.assumeThat;
 
 import java.io.File;
@@ -38,8 +38,8 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 /**
  * The dataset contains 6 files, with 2 having the same content and therefore same SHA1
@@ -51,7 +51,7 @@ public class FileMapTest {
 	private static Map<String, List<File>> fileMap;
 
 
-	@BeforeClass
+	@BeforeAll
 	public static void initialize()
 	{
 		fileMap = sha1FileMap(SITE_BASE_DIR);

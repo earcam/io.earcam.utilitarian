@@ -19,10 +19,13 @@
 package io.earcam.utilitarian.web.jaxrs;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON_PATCH_JSON_TYPE;
+import static javax.ws.rs.core.MediaType.APPLICATION_JSON_TYPE;
 
 import java.io.InputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
+import java.util.Objects;
 
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
@@ -44,7 +47,20 @@ public class JsonMessageBodyReader implements MessageBodyReader<Object> {
 	@Override
 	public boolean isReadable(Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType)
 	{
-		return true;
+		return isJson(mediaType);
+	}
+
+
+	static boolean isJson(MediaType mediaType)
+	{
+		return equalIgnoringParameters(APPLICATION_JSON_TYPE, mediaType) || equalIgnoringParameters(APPLICATION_JSON_PATCH_JSON_TYPE, mediaType);
+	}
+
+
+	private static boolean equalIgnoringParameters(MediaType a, MediaType b)
+	{
+		return Objects.equals(a.getType(), b.getType())
+				&& Objects.equals(a.getSubtype(), b.getSubtype());
 	}
 
 

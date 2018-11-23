@@ -26,8 +26,9 @@ import static io.earcam.utilitarian.security.Keys.rsa;
 import static java.time.ZoneId.systemDefault;
 import static java.util.concurrent.TimeUnit.DAYS;
 //EARCAM_SNIPPET_END: imports
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.math.BigInteger;
 import java.security.KeyPair;
@@ -37,7 +38,7 @@ import java.time.Month;
 import java.time.temporal.ChronoUnit;
 
 import org.hamcrest.MatcherAssert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class CertificatesTest {
 

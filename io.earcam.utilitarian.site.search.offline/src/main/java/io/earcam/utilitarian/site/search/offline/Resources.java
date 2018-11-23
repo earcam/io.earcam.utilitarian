@@ -30,6 +30,8 @@ import io.earcam.utilitarian.io.ReplaceAllOutputStream;
 
 public final class Resources {
 
+	public static final String PROPERTY_USE_SCRIPT_ENGINE = "search.offline.scriptengine";
+
 	public static final String UI_SCRIPT_SEARCH_FILE = "ui.search.lunr.js";
 
 	public static final String RESOURCES_ROOT = "META-INF/resources/js/";

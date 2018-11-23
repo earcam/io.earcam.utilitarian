@@ -26,11 +26,11 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static javax.ws.rs.client.ClientBuilder.newBuilder;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON_TYPE;
 import static javax.ws.rs.core.MediaType.APPLICATION_OCTET_STREAM_TYPE;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -57,7 +57,6 @@ import javax.ws.rs.core.StreamingOutput;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
-import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -108,7 +107,7 @@ public class NetlifyTest {
 	}
 
 
-	@Test
+	@org.junit.Test
 	public void createSite()
 	{
 		Site site = new Site();
@@ -121,8 +120,7 @@ public class NetlifyTest {
 	}
 
 
-	// TODO this should not return JsonArray but Site
-	@Test
+	@org.junit.Test
 	public void listSites()
 	{
 		List<Site> sites = netlify.siteList();
@@ -131,7 +129,7 @@ public class NetlifyTest {
 	}
 
 
-	@Test
+	@org.junit.Test
 	public void findSiteId()
 	{
 		Site site = netlify.findSiteForName(SITE_NAME).orElseThrow(RuntimeException::new);;
@@ -140,14 +138,14 @@ public class NetlifyTest {
 	}
 
 
-	@Test
+	@org.junit.Test
 	public void destroySite()
 	{
 		netlify.destroy(SITE_NAME);
 	}
 
 
-	@Test
+	@org.junit.Test
 	public void attemptToDestroyUnknownSiteThrows()
 	{
 		try {
@@ -157,7 +155,7 @@ public class NetlifyTest {
 	}
 
 
-	@Test
+	@org.junit.Test
 	public void deployZip() throws Exception
 	{
 		Path dir = Paths.get("src", "test", "resources", "faux-site", "create");
@@ -167,7 +165,7 @@ public class NetlifyTest {
 
 
 	// TODO this should be in class and return Site
-	@Test
+	@org.junit.Test
 	public void listDeploys()
 	{
 		Response response = client.target(baseUrl + "sites/" + SITE_ID + "/deploys")
@@ -184,7 +182,7 @@ public class NetlifyTest {
 	private Map<String, List<File>> sha1ToRelativePaths = new HashMap<>();
 
 
-	// @Test // Can't work out what's wrong here - Swagger client suffers same issue, Java HTTP bug or Netlify?
+	// @org.junit.Test // Can't work out what's wrong here - Swagger client suffers same issue, Java HTTP bug or Netlify?
 	public void deployNewSiteByDigest() throws Exception
 	{
 		Site site = netlify.findSiteForName("earcam-test").orElseThrow(RuntimeException::new);

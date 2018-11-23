@@ -29,7 +29,7 @@ import java.security.KeyPair;
 import java.security.KeyStore;
 import java.security.cert.X509Certificate;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class OpenedKeyStoreTest {
 

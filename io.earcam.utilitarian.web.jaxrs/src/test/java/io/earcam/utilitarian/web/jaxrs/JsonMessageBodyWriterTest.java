@@ -19,10 +19,10 @@
 package io.earcam.utilitarian.web.jaxrs;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON_TYPE;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -32,7 +32,7 @@ import java.lang.annotation.Annotation;
 
 import javax.ws.rs.core.MultivaluedMap;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.acme.Echo;
 

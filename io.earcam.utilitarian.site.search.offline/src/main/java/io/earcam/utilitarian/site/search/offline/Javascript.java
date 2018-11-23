@@ -25,6 +25,7 @@ import static java.util.stream.StreamSupport.stream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
+import java.util.Optional;
 
 import javax.script.Invocable;
 import javax.script.ScriptEngine;
@@ -53,11 +54,7 @@ final class Javascript {
 
 	public static Invocable createScriptEngine(String language, InputStream... scripts)
 	{
-		ScriptEngine engine = stream(load(ScriptEngineFactory.class).spliterator(), false)
-				.filter(f -> f.getLanguageName().equals(language))
-				.findAny()
-				.orElseThrow(ScriptRuntimeException::engineNotFound)
-				.getScriptEngine();
+		ScriptEngine engine = specified(language).orElseGet(() -> spi(language));
 
 		for(InputStream script : scripts) {
 			try {
@@ -67,6 +64,32 @@ final class Javascript {
 			}
 		}
 		return (Invocable) engine;
+	}
+
+
+	private static Optional<ScriptEngine> specified(String language)
+	{
+		String specified = System.getProperty(Resources.PROPERTY_USE_SCRIPT_ENGINE, "");
+
+		return ("".equals(specified)) ? Optional.empty() : Exceptional.apply(Javascript::loadSpecified, specified, language);
+	}
+
+
+	private static Optional<ScriptEngine> loadSpecified(String engineType, String language) throws ReflectiveOperationException
+	{
+		Class<?> specific = Javascript.class.getClassLoader().loadClass(engineType);
+		ScriptEngineFactory factory = (ScriptEngineFactory) specific.newInstance();
+		return Optional.of(factory.getScriptEngine());
+	}
+
+
+	private static ScriptEngine spi(String language)
+	{
+		return stream(load(ScriptEngineFactory.class).spliterator(), false)
+				.filter(f -> f.getLanguageName().equals(language))
+				.findAny()
+				.orElseThrow(ScriptRuntimeException::engineNotFound)
+				.getScriptEngine();
 	}
 
 

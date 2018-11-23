@@ -22,9 +22,9 @@ import static io.earcam.utilitarian.net.FreePortFinder.findFreePort;
 import static io.earcam.utilitarian.web.jaxrs.BasicAuthenticator.AUTHORIZATION;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON_TYPE;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
 
 import java.io.IOException;
 
@@ -38,11 +38,11 @@ import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 import org.glassfish.jersey.test.TestProperties;
-import org.junit.Test;
 
 import com.acme.Echo;
 import com.acme.EchoService;
 
+//Note: currently `JerseyTest` requires vintaged JUnit4 - e.g. https://github.com/eclipse-ee4j/jersey/issues/3662,
 public class JaxRsTest extends JerseyTest {
 
 	private static final String USER_AGENT = "Mozilla/5.0 (X11; YouNix; Linux x86_64; rv:53.0) earcam.io/1.0";
@@ -92,7 +92,7 @@ public class JaxRsTest extends JerseyTest {
 	}
 
 
-	@Test
+	@org.junit.Test
 	public void get()
 	{
 		Echo response = target("/echo/hello")
@@ -103,7 +103,7 @@ public class JaxRsTest extends JerseyTest {
 	}
 
 
-	@Test
+	@org.junit.Test
 	public void getAgain()
 	{
 		Echo response = target("echo/QUACK")
@@ -114,7 +114,7 @@ public class JaxRsTest extends JerseyTest {
 	}
 
 
-	@Test
+	@org.junit.Test
 	public void send()
 	{
 		Echo echo = new Echo();

@@ -19,9 +19,9 @@
 package io.earcam.utilitarian.site.sitemap;
 
 import static java.lang.System.lineSeparator;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalToIgnoringWhiteSpace;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -34,7 +34,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpExchange;
@@ -44,6 +44,7 @@ import com.sun.net.httpserver.HttpServer;
 import io.earcam.unexceptional.Exceptional;
 import io.earcam.utilitarian.net.FreePortFinder;
 
+@SuppressWarnings("restriction")
 public class SitemapSubmissionTest {
 
 	@Test

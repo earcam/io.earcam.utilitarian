@@ -20,11 +20,16 @@ package io.earcam.utilitarian.charstar;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.hasToString;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.lessThan;
+import static org.hamcrest.Matchers.nullValue;
 
 import java.util.Comparator;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class CharSequencesTest {
 

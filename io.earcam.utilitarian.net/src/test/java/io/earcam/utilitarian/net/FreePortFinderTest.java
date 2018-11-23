@@ -19,18 +19,18 @@
 package io.earcam.utilitarian.net;
 
 import static io.earcam.unexceptional.Exceptional.unwrap;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.net.ServerSocket;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class FreePortFinderTest {
 

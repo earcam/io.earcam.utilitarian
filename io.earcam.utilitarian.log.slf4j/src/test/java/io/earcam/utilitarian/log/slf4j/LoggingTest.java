@@ -24,16 +24,16 @@ import static io.earcam.utilitarian.log.slf4j.Level.ERROR;
 import static io.earcam.utilitarian.log.slf4j.Level.INFO;
 import static io.earcam.utilitarian.log.slf4j.Level.TRACE;
 import static io.earcam.utilitarian.log.slf4j.Logging.logging;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.not;
-import static org.junit.Assert.assertThat;
 // EARCAM_SNIPPET_END: imports
 
 import java.lang.reflect.Method;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.simple.SimpleLogger;

@@ -20,15 +20,15 @@ package io.earcam.utilitarian.web.jaxrs;
 
 import static io.earcam.utilitarian.web.jaxrs.BasicAuthenticator.AUTHORIZATION;
 import static java.util.Arrays.asList;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasEntry;
-import static org.junit.Assert.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
 import javax.ws.rs.client.ClientRequestContext;
 import javax.ws.rs.core.MultivaluedHashMap;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class BasicAuthenticatorTest {
 

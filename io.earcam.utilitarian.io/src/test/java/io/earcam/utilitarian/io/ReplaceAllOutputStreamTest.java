@@ -19,17 +19,16 @@
 package io.earcam.utilitarian.io;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class ReplaceAllOutputStreamTest {
 
@@ -45,7 +44,7 @@ public class ReplaceAllOutputStreamTest {
 		try(ReplaceAllOutputStream output = new ReplaceAllOutputStream(search, replace, baos)) {
 			output.write(out);
 		}
-		Assert.assertThat(text(baos.toByteArray()), is(equalTo("Some sample text")));
+		assertThat(text(baos.toByteArray()), is(equalTo("Some sample text")));
 	}
 
 
@@ -74,7 +73,7 @@ public class ReplaceAllOutputStreamTest {
 		try(ReplaceAllOutputStream output = new ReplaceAllOutputStream(search, replace, baos)) {
 			output.write(out);
 		}
-		Assert.assertThat(text(baos.toByteArray()), is(equalTo("ample exampleexampleexample examples")));
+		assertThat(text(baos.toByteArray()), is(equalTo("ample exampleexampleexample examples")));
 	}
 	// EARCAM_SNIPPET_BEGIN: ReplaceAllOutputStream
 
@@ -91,7 +90,7 @@ public class ReplaceAllOutputStreamTest {
 		try(ReplaceAllOutputStream output = new ReplaceAllOutputStream(search, replace, baos)) {
 			output.write(out);
 		}
-		Assert.assertThat(text(baos.toByteArray()), is(equalTo("ampledsd")));
+		assertThat(text(baos.toByteArray()), is(equalTo("ampledsd")));
 	}
 
 

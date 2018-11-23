@@ -23,15 +23,15 @@ import static io.earcam.utilitarian.net.FreePortFinder.findFreePort;            
 import static io.earcam.utilitarian.net.ssl.DummySslContext.serverSslContext;     // ⓘ
 import static io.earcam.utilitarian.net.ssl.DummySslContext.unverifiedResponse;   // ⓘ
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpExchange;
@@ -39,6 +39,7 @@ import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpsConfigurator;
 import com.sun.net.httpserver.HttpsServer;
 
+@SuppressWarnings("restriction")
 public class DummySslContextTest {
 
 	final String serverResponse = "hello Untrustworthy, Unverified and Unknown World Wide Web";

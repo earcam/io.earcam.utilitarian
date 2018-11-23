@@ -18,16 +18,16 @@
  */
 package io.earcam.utilitarian.site.search.offline;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalToIgnoringWhiteSpace;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
 
 import java.io.File;
 import java.net.URI;
 import java.util.Collections;
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import io.earcam.unexceptional.Exceptional;
 import io.earcam.utilitarian.site.search.offline.ConfigurationModel.Crawling;

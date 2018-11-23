@@ -19,16 +19,16 @@
 package io.earcam.utilitarian.site.search.offline;
 
 import static io.earcam.unexceptional.Exceptional.uri;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class XrefHtmlReferenceProcessorTest {
 
