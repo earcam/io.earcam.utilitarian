@@ -67,9 +67,9 @@ public final class ReplaceAllInputStream extends InputStream {
 	public int read() throws IOException
 	{
 		if(position != UNPOSITIONED && position < replace.length) {
-			return replace[position++];
+			return replace[position++] & 0xFF;
 		}
-		byte read = (byte) wrapped.read();
+		int read = wrapped.read();
 		if(read == search[0]) {
 			wrapped.mark(search.length);
 			int p = search();

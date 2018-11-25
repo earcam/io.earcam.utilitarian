@@ -22,6 +22,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 
+import javax.annotation.concurrent.NotThreadSafe;
+
 /**
  * <p>
  * Wraps an {@link InputStream} to ensure {@link InputStream#markSupported()} returns {@code true}.
@@ -34,12 +36,13 @@ import java.util.Arrays;
  * </p>
  *
  */
+@NotThreadSafe
 public final class MarkSupportedInputStream extends InputStream {
 
-	private volatile int[] buffer = new int[0];
-	private volatile int readPosition = 0;
-	private volatile int writePosition = 0;
-	private volatile int readLimit = 0;
+	private int[] buffer = new int[0];
+	private int readPosition = 0;
+	private int writePosition = 0;
+	private int readLimit = 0;
 	private final InputStream delegate;
 
 

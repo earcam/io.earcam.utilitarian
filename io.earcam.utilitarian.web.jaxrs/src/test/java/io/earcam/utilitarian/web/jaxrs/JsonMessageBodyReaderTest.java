@@ -22,7 +22,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,12 +35,50 @@ import com.acme.Echo;
 
 public class JsonMessageBodyReaderTest {
 
+	private final JsonMessageBodyReader reader = new JsonMessageBodyReader();
+
+
+	@Test
+	void isReadableIfJsonMimeType()
+	{
+		boolean readable = reader.isReadable(null, null, null, MediaType.APPLICATION_JSON_TYPE);
+
+		assertThat(readable, is(true));
+	}
+
+
+	@Test
+	void isReadableIfJsonPatchMimeType()
+	{
+		boolean readable = reader.isReadable(null, null, null, MediaType.APPLICATION_JSON_PATCH_JSON_TYPE);
+
+		assertThat(readable, is(true));
+	}
+
+
+	@Test
+	void isNotReadableIfXmlMimeType()
+	{
+		boolean readable = reader.isReadable(null, null, null, MediaType.APPLICATION_XML_TYPE);
+
+		assertThat(readable, is(false));
+	}
+
+
+	@Test
+	void isNotReadableIfPlainTextMimeType()
+	{
+		boolean readable = reader.isReadable(null, null, null, MediaType.TEXT_PLAIN_TYPE);
+
+		assertThat(readable, is(false));
+	}
+
+
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Test
 	public void throwsUnchecked()
 	{
 		String message = "Put in nothing";
-		JsonMessageBodyReader reader = new JsonMessageBodyReader();
 
 		InputStream input = new InputStream() {
 

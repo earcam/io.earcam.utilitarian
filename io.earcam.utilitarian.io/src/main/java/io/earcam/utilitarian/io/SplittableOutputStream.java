@@ -25,6 +25,8 @@ import java.nio.BufferOverflowException;
 import java.nio.BufferUnderflowException;
 import java.util.function.Supplier;
 
+import javax.annotation.concurrent.NotThreadSafe;
+
 /**
  * <p>
  * Deals with structured (e.g. XML) or unstructured data.
@@ -54,6 +56,7 @@ import java.util.function.Supplier;
  *
  */
 @SuppressWarnings("squid:S4349") // Sonar: Not applicable IMO
+@NotThreadSafe
 public class SplittableOutputStream extends OutputStream implements SplittableOutputStreamBuilder, SplittableOutputStreamBuilder.SplitOutputStreamBuilder {
 
 	private final Supplier<OutputStream> supplier;
@@ -61,7 +64,7 @@ public class SplittableOutputStream extends OutputStream implements SplittableOu
 	private final byte[] footer;
 	private final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
 
-	private volatile OutputStream out = null;
+	private OutputStream out = null;
 	private long maxFileSize = Long.MAX_VALUE;
 	private long maxRecordCount = Long.MAX_VALUE;
 	private long bytesCount;

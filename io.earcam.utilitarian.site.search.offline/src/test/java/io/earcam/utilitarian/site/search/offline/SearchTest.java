@@ -24,6 +24,7 @@ import static java.util.Collections.singletonMap;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.net.URI;
 import java.nio.file.Files;
@@ -108,5 +109,36 @@ public class SearchTest {
 	private String dirUri(Path baseDir, URI baseUri)
 	{
 		return baseDir.toString() + '@' + baseUri;
+	}
+
+
+	@Test
+	public void givenLessThanTwoArgumentsThenMainThrows()
+	{
+		try {
+			Search.main(new String[] { "one" });
+			fail();
+		} catch(IllegalArgumentException e) {}
+	}
+
+
+	@Test
+	void dirUriMappingRequiresAtSign() throws Exception
+	{
+		final Path baseDir = Paths.get("src", "test", "resources", "dummysite");
+		final URI baseUri = Exceptional.uri("http://acme.earcam.io/dummy/");
+
+		final Path outputDir = Paths.get(".", "target", UUID.randomUUID().toString());
+		final Path mainJson = outputDir.resolve(Paths.get("search-data.json"));
+
+		try {
+			String[] args = new String[] {
+					mainJson.getParent().toString(),
+					baseDir + "=" + baseUri,
+			};
+
+			Search.main(args);
+			fail();
+		} catch(IllegalArgumentException e) {}
 	}
 }
