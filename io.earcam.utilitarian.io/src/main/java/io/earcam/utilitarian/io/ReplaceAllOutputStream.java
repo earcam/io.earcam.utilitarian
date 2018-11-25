@@ -21,18 +21,21 @@ package io.earcam.utilitarian.io;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import javax.annotation.concurrent.NotThreadSafe;
+
 /**
  * A search and replace filtering {@link OutputStream} wrapper
  *
  * @see ReplaceAllInputStream
  */
 @SuppressWarnings("squid:S4349") // Sonar: Not applicable IMO
+@NotThreadSafe
 public final class ReplaceAllOutputStream extends OutputStream {
 
 	private final byte[] search;
 	private final byte[] replace;
 	private final OutputStream wrapped;
-	private volatile int position;
+	private int position;
 
 
 	/**

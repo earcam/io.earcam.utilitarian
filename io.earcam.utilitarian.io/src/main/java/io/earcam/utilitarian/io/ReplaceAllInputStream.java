@@ -23,6 +23,8 @@ import static io.earcam.utilitarian.io.MarkSupportedInputStream.ensureMarkSuppor
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.annotation.concurrent.NotThreadSafe;
+
 /**
  * <p>
  * A search and replace filtering {@link InputStream} wrapper.
@@ -36,13 +38,14 @@ import java.io.InputStream;
  *
  * @see ReplaceAllOutputStream
  */
+@NotThreadSafe
 public final class ReplaceAllInputStream extends InputStream {
 
 	private static final int UNPOSITIONED = -1;
 	private final byte[] search;
 	private final byte[] replace;
 	private final InputStream wrapped;
-	private volatile int position = UNPOSITIONED;
+	private int position = UNPOSITIONED;
 
 
 	/**
@@ -66,13 +69,13 @@ public final class ReplaceAllInputStream extends InputStream {
 		if(position != UNPOSITIONED && position < replace.length) {
 			return replace[position++];
 		}
-		int read = wrapped.read();
+		byte read = (byte) wrapped.read();
 		if(read == search[0]) {
 			wrapped.mark(search.length);
 			int p = search();
 			if(p == search.length) {
 				position = 1;
-				return replace.length == 0 ? read() : replace[0];
+				return replace.length == 0 ? read() : (replace[0] & 0xFF);
 			} else {
 				wrapped.reset();
 			}

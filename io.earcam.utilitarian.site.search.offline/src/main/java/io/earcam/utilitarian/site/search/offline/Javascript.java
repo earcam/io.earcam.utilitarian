@@ -54,7 +54,7 @@ final class Javascript {
 
 	public static Invocable createScriptEngine(String language, InputStream... scripts)
 	{
-		ScriptEngine engine = specified(language).orElseGet(() -> spi(language));
+		ScriptEngine engine = specified().orElseGet(() -> spi(language));
 
 		for(InputStream script : scripts) {
 			try {
@@ -67,15 +67,15 @@ final class Javascript {
 	}
 
 
-	private static Optional<ScriptEngine> specified(String language)
+	private static Optional<ScriptEngine> specified()
 	{
 		String specified = System.getProperty(Resources.PROPERTY_USE_SCRIPT_ENGINE, "");
 
-		return ("".equals(specified)) ? Optional.empty() : Exceptional.apply(Javascript::loadSpecified, specified, language);
+		return ("".equals(specified)) ? Optional.empty() : Exceptional.apply(Javascript::loadSpecified, specified);
 	}
 
 
-	private static Optional<ScriptEngine> loadSpecified(String engineType, String language) throws ReflectiveOperationException
+	private static Optional<ScriptEngine> loadSpecified(String engineType) throws ReflectiveOperationException
 	{
 		Class<?> specific = Javascript.class.getClassLoader().loadClass(engineType);
 		ScriptEngineFactory factory = (ScriptEngineFactory) specific.newInstance();

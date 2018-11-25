@@ -26,12 +26,6 @@
 		<skip.execution.pitest>false</skip.execution.pitest>
 		<earcam.project.name.short>net</earcam.project.name.short>
 
-		<!-- 
-			jacoco's argLine not merged,
-			even with 'combine.self="append"', 
-			but we can use late binding
-		-->
-		<surefire.argLine />
 		<jpms.supplimental.surefire.argLine>
 			--add-reads ${project.artifactId}=jdk.httpserver		
 		</jpms.supplimental.surefire.argLine>

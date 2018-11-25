@@ -31,12 +31,6 @@
 		<revapi.skip>true</revapi.skip>
 		<earcam.project.name.short>site/deploy/netlify</earcam.project.name.short>
 
-		<!-- 
-			jacoco's argLine not merged,
-			even with 'combine.self="append"', 
-			but we can use late binding
-		-->
-		<surefire.argLine />
 		<jpms.supplimental.surefire.argLine>
 			--add-modules jdk.httpserver,java.activation 
 			--add-reads ${project.artifactId}=io.earcam.utilitarian.net

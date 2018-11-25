@@ -28,12 +28,6 @@
 		<!-- issues with unexposed lucene - revapi's checkDependencies=false not working? -->
 		<revapi.skip>true</revapi.skip>
 
-		<!-- 
-			jacoco's argLine not merged,
-			even with 'combine.self="append"', 
-			but we can use late binding
-		-->
-		<surefire.argLine />
 		<jpms.supplimental.surefire.argLine>
 			--add-modules java.scripting
 		</jpms.supplimental.surefire.argLine>

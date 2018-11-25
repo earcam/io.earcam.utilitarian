@@ -27,12 +27,6 @@
 		<earcam.project.name.short>web/jaxrs</earcam.project.name.short>
 		<revapi.skip>true</revapi.skip><!-- issues with exposed jax.rs -->
 
-		<!-- 
-			jacoco's argLine not merged, 
-			even with 'combine.self="append"',
-			but we can use late binding 
-		-->
-		<surefire.argLine />
 		<jpms.supplimental.surefire.argLine>
 			--add-modules jdk.httpserver,java.activation
 			--add-opens ${project.artifactId}/com.acme=ALL-UNNAMED
@@ -176,15 +170,13 @@
 					<execution>
 						<id>jdk9-test</id>
 						<configuration>
-							<argLine>@{surefire.argLine}
-								${jpms.supplimental.surefire.argLine}</argLine>
+							<argLine>@{surefire.argLine} ${jpms.supplimental.surefire.argLine}</argLine>
 						</configuration>
 					</execution>
 					<execution>
 						<id>jdk10-test</id>
 						<configuration>
-							<argLine>@{surefire.argLine}
-								${jpms.supplimental.surefire.argLine}</argLine>
+							<argLine>@{surefire.argLine} ${jpms.supplimental.surefire.argLine}</argLine>
 						</configuration>
 					</execution>
 				</executions>
