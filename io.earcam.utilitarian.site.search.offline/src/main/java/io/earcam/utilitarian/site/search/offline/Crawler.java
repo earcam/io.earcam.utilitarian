@@ -98,7 +98,7 @@ public class Crawler {
 	{
 		return EmeticStream.emesis(Files::walk, baseDir)
 				.mapToStream()
-				.filter(Files::isRegularFile)
+				.filter(p -> p.toFile().isFile())
 				.map(f -> Document.document(baseDir, baseUri, f));
 	}
 

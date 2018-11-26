@@ -54,7 +54,7 @@ public class Sitemap extends AbstractSitemap {
 	public void run() throws IOException
 	{
 		Stream<Path> files = Files.walk(parameters.sourceDir)
-				.filter(Files::isRegularFile);
+				.filter(p -> p.toFile().isFile());
 		files = filter(files);
 		process(files.sequential());
 	}
