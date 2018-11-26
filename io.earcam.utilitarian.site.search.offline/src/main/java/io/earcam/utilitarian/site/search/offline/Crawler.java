@@ -29,30 +29,30 @@ import io.earcam.unexceptional.EmeticStream;
 
 // @formatter:off
 /**
- * Pipeline needs to be built according to definition, with names driven via SPI, e.g.
+ * Pipeline needs to be built according to definition, with names driven via SPI, i.e.
  *
  * configuration is just a Map<String, String> passed to each
  *
  * <pre>
- * <pipeline>
- *    <filter>
- *    	 <id>default-regex</id>
- *    	 <configuration>
- *          <include>regex</include>
- *          <exclude>regex</exclude>
- *       </configuration>
- *    </filter>
- *    <processor>
- *       <id>default-html</id>
- *    </processor>
- *    <processor>
- *       <id>default-pdf</id>
- *    </processor>
- *    <!-- ... filter based on content can go here ... -->
- *    <processor>
- *       <id>default-tokenizer</id>
- *    </processor>
- * </pipeline>
+ * &lt;pipeline&gt;
+ *    &lt;filter&gt;
+ *    	 &lt;id&gt;default-regex&lt;/id&gt;
+ *    	 &lt;configuration&gt;
+ *          &lt;include&gt;regex&lt;/include&gt;
+ *          &lt;exclude&gt;regex&lt;/exclude&gt;
+ *       &lt;/configuration&gt;
+ *    &lt;/filter&gt;
+ *    &lt;processor&gt;
+ *       &lt;id&gt;default-html&lt;/id&gt;
+ *    &lt;/processor&gt;
+ *    &lt;processor&gt;
+ *       &lt;id&gt;default-pdf&lt;/id&gt;
+ *    &lt;/processor&gt;
+ *    &lt;!-- ... filter based on content can go here ... --&gt;
+ *    &lt;processor&gt;
+ *       &lt;id&gt;default-tokenizer&lt;/id&gt;
+ *    &lt;/processor&gt;
+ * &lt;/pipeline&gt;
  * </pre>
  *
  * Therefore Filter and Processor both need to extend 'Component'

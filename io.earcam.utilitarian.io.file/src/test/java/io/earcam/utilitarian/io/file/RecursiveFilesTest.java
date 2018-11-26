@@ -19,6 +19,7 @@
 package io.earcam.utilitarian.io.file;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static java.time.ZoneId.systemDefault;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -30,6 +31,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
 import java.nio.file.AccessDeniedException;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.Path;
@@ -211,5 +213,52 @@ public class RecursiveFilesTest {
 
 		assertThat(link.toFile(), is(not(anExistingFile())));
 		assertThat(fileUnderLinkTarget.toFile(), is(anExistingFile()));
+	}
+
+
+	@Test
+	public void copyWillNotOverwriteImplicitly() throws IOException
+	{
+		String stamp = stamp("no-overwrite");
+		Path source = Paths.get(".", "target", stamp, "source");
+		Path sink = Paths.get(".", "target", stamp, "sink");
+		RecursiveFiles.copy(origin, source);
+		RecursiveFiles.copy(origin, sink);
+
+		try {
+			RecursiveFiles.copy(source, sink);
+			fail();
+		} catch(FileAlreadyExistsException e) {}
+	}
+
+
+	@Test
+	public void copyWillNotOverwriteFileWithDirectoryImplicitly() throws IOException
+	{
+		String stamp = stamp("no-overwrite");
+		Path source = Paths.get(".", "target", stamp, "source");
+		Path sink = Paths.get(".", "target", stamp, "sink");
+		RecursiveFiles.copy(origin, source);
+		Files.write(sink, "A file already exists".getBytes(UTF_8));
+
+		try {
+			RecursiveFiles.copy(source, sink);
+			fail();
+		} catch(FileAlreadyExistsException e) {}
+	}
+
+
+	@Test
+	public void copyWillOverwriteGivenOption() throws IOException
+	{
+		String stamp = stamp("overwrite");
+		Path source = Paths.get(".", "target", stamp, "source");
+		Path sink = Paths.get(".", "target", stamp, "sink");
+		RecursiveFiles.copy(origin, source);
+		RecursiveFiles.copy(origin, sink);
+
+		RecursiveFiles.copy(source, sink, REPLACE_EXISTING);
+
+		assertSameFiles(source, sink);
 	}
 }

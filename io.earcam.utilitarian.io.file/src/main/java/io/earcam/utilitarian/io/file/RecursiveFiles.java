@@ -24,6 +24,8 @@ import static java.nio.file.LinkOption.NOFOLLOW_LINKS;
 
 import java.io.IOException;
 import java.nio.file.CopyOption;
+import java.nio.file.DirectoryNotEmptyException;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.FileVisitOption;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -45,23 +47,12 @@ public final class RecursiveFiles {
 		final Path source;
 		final CopyOption[] options;
 
-		Path sinkSub;
-
 
 		public AbstractVisitor(Path source, Path sink, CopyOption... options)
 		{
 			this.source = source;
 			this.sink = sink;
 			this.options = options;
-		}
-
-
-		@Override
-		public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException
-		{
-			sinkSub = sink.resolve(source.relativize(dir));
-			sinkSub.toFile().mkdirs();
-			return CONTINUE;
 		}
 
 
@@ -104,7 +95,7 @@ public final class RecursiveFiles {
 		}
 	}
 
-	private static final class MoveVisitor extends AbstractVisitor {
+	private static final class MoveVisitor extends CopyVisitor {
 
 		public MoveVisitor(Path source, Path sink, CopyOption... options)
 		{
@@ -123,12 +114,13 @@ public final class RecursiveFiles {
 		@Override
 		public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException
 		{
-			Files.move(file, sinkSub.resolve(file.getFileName()), options);
-			return CONTINUE;
+			FileVisitResult result = super.visitFile(file, attrs);
+			Files.delete(file);
+			return result;
 		}
 	}
 
-	private static final class CopyVisitor extends AbstractVisitor {
+	private static class CopyVisitor extends AbstractVisitor {
 
 		public CopyVisitor(Path source, Path sink, CopyOption... options)
 		{
@@ -137,8 +129,16 @@ public final class RecursiveFiles {
 
 
 		@Override
-		protected FileVisitResult postVisitDirectory(Path directory)
+		public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException
 		{
+			Path targetdir = sink.resolve(source.relativize(dir));
+			targetdir.toFile().mkdirs();
+			try {
+				Files.copy(dir, targetdir, options);
+			} catch(DirectoryNotEmptyException | FileAlreadyExistsException e) {
+				if(!targetdir.toFile().isDirectory())
+					throw e;
+			}
 			return CONTINUE;
 		}
 
@@ -146,8 +146,15 @@ public final class RecursiveFiles {
 		@Override
 		public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException
 		{
-			Files.copy(file, sinkSub.resolve(file.getFileName()), options);
+			Files.copy(file, sink.resolve(source.relativize(file)), options);
 			return CONTINUE;
+		}
+
+
+		@Override
+		protected FileVisitResult postVisitDirectory(Path directory) throws IOException
+		{
+			return FileVisitResult.CONTINUE;
 		}
 	}
 
