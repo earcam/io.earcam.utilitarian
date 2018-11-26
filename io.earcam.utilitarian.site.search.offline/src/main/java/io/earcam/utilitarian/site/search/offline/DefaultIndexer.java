@@ -32,6 +32,7 @@ import static java.util.Arrays.stream;
 import static java.util.Collections.emptyMap;
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
 
 import java.io.FileOutputStream;
@@ -42,6 +43,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.SortedSet;
@@ -132,13 +134,20 @@ public class DefaultIndexer implements Indexer {
 	@Override
 	public synchronized Indexer add(Stream<Document> documents)
 	{
-		invokeFunction(engine, "addDocuments", javascriptIndexBuilder, documents
-				.filter(Document::hasTokens)
-				.peek(d -> titleMapper.accept(d.refUrl(), d.title()))
-				.peek(d -> d.tokens().forEach(autocompleter::accept))
+		List<Document> filtered = documents.filter(Document::hasTokens).collect(toList());
+		filtered.forEach(this::addToTitleAndAutoComplete);
+
+		invokeFunction(engine, "addDocuments", javascriptIndexBuilder, filtered.stream()
 				.map(Document::asMap)
 				.iterator());
 		return this;
+	}
+
+
+	private void addToTitleAndAutoComplete(Document document)
+	{
+		titleMapper.accept(document.refUrl(), document.title());
+		document.tokens().forEach(autocompleter::accept);
 	}
 
 
