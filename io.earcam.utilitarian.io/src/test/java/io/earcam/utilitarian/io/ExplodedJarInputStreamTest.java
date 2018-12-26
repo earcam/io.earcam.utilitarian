@@ -49,11 +49,10 @@ public class ExplodedJarInputStreamTest {
 	private static final Path TEST_DIR = Paths.get(".", "target", "test", ExplodedJarInputStreamTest.class.getSimpleName(), UUID.randomUUID().toString());
 
 
-	// FIXME clean this up, it's hideous
 	@Test
-	public void disgustingTest() throws Exception
+	public void explodedFromFilesystemWithManifest() throws Exception
 	{
-		Path jarDir = TEST_DIR.resolve(Paths.get("explodesToFilesystem"));
+		Path jarDir = TEST_DIR.resolve(Paths.get("explodedFromFilesystemWithManifest"));
 
 		final Class<?> archivedType = ExplodedJarInputStreamTest.class;
 

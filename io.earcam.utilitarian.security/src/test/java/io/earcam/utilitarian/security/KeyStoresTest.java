@@ -24,6 +24,7 @@ import static io.earcam.utilitarian.security.KeyStores.encode;
 import static io.earcam.utilitarian.security.Keys.rsa;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.security.KeyPair;
 import java.security.KeyStore;
@@ -69,5 +70,15 @@ public class KeyStoresTest {
 		Certificate certificate2 = hydrated.getCertificate(alias);
 
 		assertThat(certificate2.getPublicKey().getEncoded(), is(equalTo(certificate.getPublicKey().getEncoded())));
+	}
+
+
+	@Test
+	public void throwsWithoutCertificates()
+	{
+		try {
+			keyStore(credential);
+			fail();
+		} catch(IllegalArgumentException e) {}
 	}
 }
