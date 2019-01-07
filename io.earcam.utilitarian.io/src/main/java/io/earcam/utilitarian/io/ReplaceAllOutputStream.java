@@ -21,6 +21,7 @@ package io.earcam.utilitarian.io;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import javax.annotation.WillCloseWhenClosed;
 import javax.annotation.concurrent.NotThreadSafe;
 
 /**
@@ -45,7 +46,7 @@ public final class ReplaceAllOutputStream extends OutputStream {
 	 * @param replace the replacement byte sequence to substitute when the {@code search} sequence if found
 	 * @param output the {@link OutputStream} to operate on
 	 */
-	public ReplaceAllOutputStream(byte[] search, byte[] replace, OutputStream output)
+	public ReplaceAllOutputStream(byte[] search, byte[] replace, @WillCloseWhenClosed OutputStream output)
 	{
 		this.search = search;
 		this.replace = replace;

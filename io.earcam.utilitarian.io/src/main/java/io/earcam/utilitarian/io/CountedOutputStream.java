@@ -19,22 +19,20 @@
 package io.earcam.utilitarian.io;
 
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Objects;
 
 import javax.annotation.WillCloseWhenClosed;
 import javax.annotation.concurrent.NotThreadSafe;
 
 @NotThreadSafe
-public class CountedInputStream extends InputStream {
+public class CountedOutputStream extends OutputStream {
 
-	private final InputStream delegate;
+	private final OutputStream delegate;
 	private long count;
-	private boolean marked;
-	private long mark;
 
 
-	public CountedInputStream(@WillCloseWhenClosed InputStream wrapped)
+	public CountedOutputStream(@WillCloseWhenClosed OutputStream wrapped)
 	{
 		Objects.requireNonNull(wrapped);
 		this.delegate = wrapped;
@@ -54,12 +52,6 @@ public class CountedInputStream extends InputStream {
 	}
 
 
-	public long unmarkedCount()
-	{
-		return count - mark;
-	}
-
-
 	public void resetCount()
 	{
 		count = 0L;
@@ -67,53 +59,25 @@ public class CountedInputStream extends InputStream {
 
 
 	@Override
-	public void mark(int readlimit)
+	public void write(int b) throws IOException
 	{
-		marked = true;
-		delegate.mark(readlimit);
+		delegate.write(b);
+		++count;
 	}
 
 
 	@Override
-	public void reset() throws IOException
+	public void write(byte[] b) throws IOException
 	{
-		marked = false;
-		count -= mark;
-		delegate.reset();
+		delegate.write(b);
+		count += b.length;
 	}
 
 
 	@Override
-	public int read() throws IOException
+	public void write(byte[] b, int off, int len) throws IOException
 	{
-		int read = delegate.read();
-		if(read != -1) {
-			if(marked) {
-				++mark;
-			} else if(mark > 0) {
-				--mark;
-			}
-			++count;
-		}
-		return read;
-	}
-
-
-	@Override
-	public int available() throws IOException
-	{
-		return delegate.available();
-	}
-
-
-	@Override
-	public long skip(long n) throws IOException
-	{
-		long skipped = delegate.skip(n);
-		if(marked) {
-			mark += skipped;
-		}
-		count += skipped;
-		return skipped;
+		delegate.write(b, off, len);
+		count += len;
 	}
 }

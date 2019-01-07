@@ -21,7 +21,7 @@ package io.earcam.utilitarian.io;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -95,5 +95,21 @@ public class IoStreamsTest {
 			assertThat(e.getCause(), is(sameInstance(chuck)));
 		}
 
+	}
+
+
+	@Test
+	public void skipOrDieSucceedsWhenAllSkipped() throws Exception
+	{
+		ByteArrayInputStream lengthFortyTwo = new ByteArrayInputStream(new byte[42]);
+		IoStreams.skipOrDie(lengthFortyTwo, 42L);
+
+		lengthFortyTwo = new ByteArrayInputStream(new byte[42]);
+		try {
+			IoStreams.skipOrDie(lengthFortyTwo, 43L);
+			fail();
+		} catch(IOException e) {
+			assertThat(e.getCause(), is(instanceOf(IllegalStateException.class)));
+		}
 	}
 }

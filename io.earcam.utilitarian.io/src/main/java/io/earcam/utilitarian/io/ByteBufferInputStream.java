@@ -21,6 +21,9 @@ package io.earcam.utilitarian.io;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 
+import javax.annotation.concurrent.NotThreadSafe;
+
+@NotThreadSafe
 public class ByteBufferInputStream extends InputStream {
 
 	private final ByteBuffer buffer;

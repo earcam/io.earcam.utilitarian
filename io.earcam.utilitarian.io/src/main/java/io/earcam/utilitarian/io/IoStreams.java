@@ -27,8 +27,10 @@ import java.util.Objects;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.annotation.WillNotClose;
+import javax.annotation.concurrent.ThreadSafe;
 
 @ParametersAreNonnullByDefault
+@ThreadSafe
 public final class IoStreams {
 
 	private static final int BUFFER_SIZE = 8192;
@@ -77,6 +79,25 @@ public final class IoStreams {
 			return count;
 		} catch(IOException e) {
 			throw new UncheckedIOException(e);
+		}
+	}
+
+
+	/**
+	 * Skip exactly or throw.
+	 * 
+	 * @param input the stream of bytes to skip
+	 * @param skip the number of bytes to skip
+	 * @throws IOException an {@link IOException} wrapping an {@link IllegalStateException}
+	 * 
+	 * @see InputStream#skip(long)
+	 */
+	public static void skipOrDie(InputStream input, long skip) throws IOException
+	{
+		long remaining = input.skip(skip);
+		if(remaining != skip) {
+			String message = "Needed to skip " + skip + ", but only managed " + (skip - remaining);
+			throw new IOException(new IllegalStateException(message));
 		}
 	}
 }

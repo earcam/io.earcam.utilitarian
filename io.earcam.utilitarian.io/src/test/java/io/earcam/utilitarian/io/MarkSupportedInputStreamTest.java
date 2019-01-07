@@ -29,6 +29,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.jupiter.api.Test;
 
@@ -157,5 +158,23 @@ public class MarkSupportedInputStreamTest {
 			}
 		};
 		assertThat(ensureMarkSupported(input), is(sameInstance(input)));
+	}
+
+
+	@SuppressWarnings("resource")
+	@Test
+	public void delegatesCallsToAvailable() throws IOException
+	{
+		AtomicInteger available = new AtomicInteger(101);
+		InputStream input = new MarkSupportedInputStream(new ByteArrayInputStream(new byte[0]) {
+			@Override
+			public synchronized int available()
+			{
+				return available.get();
+			}
+		});
+		assertThat(input.available(), is(101));
+		available.set(42);
+		assertThat(input.available(), is(42));
 	}
 }

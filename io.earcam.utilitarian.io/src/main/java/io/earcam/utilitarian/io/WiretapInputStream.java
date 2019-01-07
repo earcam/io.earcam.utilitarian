@@ -22,6 +22,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.annotation.WillCloseWhenClosed;
+import javax.annotation.concurrent.NotThreadSafe;
+
+@NotThreadSafe
 public class WiretapInputStream extends InputStream {
 
 	private InputStream tapped;
@@ -31,7 +35,7 @@ public class WiretapInputStream extends InputStream {
 	private int mark;
 
 
-	public WiretapInputStream(InputStream tapped, boolean tapOn)
+	public WiretapInputStream(@WillCloseWhenClosed InputStream tapped, boolean tapOn)
 	{
 		this.tapping = tapOn;
 		this.tapped = tapped;
@@ -40,7 +44,7 @@ public class WiretapInputStream extends InputStream {
 
 
 	@Override
-	public synchronized void mark(int readlimit)
+	public void mark(int readlimit)
 	{
 		marked = true;
 		mark = 0;
@@ -49,7 +53,7 @@ public class WiretapInputStream extends InputStream {
 
 
 	@Override
-	public synchronized void reset() throws IOException
+	public void reset() throws IOException
 	{
 		marked = false;
 		tapped.reset();

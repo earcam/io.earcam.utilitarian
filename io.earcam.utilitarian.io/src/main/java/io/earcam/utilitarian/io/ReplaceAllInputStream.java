@@ -23,6 +23,7 @@ import static io.earcam.utilitarian.io.MarkSupportedInputStream.ensureMarkSuppor
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.annotation.WillCloseWhenClosed;
 import javax.annotation.concurrent.NotThreadSafe;
 
 /**
@@ -55,7 +56,7 @@ public final class ReplaceAllInputStream extends InputStream {
 	 * @param replace the replacement byte sequence to substitute when the {@code search} sequence if found
 	 * @param input the {@link InputStream} to operate on
 	 */
-	public ReplaceAllInputStream(byte[] search, byte[] replace, InputStream input)
+	public ReplaceAllInputStream(byte[] search, byte[] replace, @WillCloseWhenClosed InputStream input)
 	{
 		this.search = search;
 		this.replace = replace;
@@ -92,5 +93,12 @@ public final class ReplaceAllInputStream extends InputStream {
 			++p;
 		}
 		return p;
+	}
+
+
+	@Override
+	public void close() throws IOException
+	{
+		wrapped.close();
 	}
 }

@@ -18,6 +18,7 @@
  */
 package io.earcam.utilitarian.io;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -199,6 +200,47 @@ public class CountedInputStreamTest {
 			input.read();
 
 			assertThat(input.count(), is(1L));
+		}
+	}
+
+
+	@SuppressWarnings("resource")
+	@Test
+	public void availableIsDelegated() throws IOException
+	{
+		InputStream delegate = new InputStream() {
+
+			@Override
+			public int read()
+			{
+				return 0;
+			}
+
+
+			@Override
+			public int available()
+			{
+				return 42;
+			}
+		};
+
+		assertThat(new CountedInputStream(delegate).available(), is(42));
+	}
+
+
+	@Test
+	public void countCorrectWhenMarkedThenSkippedAndMarkReset() throws IOException
+	{
+		byte[] bytes = "it's the end of the world as we know it".getBytes(UTF_8);
+		try(CountedInputStream input = new CountedInputStream(new ByteArrayInputStream(bytes))) {
+
+			input.read(new byte[5]);
+			input.mark(1_000);
+			input.skip(10);
+			input.read(new byte[15]);
+			input.reset();
+
+			assertThat(input.count(), is(5L));
 		}
 	}
 }

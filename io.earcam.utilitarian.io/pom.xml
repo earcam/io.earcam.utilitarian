@@ -74,10 +74,21 @@
 								"ignore" : [
 									{
 										"code": "java.annotation.added",
-										"annotationType": "javax.annotation.concurrent.NotThreadSafe",
+										"annotation": "@javax.annotation.concurrent.ThreadSafe",
+										"package": "io.earcam.utilitarian.io",
+										"elementKind": "class"
+									},
+									{
+										"code": "java.annotation.added",
 										"annotation": "@javax.annotation.concurrent.NotThreadSafe",
 										"package": "io.earcam.utilitarian.io",
 										"elementKind": "class"
+									},
+									{
+										"code": "java.annotation.added",
+										"annotation": "@javax.annotation.WillCloseWhenClosed",
+										"package": "io.earcam.utilitarian.io",
+										"elementKind": "parameter"
 									}
 								]
 							}
