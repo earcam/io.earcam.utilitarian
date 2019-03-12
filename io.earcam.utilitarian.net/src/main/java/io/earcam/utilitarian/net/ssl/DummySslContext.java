@@ -180,14 +180,17 @@ public final class DummySslContext {
 	{
 		HttpsURLConnection connection = unverifiedConnection(httpsUrl);
 		connection.connect();
-		InputStream input = connection.getInputStream();
+		try(InputStream input = connection.getInputStream()) {
 
-		ByteArrayOutputStream output = new ByteArrayOutputStream();
-		int b;
-		while((b = input.read()) != -1) {
-			output.write(b);
+			ByteArrayOutputStream output = new ByteArrayOutputStream();
+			int b;
+			while((b = input.read()) != -1) {
+				output.write(b);
+			}
+			return output.toByteArray();
+		} finally {
+			connection.disconnect();
 		}
-		return output.toByteArray();
 	}
 
 

@@ -71,7 +71,6 @@ public class DummySslContextTest {
 			}
 
 		});
-
 		server.start();
 
 		byte[] response = unverifiedResponse(earl);  // ⓘ
@@ -79,7 +78,7 @@ public class DummySslContextTest {
 		String responseBody = new String(response, UTF_8);
 		assertThat(responseBody, is(equalTo(serverResponse)));
 
-		server.stop(0);
+		server.stop(10);
 	}
 
 
