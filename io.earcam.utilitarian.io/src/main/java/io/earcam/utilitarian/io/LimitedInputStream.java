@@ -51,7 +51,7 @@ public class LimitedInputStream extends CountedInputStream {
 		if(len > remaining) {
 			len = (int) remaining;
 		}
-		return super.read(b, off, len);
+		return (remaining == 0) ? -1 : super.read(b, off, len);
 	}
 
 

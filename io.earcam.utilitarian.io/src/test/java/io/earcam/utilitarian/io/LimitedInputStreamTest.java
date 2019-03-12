@@ -98,7 +98,7 @@ public class LimitedInputStreamTest {
 
 
 	@Test
-	public void readPastLimitReturnsMinusOne() throws Exception
+	public void readBytePastLimitReturnsMinusOne() throws Exception
 	{
 		ByteArrayInputStream input = new ByteArrayInputStream(bytes("xyz"));
 		int x = 'x';
@@ -108,6 +108,22 @@ public class LimitedInputStreamTest {
 
 		assertThat(limited.read(), is(x));
 		assertThat(limited.read(), is(-1));
+	}
+
+
+	@Test
+	public void readByteArrayPastLimitReturnsMinusOne() throws Exception
+	{
+		ByteArrayInputStream input = new ByteArrayInputStream(bytes("xyz"));
+
+		byte[] buffer = new byte[4];
+
+		@SuppressWarnings("resource")
+		LimitedInputStream limited = new LimitedInputStream(input, 2);
+
+		int read = limited.read(buffer);
+		assertThat(read, is(2));
+		assertThat(limited.read(buffer), is(-1));
 	}
 
 
