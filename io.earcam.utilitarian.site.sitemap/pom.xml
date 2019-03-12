@@ -130,7 +130,7 @@
 							<bundledSignatures>
 								<bundledSignature>jdk-unsafe</bundledSignature>
 								<bundledSignature>jdk-deprecated</bundledSignature>
-								<!-- <bundledSignature>jdk-non-portable</bundledSignature> -->
+								<!-- jdk-non-portable -->
 								<bundledSignature>jdk-system-out</bundledSignature>
 								<bundledSignature>jdk-reflection</bundledSignature>
 							</bundledSignatures>

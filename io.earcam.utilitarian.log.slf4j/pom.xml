@@ -159,7 +159,7 @@
 								<bundledSignature>jdk-unsafe</bundledSignature>
 								<bundledSignature>jdk-deprecated</bundledSignature>
 								<bundledSignature>jdk-non-portable</bundledSignature>
-								<!-- <bundledSignature>jdk-system-out</bundledSignature> -->
+								<!-- jdk-system-out -->
 								<bundledSignature>jdk-reflection</bundledSignature>
 							</bundledSignatures>
 						</configuration>
@@ -175,8 +175,8 @@
 								<bundledSignature>jdk-unsafe</bundledSignature>
 								<bundledSignature>jdk-deprecated</bundledSignature>
 								<bundledSignature>jdk-non-portable</bundledSignature>
-								<!-- <bundledSignature>jdk-system-out</bundledSignature> -->
-								<!-- <bundledSignature>jdk-reflection</bundledSignature> -->
+								<!-- jdk-system-out -->
+								<!-- jdk-reflection -->
 							</bundledSignatures>
 						</configuration>
 					</execution>

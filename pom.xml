@@ -200,16 +200,6 @@
 						<groupId>org.jboss.weld.se</groupId>
 						<artifactId>weld-se</artifactId>
 					</exclusion>
-	
-<!-- 					<exclusion> -->
-<!-- 						<groupId>javax.interceptor</groupId> -->
-<!-- 						<artifactId>javax.interceptor-api</artifactId> -->
-<!-- 					</exclusion> -->
-	
-<!-- 					<exclusion> -->
-<!-- 						<groupId>javax.inject</groupId> -->
-<!-- 						<artifactId>javax.inject</artifactId> -->
-<!-- 					</exclusion> -->
 				</exclusions>
 			</dependency>
 
