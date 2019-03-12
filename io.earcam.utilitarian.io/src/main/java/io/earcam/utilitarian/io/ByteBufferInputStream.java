@@ -91,14 +91,14 @@ public class ByteBufferInputStream extends InputStream {
 
 
 	@Override
-	public void mark(int readlimit)
+	public synchronized void mark(int readlimit)
 	{
 		buffer.mark();
 	}
 
 
 	@Override
-	public void reset()
+	public synchronized void reset()
 	{
 		buffer.reset();
 	}

@@ -97,7 +97,7 @@ public final class MarkSupportedInputStream extends InputStream {
 
 
 	@Override
-	public void mark(int readLimit)
+	public synchronized void mark(int readLimit)
 	{
 		this.readLimit = readLimit + 1;
 		if(buffer.length < this.readLimit || readPosition > 0) {
@@ -109,7 +109,7 @@ public final class MarkSupportedInputStream extends InputStream {
 
 
 	@Override
-	public void reset() throws IOException
+	public synchronized void reset() throws IOException
 	{
 		if(readLimit == 0) {
 			throw new IOException("Not marked, or current position > marked position + readLimit");

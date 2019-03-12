@@ -98,6 +98,34 @@ public class CountedInputStreamTest {
 
 
 	@Test
+	public void countNotChangedByRepeatedReadsPastEndOfStream() throws IOException
+	{
+		try(CountedInputStream input = new CountedInputStream(new ByteArrayInputStream(new byte[2]))) {
+			input.read();
+			input.read();
+			assertThat(input.read(), is(-1));
+			input.read();
+			input.read();
+			assertThat(input.count(), is(2L));
+		}
+	}
+
+
+	@Test
+	public void countNotChangedByRepeatedArrayReadsPastEndOfStream() throws IOException
+	{
+		byte[] buffer = new byte[2];
+		try(CountedInputStream input = new CountedInputStream(new ByteArrayInputStream(new byte[3]))) {
+			input.read(buffer);
+			assertThat(input.read(buffer), is(1));
+			input.read(buffer);
+			input.read(buffer);
+			assertThat(input.count(), is(3L));
+		}
+	}
+
+
+	@Test
 	public void afterThreeCallsToReadTheCountIsThree() throws IOException
 	{
 		try(CountedInputStream input = new CountedInputStream(new ByteArrayInputStream(new byte[4]))) {

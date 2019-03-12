@@ -67,7 +67,7 @@ public class CountedInputStream extends InputStream {
 
 
 	@Override
-	public void mark(int readlimit)
+	public synchronized void mark(int readlimit)
 	{
 		marked = true;
 		delegate.mark(readlimit);
@@ -75,7 +75,7 @@ public class CountedInputStream extends InputStream {
 
 
 	@Override
-	public void reset() throws IOException
+	public synchronized void reset() throws IOException
 	{
 		marked = false;
 		count -= mark;
@@ -88,12 +88,29 @@ public class CountedInputStream extends InputStream {
 	{
 		int read = delegate.read();
 		if(read != -1) {
-			if(marked) {
-				++mark;
-			} else if(mark > 0) {
-				--mark;
-			}
-			++count;
+			count(1);
+		}
+		return read;
+	}
+
+
+	private void count(int read)
+	{
+		if(marked) {
+			mark += read;
+		} else if(mark > 0) {
+			mark -= read;
+		}
+		count += read;
+	}
+
+
+	@Override
+	public int read(byte[] b, int off, int len) throws IOException
+	{
+		int read = delegate.read(b, off, len);
+		if(read != -1) {
+			count(read);
 		}
 		return read;
 	}

@@ -44,7 +44,7 @@ public class WiretapInputStream extends InputStream {
 
 
 	@Override
-	public void mark(int readlimit)
+	public synchronized void mark(int readlimit)
 	{
 		marked = true;
 		mark = 0;
@@ -53,7 +53,7 @@ public class WiretapInputStream extends InputStream {
 
 
 	@Override
-	public void reset() throws IOException
+	public synchronized void reset() throws IOException
 	{
 		marked = false;
 		tapped.reset();
