@@ -272,7 +272,7 @@ public class SplittableOutputStream extends OutputStream implements SplittableOu
 	@Override
 	public void close() throws IOException
 	{
-		if(recorded()) {
+		if(inScope && recorded()) {
 			throw new BufferUnderflowException();
 		}
 		endSplit();

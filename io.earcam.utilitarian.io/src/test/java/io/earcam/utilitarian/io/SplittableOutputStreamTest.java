@@ -48,6 +48,19 @@ import org.junit.jupiter.api.Test;
 
 public class SplittableOutputStreamTest {
 
+	@Test
+	public void zeroRecordWritesNothing() throws Exception
+	{
+		ByteArrayOutputStream out = new ByteArrayOutputStream();;
+		ByteArrayOutputStream unused = new ByteArrayOutputStream();
+		Supplier<OutputStream> supplier = Arrays.asList(out, unused).iterator()::next;
+
+		try(SplittableOutputStream splittable = splittable(supplier, bytes("HEAD"), bytes("FOOT")).maxSize(12).outputStream()) {}
+		assertThat(out.toByteArray().length, is(0));
+		assertThat(unused.toByteArray().length, is(0));
+	}
+
+
 	// Given content fits exactly, then all is written and new OutputStream is returned
 	@Test
 	public void contentWithOneRecordFitsMaxSizeExactly() throws Exception
